@@ -1,0 +1,72 @@
+html,
+body {
+    background-color: rgb(242, 242, 242);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#canvas {
+    position: absolute;
+}
+
+/* GUI style */
+:root {
+    --tp-base-background-color: hsla(0, 0%, 10%, 0.8);
+    --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
+    --tp-button-background-color: hsla(0, 0%, 80%, 1);
+    --tp-button-background-color-active: hsla(0, 0%, 100%, 1);
+    --tp-button-background-color-focus: hsla(0, 0%, 95%, 1);
+    --tp-button-background-color-hover: hsla(0, 0%, 85%, 1);
+    --tp-button-foreground-color: hsla(0, 0%, 0%, 0.8);
+    --tp-folder-background-color: hsla(0, 0%, 0%, 0.3);
+    --tp-folder-background-color-active: hsla(0, 0%, 0%, 0.6);
+    --tp-folder-background-color-focus: hsla(0, 0%, 0%, 0.5);
+    --tp-folder-background-color-hover: hsla(0, 0%, 0%, 0.4);
+    --tp-folder-foreground-color: hsla(0, 0%, 100%, 0.5);
+    --tp-input-background-color: hsla(0, 0%, 0%, 0.3);
+    --tp-input-background-color-active: hsla(0, 0%, 0%, 0.6);
+    --tp-input-background-color-focus: hsla(0, 0%, 0%, 0.5);
+    --tp-input-background-color-hover: hsla(0, 0%, 0%, 0.4);
+    --tp-input-foreground-color: hsla(0, 0%, 100%, 0.5);
+    --tp-input-guide-color: hsla(0, 0%, 100%, 0.1);
+    --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
+    --tp-monitor-foreground-color: hsla(0, 0%, 100%, 0.3);
+    --tp-label-foreground-color: hsla(0, 0%, 100%, 0.5);
+    --tp-separator-color: hsla(0, 0%, 0%, 0.2);
+}
+
+#introduction {
+    position: absolute;
+    font-family: 'Roboto Mono';
+    font-size: 14px;
+    padding: 1.5% 1.5%;
+    margin-top: 7%;
+    margin-left: 27%;
+    width: 46%;
+    text-align: justify;
+    background-color: rgba(11, 11, 11, 0.9);
+    color: rgba(205, 205, 205);
+    border-radius: 5px;
+    z-index: 1;
+    display: block;
+    visibility: visible;
+}
+
+.btn {
+    position: flex;
+    font-family: 'Roboto Mono', monospace;
+    border: none;
+    border-radius: 2px;
+    background-color: rgba(205, 205, 205);
+    color: rgba(11, 11, 11);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
