@@ -37,7 +37,7 @@ function drawSkeleton() {
             let partB = skeleton[j][1];
             if (partA.score > 0.5) {
                 pose_layer.stroke(0);
-                pose_layer.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
+                pose_layer.line(partA.position.x / 2, partA.position.y / 2, partB.position.x / 2, partB.position.y / 2);
             }
         }
     }
@@ -51,7 +51,7 @@ function drawFace() {
         if (nose.confidence > 0.5) {
             pose_layer.noFill();
             pose_layer.stroke(0);
-            pose_layer.ellipse(nose.x, nose.y, 100, 100);
+            pose_layer.ellipse(nose.x / 2, nose.y / 2, 100, 100);
         }
     }
 }
