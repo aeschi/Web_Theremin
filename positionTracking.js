@@ -1,6 +1,7 @@
 let video;
 let poseNet;
 let poses = [];
+let nose;
 
 function poseNetSetup() {
     video = createCapture(VIDEO);
@@ -8,7 +9,7 @@ function poseNetSetup() {
 
     let options = {
         flipHorizontal: true,
-        minConfidence: 0.5,
+        minConfidence: 0.7,
     };
     // Create a new poseNet method with a single detection
     poseNet = ml5.poseNet(video, options, modelReady);
@@ -36,8 +37,9 @@ function drawSkeleton() {
             let partA = skeleton[j][0];
             let partB = skeleton[j][1];
             if (partA.score > 0.5) {
-                pose_layer.stroke(0);
-                pose_layer.line(partA.position.x / 2, partA.position.y / 2, partB.position.x / 2, partB.position.y / 2);
+                pose_layer.stroke(215, 123, 103);
+                pose_layer.strokeWeight(2);
+                pose_layer.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
             }
         }
     }
@@ -50,8 +52,8 @@ function drawFace() {
 
         if (nose.confidence > 0.5) {
             pose_layer.noFill();
-            pose_layer.stroke(0);
-            pose_layer.ellipse(nose.x / 2, nose.y / 2, 100, 100);
+            pose_layer.stroke(215, 123, 103);
+            pose_layer.ellipse(nose.x, nose.y, 100, 100);
         }
     }
 }
