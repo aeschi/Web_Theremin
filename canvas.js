@@ -29,13 +29,15 @@ function preload() {
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
+    canvas.position(0, 0);
 
     vidSize = windowWidth * 0.75;
-    farmerVid = createVideo(['data/video/farmersspring25fpsFHD.mp4'], vidLoad);
-    farmerVid.hide();
+    // farmerVid = createVideo(['data/video/farmersspring25fpsFHD.mp4'], vidLoad);
+    // farmerVid.hide();
 
     pose_layer = createGraphics(640, 360);
-    // pose_layer = createGraphics(canvas.width, canvas.height);
+    hands_layer = createGraphics(640, 360);
+
     poseNetSetup();
 
     if (width < 2000) {
@@ -45,17 +47,17 @@ function setup() {
         thereminWidth = 1000;
         thereminHeight = 1000 * 0.78;
     }
+
     // initAudio();
 }
 
 function draw() {
-    // background(230, 20, 100);
+    // background(253, 245, 230, 20);
     canvas.clear();
-
     // draw video
-    image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
+    // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
 
-    drawSkeleton();
+    // drawSkeleton();
 
     // map hand movement to synth
     if (poses.length > 0) {
@@ -63,8 +65,12 @@ function draw() {
         let handL = poses[0].pose.leftWrist;
 
         if (typeof handR.x !== 'undefined') {
-            pose_layer.ellipse(handR.x, handR.y, 30, 30);
-            pose_layer.ellipse(handL.x, handL.y, 30, 30);
+            hands_layer.clear();
+            hands_layer.fill(215, 123, 103);
+            hands_layer.noStroke();
+
+            hands_layer.ellipse(handR.x, handR.y, 20, 20);
+            hands_layer.ellipse(handL.x, handL.y, 20, 20);
 
             // Update oscillator frequency
             frequency = map(handR.x, 0, 640, 440, 220);
@@ -75,11 +81,16 @@ function draw() {
             synth.volume.value = synthVolume;
         }
     }
-    // draw pose layer
-    image(pose_layer, width / 2 - pose_layer.width / 2, height / 2 - pose_layer.height / 3);
+    // draw layers
+    // image(pose_layer, width / 2 - pose_layer.width / 2, height / 2 - pose_layer.height / 3);
+    image(hands_layer, 0, 0, width, height);
 
     // draw theremin illustration
     image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
+}
+
+function mouseMoved() {
+    fill(random(255), 255, 255);
 }
 
 function vidLoad() {
@@ -106,3 +117,10 @@ function vidLoad() {
 //     gainNode.gain.value = 0.5;
 //     var soundPlaying = false;
 // }
+
+// pose recorder with timeline - can be saved to json file
+// https://github.com/osteele/p5pose-recorder
+// https://osteele.github.io/p5pose-recorder/
+
+// https://creative-coding.decontextualize.com/video/
+// https://blog.addpipe.com/10-advanced-features-in-html5-video-player/#startorstopthevideoatacertainpointortimestamp

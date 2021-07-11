@@ -9,7 +9,7 @@ function poseNetSetup() {
 
     let options = {
         flipHorizontal: true,
-        minConfidence: 0.7,
+        minConfidence: 0.8,
     };
     // Create a new poseNet method with a single detection
     poseNet = ml5.poseNet(video, options, modelReady);
