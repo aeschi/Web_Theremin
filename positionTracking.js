@@ -9,7 +9,8 @@ function poseNetSetup() {
 
     let options = {
         flipHorizontal: true,
-        minConfidence: 0.8,
+        minConfidence: 0.6,
+        maxPoseDetections: 2,
     };
     // Create a new poseNet method with a single detection
     poseNet = ml5.poseNet(video, options, modelReady);
@@ -28,7 +29,6 @@ function modelReady() {
 
 function drawSkeleton() {
     pose_layer.clear();
-    drawFace();
     // Loop through all the skeletons detected
     for (let i = 0; i < poses.length; i++) {
         let skeleton = poses[i].skeleton;
@@ -39,21 +39,23 @@ function drawSkeleton() {
             if (partA.score > 0.5) {
                 pose_layer.stroke(215, 123, 103);
                 pose_layer.strokeWeight(2);
+                pose_layer.noFill();
+
+                // let dSkeleton = dist(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
+                // let steps = 10;
+                // pose_layer.beginShape();
+                // vertex(partA.position.x, partA.position.y);
+
+                // for (let x = 0; x < steps; x += 1) {
+                //     let noisVal = map(noise(x), 0, 1, -10, 10);
+
+                //     vertex(partA.position.x + x * (dSkeleton / steps), partA.position.y + noisVal);
+                // }
+
+                // vertex(partB.position.x, partB.position.y);
+                // pose_layer.endShape();
                 pose_layer.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
             }
-        }
-    }
-}
-
-// A function to draw ellipses over the detected keypoints
-function drawFace() {
-    for (let i = 0; i < poses.length; i++) {
-        nose = poses[0].pose.nose;
-
-        if (nose.confidence > 0.5) {
-            pose_layer.noFill();
-            pose_layer.stroke(215, 123, 103);
-            pose_layer.ellipse(nose.x, nose.y, 100, 100);
         }
     }
 }

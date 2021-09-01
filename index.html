@@ -28,6 +28,9 @@
     <!-- css for grain params html gui -->
     <link rel="stylesheet" href="styles.css">
 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
 </head>
 
 <body>
@@ -50,7 +53,7 @@
 
 
     <div style="object-position:center">
-        <!-- <div id="introduction">
+        <div id="introduction">
             Hi there!
             <br><br>This is a virtual THEREMIN application.
             <br><br>The THEREMIN responds to your hand movements, so make sure to allow access to
@@ -70,15 +73,15 @@
 
             <br><br>
             <button type="button" class="btn" onclick="hideIntro()">OK, GOT IT!</button>
-        </div> -->
+        </div>
     </div>
 
     <div id="graincanvasContainer"></div>
 
     <!-- grain synthesis algorithm by Jacob Johnson https://github.com/j-t-johnson/granular-machine -->
-    <script src="grainsynth/grainmachine.js"></script>
+    <!-- <script src="grainsynth/grainmachine.js"></script> -->
 
-    <script src='trail.js'></script>
+    <!-- <script src='trail.js'></script> -->
 
     <div class="canvas">
         <script src="canvas.js"></script>
@@ -89,8 +92,8 @@
     <script src="gui.js"></script>
 
     <div id="video-bg">
-        <video controls controlsList="nodownload" width="700px" muted loop>
-            <source src="data/video/farmersspring25fpsFHD.mp4" type="video/mp4">
+        <video controls controlsList="nofullscreen nodownload" width="700px" autoplay muted loop>
+            <source src="data/video/farmersspring25fps_short.mp4" type="video/mp4">
         </video>
     </div>
 

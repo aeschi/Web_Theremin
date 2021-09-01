@@ -15,6 +15,11 @@ body {
 } */
 
 #video-bg {
+    margin-left: 26%;
+    margin-right: 24%;
+    padding-top: 0.5%;
+    padding-bottom: 0.3%;
+    background-color: rgb(109, 122, 175);
     margin-top: 10%;
     text-align: center;
 }
