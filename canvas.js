@@ -8,7 +8,7 @@ let synthVolume;
 
 let synth = new Tone.DuoSynth({
     harmonicity: 2,
-    vibratoAmount: 0.4,
+    // vibratoAmount: 0.05,
     voice0: {
         oscillator: {
             type: 'sine',
@@ -29,14 +29,15 @@ function preload() {
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
+    canvas.parent('canvas');
     canvas.position(0, 0);
 
     vidSize = windowWidth * 0.75;
     // farmerVid = createVideo(['data/video/farmersspring25fpsFHD.mp4'], vidLoad);
     // farmerVid.hide();
 
-    pose_layer = createGraphics(640, 360);
-    hands_layer = createGraphics(640, 360);
+    face_layer = createGraphics(canvas.width, canvas.height);
+    brush_layer = createGraphics(canvas.width, canvas.height);
 
     poseNetSetup();
 
@@ -52,14 +53,14 @@ function setup() {
 }
 
 function draw() {
-    // background(253, 245, 230, 20);
+    // background(253, 245, 230, 160);
     canvas.clear();
+    face_layer.clear();
 
     // draw video
     // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
 
-    // drawSkeleton();
-    // map hand movement to synth
+    // map hand movement to synth and draw keypoints
     if (poses.length > 0) {
         let handR = poses[0].pose.rightWrist;
         let handL = poses[0].pose.leftWrist;
@@ -67,53 +68,69 @@ function draw() {
         let d = 30;
 
         if (typeof handR.x !== 'undefined') {
-            hands_layer.clear();
-            // hands_layer.background(253, 245, 230, 20);
-            hands_layer.fill(215, 123, 103, 100);
-            hands_layer.noStroke();
+            brush_layer.clear();
+            brush_layer.fill(215, 123, 103, 100);
+            brush_layer.noStroke();
 
             if (handR.confidence > 0.05 && handL.confidence > 0.05) {
                 d = int(dist(handR.x, handR.y, handL.x, handL.y));
             }
 
             if (handR.confidence > 0.2) {
-                hands_layer.ellipse(handR.x, handR.y, d / 15);
-                hands_layer.ellipse(handL.x, handL.y, d / 15);
+                rightHandX = map(handR.x, 0, 640, 0, width);
+                rightHandY = map(handR.y, 0, 360, 0, height);
+
+                leftHandX = map(handL.x, 0, 640, 0, width);
+                leftHandY = map(handL.y, 0, 360, 0, height);
+
+                brush_layer.ellipse(rightHandX, rightHandY, d / 10);
+                brush_layer.ellipse(leftHandX, leftHandY, d / 10);
             }
 
-            if (nose.confidence > 0.5) {
-                hands_layer.noFill();
-                hands_layer.stroke(215, 123, 103);
+            // face
+            if (nose.confidence > 0.8) {
+                noseX = map(nose.x, 0, 640, 0, width);
+                noseY = map(nose.y, 0, 360, 0, height);
 
-                hands_layer.beginShape();
+                face_layer.noFill();
+                face_layer.stroke(215, 123, 103);
+
+                face_layer.beginShape();
                 for (let a = 0; a < TWO_PI; a += 0.02) {
                     let xoff = map(cos(a), -1, 1, 0, 2);
                     let yoff = map(sin(a), -1, 1, 0, 2);
-                    const r = map(noise(xoff, yoff, 0), 0, 1, 33, 40);
+                    const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
                     let x = r * cos(a);
                     let y = r * sin(a);
-                    vertex(x + nose.x, y + nose.y);
+                    vertex(x + noseX, y + noseY);
                 }
-                hands_layer.endShape(CLOSE);
+                face_layer.endShape(CLOSE);
+
+                face_layer.arc(noseX, noseY + 15, 40, 40, QUARTER_PI, HALF_PI + QUARTER_PI);
+
+                face_layer.noStroke();
+                face_layer.fill(215, 123, 103);
+                face_layer.ellipse(noseX - 13, noseY - 10, 3);
+                face_layer.ellipse(noseX + 13, noseY - 10, 3);
             }
 
-            // trigger synth
-            synth.triggerAttackRelease('C4', '0.1');
+            if (playing) {
+                // trigger synth
+                synth.triggerAttackRelease('C4', '0.1');
 
-            // Update oscillator frequency
-            frequency = map(handR.x, 0, 640, 440, 220);
-            synth.setNote(frequency);
+                // Update oscillator frequency
+                frequency = map(handR.x, 0, 640, 880, 220);
+                synth.setNote(frequency);
 
-            // Update oscillator volume
-            synthVolume = map(handL.y, 0, 360, 0, -24);
-            synth.volume.value = synthVolume;
+                // Update oscillator volume
+                synthVolume = map(handL.y, 0, 360, 0, -24);
+                synth.volume.value = synthVolume;
+            }
         }
     }
     // draw layers
-    let factor = width / hands_layer.width;
-    image(pose_layer, 0, (height - pose_layer.height) / 2, pose_layer.width, pose_layer.height);
-    image(hands_layer, 0, (height - hands_layer.height * factor) / 2, hands_layer.width * factor, hands_layer.height * factor);
-
+    image(face_layer, 0, 0);
+    image(brush_layer, 0, 0);
     // draw theremin illustration
     image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
 }

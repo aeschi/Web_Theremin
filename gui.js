@@ -34,11 +34,11 @@ const btnTheremin = instr.addButton({
 });
 
 btnTheremin.on('click', () => {
-    if (playing) {
-        synth.triggerRelease();
-    } else {
-        synth.triggerAttack();
-    }
+    // if (playing) {
+    //     Tone.Transport.start('+0.1');
+    // } else {
+    //     Tone.Transport.pause();
+    // }
     playing = !playing;
     console.log(playing);
 });
