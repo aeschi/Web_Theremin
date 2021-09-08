@@ -7,7 +7,7 @@ let frequency;
 let synthVolume;
 
 let synth = new Tone.DuoSynth({
-    harmonicity: 2,
+    harmonicity: 0.75,
     // vibratoAmount: 0.05,
     voice0: {
         oscillator: {
@@ -116,7 +116,7 @@ function draw() {
 
             if (playing) {
                 // trigger synth
-                synth.triggerAttackRelease('C4', '0.1');
+                synth.triggerAttackRelease('A4', '0.1');
 
                 // Update oscillator frequency
                 frequency = map(handR.x, 0, 640, 880, 220);
