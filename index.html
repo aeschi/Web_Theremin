@@ -35,54 +35,38 @@
 
 <body>
     <!-- show hide introduction -->
-    <script>
-        let isVisible = true;
-        let introductionText;
+    <script src="introduction.js"></script>
 
-        function hideIntro() {
-            introductionText = document.getElementById('introduction');
-            if (isVisible) {
-                introductionText.style.display = 'none';
-                isVisible = false;
-            } else if (!isVisible) {
-                introductionText.style.display = 'block';
-                isVisible = true;
-            }
-        }
-    </script>
+    <div id="introduction">
+        Hi there!
+        <br><br>This is a virtual THEREMIN application.
+        <br><br>The THEREMIN responds to your hand movements, so make sure to allow access to
+        your webcam. To be able to hear anything, you will have to turn on the sound with the '►
+        | ◼︎' button at the top right.
+        <br><br>Move your left hand up and done to change the volume. Move your right hand
+        through space to change the pitch.
+        <br><br>This application has two THEREMIN sounds. The more atmospheric 'GRANULAR
+        SYNTHESIS' one and the 'CLASSIC' sound.
+        <br><br>Try out different sources and play around with the grain settings to fully
+        explore the possible output for granular synthesis.
+        To explore the classic Theremin sound, click on the '► | ◼︎' button below THEREMIN
+        CLASSIC.
+        <br><br>
+        To use the two sounds together, activate both sounds by clicking their play
+        buttons.
 
-
-    <div style="object-position:center">
-        <div id="introduction">
-            Hi there!
-            <br><br>This is a virtual THEREMIN application.
-            <br><br>The THEREMIN responds to your hand movements, so make sure to allow access to
-            your webcam. To be able to hear anything, you will have to turn on the sound with the '►
-            | ◼︎' button at the top right.
-            <br><br>Move your left hand up and done to change the volume. Move your right hand
-            through space to change the pitch.
-            <br><br>This application has two THEREMIN sounds. The more atmospheric 'GRANULAR
-            SYNTHESIS' one and the 'CLASSIC' sound.
-            <br><br>Try out different sources and play around with the grain settings to fully
-            explore the possible output for granular synthesis.
-            To explore the classic Theremin sound, click on the '► | ◼︎' button below THEREMIN
-            CLASSIC.
-            <br><br>
-            To use the two sounds together, activate both sounds by clicking their play
-            buttons.
-
-            <br><br>
-            <button type="button" class="btn" onclick="hideIntro()">OK, GOT IT!</button>
-        </div>
+        <br><br>
+        <button type="button" class="btn" onclick="hideIntro()">OK, GOT IT!</button>
     </div>
 
-    <div id="graincanvasContainer"></div>
-
+    <!-- <div id="graincanvasContainer"></div> -->
     <!-- grain synthesis algorithm by Jacob Johnson https://github.com/j-t-johnson/granular-machine -->
     <!-- <script src="grainsynth/grainmachine.js"></script> -->
 
+
     <div id="video-bg">
-        <video controls controlsList="nofullscreen nodownload" width="40%" autoplay muted loop>
+        <video id="video1" controls controlsList="nofullscreen nodownload" width="40%" autoplay
+            muted loop>
             <source src="data/video/farmersspring25fps_short.mp4" type="video/mp4">
         </video>
     </div>
