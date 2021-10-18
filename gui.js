@@ -1,17 +1,12 @@
 // GUI for grain params
 // Documentation: https://cocopon.github.io/tweakpane/input.html
+
 // Video Helper Function
 let myVideo = document.getElementById('video1');
 let startTime = 0;
 let endTime = 10;
 
 const PARAMS = {
-    // source: 0,
-    // attack: 0.3,
-    // decay: 0.3,
-    // density: 35,
-    // start: 0,
-    // end: 0,
     startTime: startTime,
     endTime: endTime,
 };

@@ -48,8 +48,6 @@ function setup() {
         thereminWidth = 1000;
         thereminHeight = 1000 * 0.78;
     }
-
-    // initAudio();
 }
 
 function draw() {
@@ -72,10 +70,12 @@ function draw() {
             brush_layer.fill(215, 123, 103, 100);
             brush_layer.noStroke();
 
+            // size of hand ellipse based on distance between hands
             if (handR.confidence > 0.05 && handL.confidence > 0.05) {
                 d = int(dist(handR.x, handR.y, handL.x, handL.y));
             }
 
+            // draw hands
             if (handR.confidence > 0.2) {
                 rightHandX = map(handR.x, 0, 640, 0, width);
                 rightHandY = map(handR.y, 0, 360, 0, height);
@@ -87,7 +87,7 @@ function draw() {
                 brush_layer.ellipse(leftHandX, leftHandY, d / 10);
             }
 
-            // face
+            // draw face
             if (nose.confidence > 0.8) {
                 noseX = map(nose.x, 0, 640, 0, width);
                 noseY = map(nose.y, 0, 360, 0, height);
@@ -114,6 +114,7 @@ function draw() {
                 face_layer.ellipse(noseX + 13, noseY - 10, 3);
             }
 
+            // play Theremin sound
             if (playing) {
                 // trigger synth
                 synth.triggerAttackRelease('A3', '0.1');
@@ -128,13 +129,16 @@ function draw() {
             }
         }
     }
+
     // draw layers
     image(face_layer, 0, 0);
     image(brush_layer, 0, 0);
+
     // draw theremin illustration
     image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
 }
 
+// werden alle nicht verwendet aktuell
 function drawFace() {
     hands_layer.translate(nose.x, nose.y);
 
