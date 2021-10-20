@@ -31,14 +31,6 @@ const player = new Tone.Player({
     autostart: false,
 }).toDestination();
 
-const reverb = new Tone.Reverb().toDestination();
-
-const player = new Tone.Player({
-    url: 'data/music/Theremin_Begleitung_Theremin_2-5.wav',
-    loop: true,
-    autostart: false,
-}).toDestination();
-
 let detuneMaxValue = 100;
 let playbackRate = 1;
 
@@ -49,7 +41,7 @@ gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
     gp.grainSize = 0.2
     gp.overlap = 0.02
     gp.loop = true;
-  }).toMaster()
+  }).toDestination()
 
 let playing = false;
 
@@ -164,7 +156,7 @@ function draw() {
             if(grainPlaying){
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
                 const currPbr = map(handL.y, 0, height, 0, playbackRate)
-                // console.log("currPbr:", currPbr)
+                console.log("currPbr:", currPbr)
                 gp.playbackRate = Math.abs(currPbr)
 
                 // right hand x position controls amount of detuning. detune maximum set in GUI

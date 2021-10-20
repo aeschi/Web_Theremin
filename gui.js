@@ -9,6 +9,11 @@ let endTime = 10;
 const PARAMS = {
     startTime: startTime,
     endTime: endTime,
+    source: 0, //sample file number in GUI drop down list
+    grainSize: 0.2, //in seconds
+    overlap: 0, //in seconds
+    detune: 100, // detuning in cents, 100 cent = 1 semitone
+    playbackrate: 1 //playback rate factor
 };
 
 console.log(synth.volume.value);
@@ -73,7 +78,7 @@ SourceInput.on('change', function (ev) {
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
-          }).toMaster();
+          }).toDestination();
           grainPlaying = false; 
     }else if(grainSample == 1){
         gp.stop();
@@ -83,7 +88,7 @@ SourceInput.on('change', function (ev) {
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
-          }).toMaster();
+          }).toDestination();
           grainPlaying = false;    
     } else if(grainSample == 2){
         gp.stop();
@@ -93,7 +98,7 @@ SourceInput.on('change', function (ev) {
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
-          }).toMaster();
+          }).toDestination();
           grainPlaying = false;    
     } 
    
