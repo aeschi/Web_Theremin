@@ -1,21 +1,12 @@
 // GUI for grain params
 // Documentation: https://cocopon.github.io/tweakpane/input.html
+
 // Video Helper Function
 let myVideo = document.getElementById('video1');
 let startTime = 0;
 let endTime = 10;
 
 const PARAMS = {
-     source: 0, //sample file number in GUI drop down list
-     grainSize: 0.2, //in seconds
-     overlap: 0, //in seconds
-     detune: 100, // detuning in cents, 100 cent = 1 semitone
-     playbackrate: 1, //playback rate factor
-    // attack: 0.3,
-    // decay: 0.3,
-    // density: 35,
-    // start: 0,
-    // end: 0,
     startTime: startTime,
     endTime: endTime,
 };
@@ -24,6 +15,29 @@ console.log(synth.volume.value);
 const pane = new Tweakpane({
     title: 'VIRTUAL THEREMIN SOUNDS',
     expanded: true,
+});
+
+const btnExample = pane.addButton({
+    title: '► | ◼︎',
+    label: 'example',
+});
+
+btnExample.on('click', () => {
+    if (player.state == 'stopped') {
+        player.start();
+    } else if (player.state == 'started') {
+        player.stop('+0.3');
+    }
+});
+
+const btnEffect = pane.addButton({
+    title: '► | ◼︎',
+    label: 'reverb',
+});
+
+btnEffect.on('click', () => {
+    player.connect(reverb);
+    player.start();
 });
 
 pane.addSeparator();
