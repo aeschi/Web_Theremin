@@ -128,7 +128,7 @@ maxDetune.on('change', function (ev) {
     detuneMaxValue = ev.value;
 });
 
-const changePBR = f.addInput(PARAMS, 'playbackrate', { min: 0, max: 50, step: 0.1 });
+const changePBR = f.addInput(PARAMS, 'playbackrate', { min: 0.1, max: 50, step: 0.1 });
 changePBR.on('change', function (ev) {
     playbackRate = ev.value;
 });

@@ -156,7 +156,7 @@ function draw() {
             if(grainPlaying){
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
                 const currPbr = map(handL.y, 0, height, 0, playbackRate)
-                console.log("currPbr:", currPbr)
+                //console.log("handL.y", handL.y," playback rate " , playbackRate, " curr pbr ", currPbr)
                 gp.playbackRate = Math.abs(currPbr)
 
                 // right hand x position controls amount of detuning. detune maximum set in GUI
