@@ -58,19 +58,19 @@ const btnGranular = gs.addButton({
 
 
 btnGranular.on('click', () => {
-    if(grainPlaying){ 
+    if (grainPlaying) {
         grainPlaying = false;
         gp.stop();
-    }else{ 
+    } else {
         grainPlaying = true;
         gp.start();
     }
 });
 
-const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2} });
+const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 } });
 SourceInput.on('change', function (ev) {
     grainSample = ev.value;
-    if(grainSample == 0){
+    if (grainSample == 0) {
         gp.stop();
         //gp.dispose();
         /*
@@ -81,12 +81,14 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
+        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
             console.log("loaded");
-            });
+        });
+        if (sampleBuffer.loaded) {
             gp.buffer = sampleBuffer;
-          grainPlaying = false; 
-    }else if(grainSample == 1){
+        }
+        grainPlaying = false;
+    } else if (grainSample == 1) {
         gp.stop();
         /*gp.dispose();
         gp = new Tone.GrainPlayer("grainsynth/samples/audio/guitar.wav", function() {
@@ -96,12 +98,14 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
+        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
             console.log("loaded");
-            });
+        });
+        if (sampleBuffer.loaded) {
             gp.buffer = sampleBuffer;
-          grainPlaying = false;    
-    } else if(grainSample == 2){
+        }
+        grainPlaying = false;
+    } else if (grainSample == 2) {
         gp.stop();
         /*gp.dispose();
         gp = new Tone.GrainPlayer("grainsynth/samples/audio/piano+spaceecho.mp3", function() {
@@ -111,13 +115,15 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
+        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
             console.log("loaded");
-            });
+        });
+        if (sampleBuffer.loaded) {
             gp.buffer = sampleBuffer;
-          grainPlaying = false;    
-    } 
-   
+        }
+        grainPlaying = false;
+    }
+
 });
 
 
@@ -128,7 +134,7 @@ const f = gs.addFolder({
 
 const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 2, step: 0.01 });
 attackInput.on('change', function (ev) {
-    gS = parseFloat(ev.value.toFixed(2)); 
+    gS = parseFloat(ev.value.toFixed(2));
     gp.grainSize = gS;
 });
 
@@ -184,7 +190,7 @@ btnGranular.on('click', async () => {
     grainGain.connect(ctx.destination);
     bufferSwitch(grainSample);
     grainPlaying = true;*/
-    /*
+/*
 });
 
 */
