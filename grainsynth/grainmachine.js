@@ -23,9 +23,10 @@ var posX, posY;
 ////////////////////////////////////////////////////////////////////////////////
 
 //initialize grain synth
-function init(audioCtx) {
+function init() {
     //web audio setup
-    ctx = audioCtx;
+    //ctx = audioCtx;
+    ctx = Tone.getContext().rawContext;
 
     //master volume
 
@@ -57,16 +58,16 @@ function grains(pos, pitch) {
     var verbLevel = ctx.createGain();
     var len, factor, position, randFactor;
 
+    // MAKING THE ENVELOPE
     contour.gain.setValueAtTime(0, ctx.currentTime);
     contour.gain.linearRampToValueAtTime(0.6 * rand(0.5, 1), ctx.currentTime + att);
     contour.gain.linearRampToValueAtTime(0, ctx.currentTime + (att + dec));
 
-    contour.connect(verbLevel);
+    //contour.connect(verbLevel);
     contour.connect(grainGain);
 
-    verbLevel.gain.setValueAtTime(0.6, ctx.currentTime);
-
-    verbLevel.connect(grainGain);
+    //verbLevel.gain.setValueAtTime(0.6, ctx.currentTime);
+    //verbLevel.connect(grainGain);
 
     var gRate = 5.5 * (0.8 - pitch / window.innerHeight) + 0.5;
 
