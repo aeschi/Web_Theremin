@@ -13,7 +13,7 @@ const PARAMS = {
     grainSize: 0.2, //in seconds
     overlap: 0, //in seconds
     detune: 100, // detuning in cents, 100 cent = 1 semitone
-    playbackrate: 1 //playback rate factor
+    playbackrate: 1, //playback rate factor
 };
 
 console.log(synth.volume.value);
@@ -22,30 +22,28 @@ const pane = new Tweakpane({
     expanded: true,
 });
 
-const btnExample = pane.addButton({
-    title: '► | ◼︎',
-    label: 'example',
-});
-
-btnExample.on('click', () => {
-    if (player.state == 'stopped') {
-        player.start();
-    } else if (player.state == 'started') {
-        player.stop('+0.3');
-    }
-});
-
-const btnEffect = pane.addButton({
-    title: '► | ◼︎',
-    label: 'reverb',
-});
-
-btnEffect.on('click', () => {
-    player.connect(reverb);
-    player.start();
-});
-
+// CLASSIC THEREMIN
 pane.addSeparator();
+
+const instr = pane.addFolder({
+    title: 'THEREMIN CLASSIC',
+});
+
+const btnTheremin = instr.addButton({
+    title: '► | ◼︎',
+    label: 'sound',
+});
+
+btnTheremin.on('click', () => {
+    // if (playing) {
+    //     Tone.Transport.start('+0.1');
+    // } else {
+    //     Tone.Transport.pause();
+    // }
+    playing = !playing;
+});
+
+// GRANUALAR
 
 const gs = pane.addFolder({
     title: 'THEREMIN GRANULAR SYNTHESIS',
@@ -55,7 +53,6 @@ const btnGranular = gs.addButton({
     title: '► | ◼︎',
     label: 'sound',
 });
-
 
 btnGranular.on('click', () => {
     if (grainPlaying) {
@@ -67,14 +64,14 @@ btnGranular.on('click', () => {
     }
 });
 
-const sampleBuffer1 = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
-    console.log("loaded");
+const sampleBuffer1 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/SH-el.mp3', () => {
+    console.log('loaded');
 });
-const sampleBuffer2 = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
-    console.log("loaded");
+const sampleBuffer2 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/guitar.wav', () => {
+    console.log('loaded');
 });
-const sampleBuffer3 = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
-    console.log("loaded");
+const sampleBuffer3 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/piano+spaceecho.mp3', () => {
+    console.log('loaded');
 });
 const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 } });
 SourceInput.on('change', function (ev) {
@@ -90,7 +87,7 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-         /*
+        /*
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
             console.log("loaded");
         });
@@ -107,7 +104,7 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-         /*
+        /*
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
             console.log("loaded");
         });
@@ -124,18 +121,15 @@ SourceInput.on('change', function (ev) {
             gp.loop = true;
           }).toDestination();
           */
-         /*
+        /*
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
             console.log("loaded");
         });
         */
         gp.buffer = sampleBuffer3;
         grainPlaying = false;
-
     }
-
 });
-
 
 const f = gs.addFolder({
     title: 'GRAIN SETTINGS',
@@ -152,7 +146,6 @@ const decayInput = f.addInput(PARAMS, 'overlap', { min: 0.0, max: 1, step: 0.01 
 decayInput.on('change', function (ev) {
     oL = parseFloat(ev.value.toFixed(2));
     gp.overlap = oL;
-
 });
 
 const maxDetune = f.addInput(PARAMS, 'detune', { min: 0, max: 800, step: 10 });
@@ -204,28 +197,35 @@ btnGranular.on('click', async () => {
 });
 
 */
-pane.addSeparator();
 
-const instr = pane.addFolder({
-    title: 'THEREMIN CLASSIC',
+const music = pane.addFolder({
+    title: 'MUSIC',
 });
 
-const btnTheremin = instr.addButton({
+const btnExample = music.addButton({
     title: '► | ◼︎',
-    label: 'sound',
+    label: 'example',
 });
 
-btnTheremin.on('click', () => {
-    // if (playing) {
-    //     Tone.Transport.start('+0.1');
-    // } else {
-    //     Tone.Transport.pause();
-    // }
-    playing = !playing;
+btnExample.on('click', () => {
+    if (player.state == 'stopped') {
+        player.start();
+    } else if (player.state == 'started') {
+        player.stop('+0.3');
+    }
 });
 
+const btnEffect = music.addButton({
+    title: '► | ◼︎',
+    label: 'reverb',
+});
 
+btnEffect.on('click', () => {
+    player.connect(reverb);
+    player.start();
+});
 
+// VIDEO SETTINGS
 pane.addSeparator();
 const vid = pane.addFolder({
     title: 'VIDEO',
@@ -269,7 +269,7 @@ const endInput = vid
 pane.addSeparator();
 const showInstructions = pane.addButton({ title: 'show instructions' });
 showInstructions.on('click', () => {
-    hideIntro();
+    tour.start();
 });
 
 function playPause() {

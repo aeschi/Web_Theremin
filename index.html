@@ -20,13 +20,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.32/Tone.min.js"
         type="text/javascript"></script>
 
+    <!-- shepard.js for onboarding tour -->
+    <!-- <link rel="stylesheet" href="shepherd-theme-default.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
+
     <!-- font-family -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
     </style>
 
     <!-- css for grain params html gui -->
     <link rel="stylesheet" href="styles.css">
+
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -34,35 +39,7 @@
 </head>
 
 <body>
-    <!-- show hide introduction -->
     <script src="introduction.js"></script>
-
-    <div id="introduction">
-        Hi there!
-        <br><br>This is a virtual THEREMIN application.
-        <br><br>The THEREMIN responds to your hand movements, so make sure to allow access to
-        your webcam. To be able to hear anything, you will have to turn on the sound with the '►
-        | ◼︎' button at the top right.
-        <br><br>Move your left hand up and done to change the volume. Move your right hand
-        through space to change the pitch.
-        <br><br>This application has two THEREMIN sounds. The more atmospheric 'GRANULAR
-        SYNTHESIS' one and the 'CLASSIC' sound.
-        <br><br>Try out different sources and play around with the grain settings to fully
-        explore the possible output for granular synthesis.
-        To explore the classic Theremin sound, click on the '► | ◼︎' button below THEREMIN
-        CLASSIC.
-        <br><br>
-        To use the two sounds together, activate both sounds by clicking their play
-        buttons.
-
-        <br><br>
-        <button type="button" class="btn" onclick="hideIntro()">OK, GOT IT!</button>
-    </div>
-
-    <!-- <div id="graincanvasContainer"></div> -->
-    <!-- grain synthesis algorithm by Jacob Johnson https://github.com/j-t-johnson/granular-machine -->
-    <!-- <script src="grainsynth/grainmachine.js"></script> -->
-  
 
     <div id="video-bg">
         <video id="video1" controls controlsList="nofullscreen nodownload" width="40%" autoplay
@@ -76,7 +53,10 @@
     </div>
 
     <script src="positionTracking.js"></script>
-    <script src="gui.js"></script>
+
+    <div id="gui">
+        <script src="gui.js"></script>
+    </div>
 
 </body>
 
