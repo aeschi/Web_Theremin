@@ -72,33 +72,49 @@ SourceInput.on('change', function (ev) {
     grainSample = ev.value;
     if(grainSample == 0){
         gp.stop();
-        gp.dispose();
+        //gp.dispose();
+        /*
         gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
             console.log("GrainPlayer loaded!")
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
           }).toDestination();
+          */
+          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
+            console.log("loaded");
+            });
+            gp.buffer = sampleBuffer;
           grainPlaying = false; 
     }else if(grainSample == 1){
         gp.stop();
-        gp.dispose();
+        /*gp.dispose();
         gp = new Tone.GrainPlayer("grainsynth/samples/audio/guitar.wav", function() {
             console.log("GrainPlayer loaded!")
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
           }).toDestination();
+          */
+          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
+            console.log("loaded");
+            });
+            gp.buffer = sampleBuffer;
           grainPlaying = false;    
     } else if(grainSample == 2){
         gp.stop();
-        gp.dispose();
+        /*gp.dispose();
         gp = new Tone.GrainPlayer("grainsynth/samples/audio/piano+spaceecho.mp3", function() {
             console.log("GrainPlayer loaded!")
             console.log("gp.playbackRate:", gp.playbackRate)
             console.log("gp.detune", gp.detune)
             gp.loop = true;
           }).toDestination();
+          */
+          const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
+            console.log("loaded");
+            });
+            gp.buffer = sampleBuffer;
           grainPlaying = false;    
     } 
    
