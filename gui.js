@@ -17,6 +17,29 @@ const pane = new Tweakpane({
     expanded: true,
 });
 
+const btnExample = pane.addButton({
+    title: '► | ◼︎',
+    label: 'example',
+});
+
+btnExample.on('click', () => {
+    if (player.state == 'stopped') {
+        player.start();
+    } else if (player.state == 'started') {
+        player.stop('+0.3');
+    }
+});
+
+const btnEffect = pane.addButton({
+    title: '► | ◼︎',
+    label: 'reverb',
+});
+
+btnEffect.on('click', () => {
+    player.connect(reverb);
+    player.start();
+});
+
 pane.addSeparator();
 
 const gs = pane.addFolder({

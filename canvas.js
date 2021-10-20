@@ -6,6 +6,8 @@ let vidSize;
 let frequency;
 let synthVolume;
 
+let thereminMusic;
+
 let synth = new Tone.DuoSynth({
     harmonicity: 0.4,
     vibratoAmount: 0.05,
@@ -19,12 +21,21 @@ let synth = new Tone.DuoSynth({
             type: 'sine',
         },
     },
-}).toMaster();
+}).toDestination();
+
+const reverb = new Tone.Reverb().toDestination();
+
+const player = new Tone.Player({
+    url: 'data/music/Theremin_Begleitung_Theremin_2-5.wav',
+    loop: true,
+    autostart: false,
+}).toDestination();
 
 let playing = false;
 
 function preload() {
     thereminImg = loadImage('data/image/theremin.png');
+    // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
 }
 
 function setup() {
