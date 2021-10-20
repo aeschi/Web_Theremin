@@ -84,9 +84,7 @@ SourceInput.on('change', function (ev) {
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
             console.log("loaded");
         });
-        if (sampleBuffer.loaded) {
-            gp.buffer = sampleBuffer;
-        }
+        gp.buffer = sampleBuffer;
         grainPlaying = false;
     } else if (grainSample == 1) {
         gp.stop();
@@ -101,9 +99,7 @@ SourceInput.on('change', function (ev) {
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
             console.log("loaded");
         });
-        if (sampleBuffer.loaded) {
-            gp.buffer = sampleBuffer;
-        }
+        gp.buffer = sampleBuffer;
         grainPlaying = false;
     } else if (grainSample == 2) {
         gp.stop();
@@ -118,10 +114,9 @@ SourceInput.on('change', function (ev) {
         const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
             console.log("loaded");
         });
-        if (sampleBuffer.loaded) {
-            gp.buffer = sampleBuffer;
-        }
+        gp.buffer = sampleBuffer;
         grainPlaying = false;
+
     }
 
 });
