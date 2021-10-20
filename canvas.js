@@ -21,7 +21,29 @@ let synth = new Tone.DuoSynth({
     },
 }).toMaster();
 
+const reverb = new Tone.Reverb().toDestination();
+
+const player = new Tone.Player({
+    url: 'data/music/Theremin_Begleitung_Theremin_2-5.wav',
+    loop: true,
+    autostart: false,
+}).toDestination();
+
+let detuneMaxValue = 100;
+let playbackRate = 1;
+
+gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
+    console.log("GrainPlayer loaded!")
+    console.log("gp.playbackRate:", gp.playbackRate)
+    console.log("gp.detune", gp.detune)
+    gp.grainSize = 0.2
+    gp.overlap = 0.02
+    gp.loop = true;
+  }).toMaster()
+
 let playing = false;
+
+let grainPlaying = false;
 
 function preload() {
     thereminImg = loadImage('data/image/theremin.png');
@@ -50,6 +72,9 @@ function setup() {
     }
 
     // initAudio();
+    
+   // grainSample = 0; // 0 = synthetic sound, 2 = guitar sound, 3 = piano with echo sound
+   // bufferSwitch(grainSample);
 }
 
 function draw() {
@@ -125,6 +150,18 @@ function draw() {
                 // Update oscillator volume
                 synthVolume = map(handL.y, 0, 360, 0, -24);
                 synth.volume.value = synthVolume;
+            }
+
+            if(grainPlaying){
+                //left hand height controls playbackrate, maximum playbackrate set in GUI
+                const currPbr = map(handL.y, 0, height, 0, playbackRate)
+                // console.log("currPbr:", currPbr)
+                gp.playbackRate = Math.abs(currPbr)
+
+                // right hand x position controls amount of detuning. detune maximum set in GUI
+                const currDetune = map(handR.x, 0, width, -detuneMaxValue, detuneMaxValue)
+                // console.log("currDetune:", currDetune)
+                gp.detune = currDetune;
             }
         }
     }
