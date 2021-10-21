@@ -38,10 +38,10 @@ gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
     console.log("GrainPlayer loaded!")
     console.log("gp.playbackRate:", gp.playbackRate)
     console.log("gp.detune", gp.detune)
-    gp.grainSize = 0.2
+    gp.grainSize = 0.01
     gp.overlap = 0.02
     gp.loop = true;
-  }).toDestination()
+  }).toDestination();
 
 let playing = false;
 
@@ -202,7 +202,7 @@ function vidLoad() {
     farmerVid.volume(0);
     farmerVid.size(vidSize);
 }
-
+/*
 function initAudio() {
     //create audio context for all theremin voices
     ctx = new (AudioContext || webkitAudioContext)();
@@ -221,7 +221,7 @@ function initAudio() {
     gainNode.gain.value = 0.5;
     var soundPlaying = false;
 }
-
+*/
 // pose recorder with timeline - can be saved to json file
 // https://github.com/osteele/p5pose-recorder
 // https://osteele.github.io/p5pose-recorder/

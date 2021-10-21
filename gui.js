@@ -35,12 +35,16 @@ const btnTheremin = instr.addButton({
 });
 
 btnTheremin.on('click', () => {
-    // if (playing) {
-    //     Tone.Transport.start('+0.1');
-    // } else {
-    //     Tone.Transport.pause();
-    // }
-    playing = !playing;
+    if (playing) {
+        Tone.getContext().rawContext.suspend();
+        playing = false;
+    } else {
+        Tone.start();
+        playing = true;
+    }
+
+
+
 });
 
 // GRANUALAR
@@ -55,13 +59,28 @@ const btnGranular = gs.addButton({
 });
 
 btnGranular.on('click', () => {
-    if (grainPlaying) {
-        grainPlaying = false;
-        gp.stop();
-    } else {
-        grainPlaying = true;
-        gp.start();
+    if (playing) {
+        if (grainPlaying) {
+            grainPlaying = false;
+            gp.stop();
+        }
+        else {
+            grainPlaying = true;
+            gp.start();
+        }
     }
+    else {
+        if (grainPlaying) {
+            grainPlaying = false;
+            gp.stop();
+        }
+        else {
+            Tone.start();
+            grainPlaying = true;
+            gp.start();
+        }
+    }
+
 });
 
 const sampleBuffer1 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/SH-el.mp3', () => {
@@ -136,7 +155,7 @@ const f = gs.addFolder({
     expanded: true,
 });
 
-const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 2, step: 0.01 });
+const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 3, step: 0.01 });
 attackInput.on('change', function (ev) {
     gS = parseFloat(ev.value.toFixed(2));
     gp.grainSize = gS;
