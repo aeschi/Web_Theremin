@@ -23,6 +23,16 @@ let synth = new Tone.DuoSynth({
     },
 }).toDestination();
 
+const sampler = new Tone.Sampler({
+    urls: {
+        C4: 'data/music/sine-wave-c4.wav',
+        'G#4': 'data/music/sine-wave-gs4.wav',
+        E4: 'data/music/sine-wave-e4.wav',
+    },
+    release: 1,
+    // baseUrl: 'https://tonejs.github.io/audio/salamander/',
+}).toDestination();
+
 const reverb = new Tone.Reverb().toDestination();
 
 const player = new Tone.Player({
@@ -34,14 +44,14 @@ const player = new Tone.Player({
 let detuneMaxValue = 100;
 let playbackRate = 1;
 
-gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
-    console.log("GrainPlayer loaded!")
-    console.log("gp.playbackRate:", gp.playbackRate)
-    console.log("gp.detune", gp.detune)
-    gp.grainSize = 0.01
-    gp.overlap = 0.02
+gp = new Tone.GrainPlayer('grainsynth/samples/audio/SH-el.mp3', function () {
+    console.log('GrainPlayer loaded!');
+    console.log('gp.playbackRate:', gp.playbackRate);
+    console.log('gp.detune', gp.detune);
+    gp.grainSize = 0.01;
+    gp.overlap = 0.02;
     gp.loop = true;
-  }).toDestination();
+}).toDestination();
 
 let playing = false;
 
@@ -142,25 +152,47 @@ function draw() {
             // play Theremin sound
             if (playing) {
                 // trigger synth
-                synth.triggerAttackRelease('A3', '0.1');
+                // synth.triggerAttackRelease('A3', '0.1');
 
                 // Update oscillator frequency
                 frequency = map(handR.x, 0, 640, 880, 220);
                 synth.setNote(frequency);
 
+                if (frequency > 493 && frequency < 523) {
+                    sampler.triggerAttackRelease('B4', 0.1);
+                } else if (frequency > 440 && frequency < 466) {
+                    sampler.triggerAttackRelease('A4', 0.1);
+                    // } else if (frequency > 415 && frequency < 440) {
+                    //     sampler.triggerAttackRelease('G#4', 0.1);
+                } else if (frequency > 392 && frequency < 415) {
+                    sampler.triggerAttackRelease('G4', 0.1);
+                    // } else if (frequency > 370 && frequency < 392) {
+                    //     sampler.triggerAttackRelease('F#4', 0.1);
+                } else if (frequency > 349 && frequency < 370) {
+                    sampler.triggerAttackRelease('F4', 0.1);
+                } else if (frequency > 329 && frequency < 249) {
+                    sampler.triggerAttackRelease('E4', 0.1);
+                } else if (frequency > 294 && frequency < 311) {
+                    sampler.triggerAttackRelease('D4', 0.1);
+                } else if (frequency > 262 && frequency < 277) {
+                    sampler.triggerAttackRelease('C4', 0.1);
+                }
+
                 // Update oscillator volume
                 synthVolume = map(handL.y, 0, 360, 0, -24);
-                synth.volume.value = synthVolume;
+                // synth.volume.value = synthVolume;
+
+                sampler.volume.value = synthVolume;
             }
 
-            if(grainPlaying){
+            if (grainPlaying) {
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
-                const currPbr = map(handL.y, 0, height, 0, playbackRate)
+                const currPbr = map(handL.y, 0, height, 0, playbackRate);
                 //console.log("handL.y", handL.y," playback rate " , playbackRate, " curr pbr ", currPbr)
-                gp.playbackRate = Math.abs(currPbr)
+                gp.playbackRate = Math.abs(currPbr);
 
                 // right hand x position controls amount of detuning. detune maximum set in GUI
-                const currDetune = map(handR.x, 0, width, -detuneMaxValue, detuneMaxValue)
+                const currDetune = map(handR.x, 0, width, -detuneMaxValue, detuneMaxValue);
                 // console.log("currDetune:", currDetune)
                 gp.detune = currDetune;
             }

@@ -42,9 +42,6 @@ btnTheremin.on('click', () => {
         Tone.start();
         playing = true;
     }
-
-
-
 });
 
 // GRANUALAR
@@ -63,24 +60,20 @@ btnGranular.on('click', () => {
         if (grainPlaying) {
             grainPlaying = false;
             gp.stop();
-        }
-        else {
+        } else {
             grainPlaying = true;
             gp.start();
         }
-    }
-    else {
+    } else {
         if (grainPlaying) {
             grainPlaying = false;
             gp.stop();
-        }
-        else {
+        } else {
             Tone.start();
             grainPlaying = true;
             gp.start();
         }
     }
-
 });
 
 const sampleBuffer1 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/SH-el.mp3', () => {
@@ -216,6 +209,8 @@ btnGranular.on('click', async () => {
 });
 
 */
+
+// Play Music
 
 const music = pane.addFolder({
     title: 'MUSIC',

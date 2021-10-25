@@ -26,6 +26,29 @@ body {
     z-index: 0;
 }
 
+/* .shepherd-element.shepherd-theme-default {
+    margin-bottom: 1px;
+    margin-left: 1px;
+    /* position: block; */
+/* vertical-align: bottom; 
+} */
+
+.shepherd-element.shepherd-theme-default .shepherd-content {
+    border-radius: 1px;
+    position: relative;
+    font-family: inherit;
+    text-align: left;
+    background: hsla(0, 9%, 42%, 0.1);
+    color: #444;
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+
+.shepherd-element.shepherd-theme-default .shepherd-content .shepherd-button {
+    background: rgb(109, 122, 175);
+    color: #fff;
+}
+
 /* GUI style */
 :root {
     --tp-base-background-color: hsla(0, 0%, 0%, 0.2);
