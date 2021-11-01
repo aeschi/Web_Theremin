@@ -8,7 +8,7 @@ let synthVolume;
 
 let thereminMusic;
 
-let noteDuration = 1;
+let noteDuration = 0.5;
 
 let synth = new Tone.DuoSynth({
     harmonicity: 0.4,
@@ -27,9 +27,9 @@ let synth = new Tone.DuoSynth({
 
 const sampler = new Tone.Sampler({
     urls: {
-        C4: 'data/music/c4.mp3',
-        'G#4': 'data/music/g-4.mp3',
-        E4: 'data/music/e4.mp3',
+        C4: 'data/music/sine-wave-c4.wav',
+        'G#4': 'data/music/sine-wave-e4.wav',
+        E4: 'data/music/sine-wave-gs4.wav',
     },
     release: 1,
     // baseUrl: 'https://tonejs.github.io/audio/salamander/',
@@ -91,7 +91,6 @@ function draw() {
     // background(253, 245, 230, 160);
     canvas.clear();
     face_layer.clear();
-
 
     // draw video
     // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
@@ -170,18 +169,19 @@ function draw() {
 
             if (grainPlaying) {
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
-                const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player 
-               // console.log("handl y "+handL.y);
-               //console.log("gp pbr "+playbackrate);
-               // console.log("curr pbr "+currPbr);
-                if(currPbr < 0.001 ){
-                    console.log("handL.y", handL.y," playback rate " , playbackrate, " curr pbr ", currPbr)
-                    gp.playbackRate = 0.001;    
+                const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
+                // console.log("handl y "+handL.y);
+                //console.log("gp pbr "+playbackrate);
+                // console.log("curr pbr "+currPbr);
+                if (currPbr < 0.001) {
+                    console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+                    gp.playbackRate = 0.001;
+                } else {
+                    gp.playbackRate = currPbr;
                 }
-                else { gp.playbackRate = currPbr; }               
                 // right hand x position controls amount of detuning. detune maximum set in GUI
                 const currDetune = map(handR.x, 0, video.width, -detuneMaxValue, detuneMaxValue);
-               //  console.log("currDetune:", currDetune)
+                //  console.log("currDetune:", currDetune)
                 gp.detune = currDetune;
             }
         }
@@ -250,7 +250,6 @@ function vidLoad() {
     farmerVid.volume(0);
     farmerVid.size(vidSize);
 }
-
 
 /*
 function initAudio() {
