@@ -42,7 +42,7 @@ const player = new Tone.Player({
 }).toDestination();
 
 let detuneMaxValue = 100;
-let playbackRate = 1;
+let playbackrate = 1;
 
 gp = new Tone.GrainPlayer('grainsynth/samples/audio/SH-el.mp3', function () {
     console.log('GrainPlayer loaded!');
@@ -89,6 +89,7 @@ function draw() {
     // background(253, 245, 230, 160);
     canvas.clear();
     face_layer.clear();
+
 
     // draw video
     // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
@@ -187,13 +188,18 @@ function draw() {
 
             if (grainPlaying) {
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
-                const currPbr = map(handL.y, 0, height, 0, playbackRate);
-                //console.log("handL.y", handL.y," playback rate " , playbackRate, " curr pbr ", currPbr)
-                gp.playbackRate = Math.abs(currPbr);
-
+                const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player 
+               // console.log("handl y "+handL.y);
+               //console.log("gp pbr "+playbackrate);
+               // console.log("curr pbr "+currPbr);
+                if(currPbr < 0.001 ){
+                    console.log("handL.y", handL.y," playback rate " , playbackrate, " curr pbr ", currPbr)
+                    gp.playbackRate = 0.001;    
+                }
+                else { gp.playbackRate = currPbr; }               
                 // right hand x position controls amount of detuning. detune maximum set in GUI
-                const currDetune = map(handR.x, 0, width, -detuneMaxValue, detuneMaxValue);
-                // console.log("currDetune:", currDetune)
+                const currDetune = map(handR.x, 0, video.width, -detuneMaxValue, detuneMaxValue);
+               //  console.log("currDetune:", currDetune)
                 gp.detune = currDetune;
             }
         }
@@ -234,6 +240,8 @@ function vidLoad() {
     farmerVid.volume(0);
     farmerVid.size(vidSize);
 }
+
+
 /*
 function initAudio() {
     //create audio context for all theremin voices
