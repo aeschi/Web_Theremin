@@ -8,6 +8,8 @@ let synthVolume;
 
 let thereminMusic;
 
+let noteDuration = 1;
+
 let synth = new Tone.DuoSynth({
     harmonicity: 0.4,
     vibratoAmount: 0.05,
@@ -25,9 +27,9 @@ let synth = new Tone.DuoSynth({
 
 const sampler = new Tone.Sampler({
     urls: {
-        C4: 'data/music/sine-wave-c4.wav',
-        'G#4': 'data/music/sine-wave-gs4.wav',
-        E4: 'data/music/sine-wave-e4.wav',
+        C4: 'data/music/c4.mp3',
+        'G#4': 'data/music/g-4.mp3',
+        E4: 'data/music/e4.mp3',
     },
     release: 1,
     // baseUrl: 'https://tonejs.github.io/audio/salamander/',
@@ -158,26 +160,6 @@ function draw() {
                 frequency = map(handR.x, 0, 640, 880, 220);
                 synth.setNote(frequency);
 
-                if (frequency > 493 && frequency < 523) {
-                    sampler.triggerAttackRelease('B4', 0.1);
-                } else if (frequency > 440 && frequency < 466) {
-                    sampler.triggerAttackRelease('A4', 0.1);
-                    // } else if (frequency > 415 && frequency < 440) {
-                    //     sampler.triggerAttackRelease('G#4', 0.1);
-                } else if (frequency > 392 && frequency < 415) {
-                    sampler.triggerAttackRelease('G4', 0.1);
-                    // } else if (frequency > 370 && frequency < 392) {
-                    //     sampler.triggerAttackRelease('F#4', 0.1);
-                } else if (frequency > 349 && frequency < 370) {
-                    sampler.triggerAttackRelease('F4', 0.1);
-                } else if (frequency > 329 && frequency < 249) {
-                    sampler.triggerAttackRelease('E4', 0.1);
-                } else if (frequency > 294 && frequency < 311) {
-                    sampler.triggerAttackRelease('D4', 0.1);
-                } else if (frequency > 262 && frequency < 277) {
-                    sampler.triggerAttackRelease('C4', 0.1);
-                }
-
                 // Update oscillator volume
                 synthVolume = map(handL.y, 0, 360, 0, -24);
                 // synth.volume.value = synthVolume;
@@ -206,6 +188,34 @@ function draw() {
     // draw theremin illustration
     image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
 }
+
+setInterval(function () {
+    if (frequency > 494 && frequency < 523) {
+        sampler.triggerAttackRelease('B4', noteDuration);
+    } else if (frequency > 466 && frequency < 494) {
+        sampler.triggerAttackRelease('A#4', noteDuration);
+    } else if (frequency > 440 && frequency < 466) {
+        sampler.triggerAttackRelease('A4', noteDuration);
+    } else if (frequency > 415 && frequency < 440) {
+        sampler.triggerAttackRelease('G#4', 0.1);
+    } else if (frequency > 392 && frequency < 415) {
+        sampler.triggerAttackRelease('G4', noteDuration);
+    } else if (frequency > 370 && frequency < 392) {
+        sampler.triggerAttackRelease('F#4', 0.1);
+    } else if (frequency > 349 && frequency < 370) {
+        sampler.triggerAttackRelease('F4', noteDuration);
+    } else if (frequency > 329 && frequency < 349) {
+        sampler.triggerAttackRelease('E4', noteDuration);
+    } else if (frequency > 311 && frequency < 329) {
+        sampler.triggerAttackRelease('D#4', noteDuration);
+    } else if (frequency > 294 && frequency < 311) {
+        sampler.triggerAttackRelease('D4', noteDuration);
+    } else if (frequency > 277 && frequency < 294) {
+        sampler.triggerAttackRelease('C#4', noteDuration);
+    } else if (frequency > 262 && frequency < 277) {
+        sampler.triggerAttackRelease('C4', noteDuration);
+    }
+}, 150);
 
 // werden alle nicht verwendet aktuell
 function drawFace() {
