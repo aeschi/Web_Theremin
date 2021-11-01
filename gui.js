@@ -10,9 +10,9 @@ const PARAMS = {
     startTime: startTime,
     endTime: endTime,
     source: 0, //sample file number in GUI drop down list
-    grainSize: 0.2, //in seconds
+    grainSize: 0.1, //in seconds
     overlap: 0, //in seconds
-    detune: 100, // detuning in cents, 100 cent = 1 semitone
+    detune: 0, // detuning in cents, 100 cent = 1 semitone
     playbackrate: 1, //playback rate factor
 };
 
@@ -85,7 +85,10 @@ const sampleBuffer2 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/guitar.
 const sampleBuffer3 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/piano+spaceecho.mp3', () => {
     console.log('loaded');
 });
-const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 } });
+const sampleBuffer4 = new Tone.ToneAudioBuffer('data/music/Theremin_Hauptstimme_ohne_Stille.wav', () => {
+    console.log('loaded');
+});
+const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 , Theremin_Melody_1: 3} });
 SourceInput.on('change', function (ev) {
     grainSample = ev.value;
     if (grainSample == 0) {
@@ -140,6 +143,10 @@ SourceInput.on('change', function (ev) {
         */
         gp.buffer = sampleBuffer3;
         grainPlaying = false;
+    }  else if (grainSample == 3) {
+        gp.stop();
+        gp.buffer = sampleBuffer4;
+        grainPlaying = false;
     }
 });
 
@@ -148,13 +155,13 @@ const f = gs.addFolder({
     expanded: true,
 });
 
-const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 3, step: 0.01 });
+const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 0.1, step: 0.01 });
 attackInput.on('change', function (ev) {
     gS = parseFloat(ev.value.toFixed(2));
     gp.grainSize = gS;
 });
 
-const decayInput = f.addInput(PARAMS, 'overlap', { min: 0.0, max: 1, step: 0.01 });
+const decayInput = f.addInput(PARAMS, 'overlap', { min: 0.0, max: 0.1, step: 0.01 });
 decayInput.on('change', function (ev) {
     oL = parseFloat(ev.value.toFixed(2));
     gp.overlap = oL;
@@ -165,9 +172,12 @@ maxDetune.on('change', function (ev) {
     detuneMaxValue = ev.value;
 });
 
-const changePBR = f.addInput(PARAMS, 'playbackrate', { min: 0.1, max: 50, step: 0.1 });
+const changePBR = f.addInput(PARAMS, 'playbackrate', { min: 0.01, max: 2, step: 0.01 });
+
 changePBR.on('change', function (ev) {
-    playbackRate = ev.value;
+    pbr = parseFloat(ev.value.toFixed(2));
+    console.log("pbr "+pbr);
+    playbackrate = pbr;
 });
 
 /*
