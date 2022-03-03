@@ -59,25 +59,29 @@ let playing = false;
 
 let grainPlaying = false;
 
+/*
 function preload() {
     thereminImg = loadImage('data/image/theremin.png');
     // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
 }
+*/
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.parent('canvas');
     canvas.position(0, 0);
 
+    /*
     vidSize = windowWidth * 0.75;
     // farmerVid = createVideo(['data/video/farmersspring25fpsFHD.mp4'], vidLoad);
     // farmerVid.hide();
 
     face_layer = createGraphics(canvas.width, canvas.height);
     brush_layer = createGraphics(canvas.width, canvas.height);
-
+*/
     poseNetSetup();
 
+    /*
     if (width < 2000) {
         thereminWidth = width / 2;
         thereminHeight = (width / 2) * 0.78;
@@ -85,12 +89,14 @@ function setup() {
         thereminWidth = 1000;
         thereminHeight = 1000 * 0.78;
     }
+    */
 }
 
 function draw() {
     // background(253, 245, 230, 160);
     canvas.clear();
-    face_layer.clear();
+
+    //face_layer.clear();
 
     // draw video
     // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
@@ -103,10 +109,12 @@ function draw() {
         let d = 30;
 
         if (typeof handR.x !== 'undefined') {
+            /*
             brush_layer.clear();
             brush_layer.fill(215, 123, 103, 100);
             brush_layer.noStroke();
-
+            */
+           
             // size of hand ellipse based on distance between hands
             if (handR.confidence > 0.05 && handL.confidence > 0.05) {
                 d = int(dist(handR.x, handR.y, handL.x, handL.y));
@@ -119,11 +127,13 @@ function draw() {
 
                 leftHandX = map(handL.x, 0, 640, 0, width);
                 leftHandY = map(handL.y, 0, 360, 0, height);
-
+                /*
                 brush_layer.ellipse(rightHandX, rightHandY, d / 10);
                 brush_layer.ellipse(leftHandX, leftHandY, d / 10);
+                */
             }
 
+            /*
             // draw face
             if (nose.confidence > 0.8) {
                 noseX = map(nose.x, 0, 640, 0, width);
@@ -150,6 +160,7 @@ function draw() {
                 face_layer.ellipse(noseX - 13, noseY - 10, 3);
                 face_layer.ellipse(noseX + 13, noseY - 10, 3);
             }
+            */
 
             // play Theremin sound
             if (playing) {
@@ -187,12 +198,14 @@ function draw() {
         }
     }
 
+    /*
     // draw layers
     image(face_layer, 0, 0);
     image(brush_layer, 0, 0);
 
     // draw theremin illustration
     image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
+    */
 }
 
 setInterval(function () {

@@ -1,8 +1,10 @@
 // GUI for grain params
 // Documentation: https://cocopon.github.io/tweakpane/input.html
 
+/*
 // Video Helper Function
 let myVideo = document.getElementById('video1');
+*/
 let startTime = 0;
 let endTime = 10;
 
@@ -88,7 +90,7 @@ const sampleBuffer3 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/piano+s
 const sampleBuffer4 = new Tone.ToneAudioBuffer('data/music/Theremin_Hauptstimme_ohne_Stille.wav', () => {
     console.log('loaded');
 });
-const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 , Theremin_Melody_1: 3} });
+const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2, Theremin_Melody_1: 3 } });
 SourceInput.on('change', function (ev) {
     grainSample = ev.value;
     if (grainSample == 0) {
@@ -143,7 +145,7 @@ SourceInput.on('change', function (ev) {
         */
         gp.buffer = sampleBuffer3;
         grainPlaying = false;
-    }  else if (grainSample == 3) {
+    } else if (grainSample == 3) {
         gp.stop();
         gp.buffer = sampleBuffer4;
         grainPlaying = false;
@@ -176,7 +178,7 @@ const changePBR = f.addInput(PARAMS, 'playbackrate', { min: 0.01, max: 2, step: 
 
 changePBR.on('change', function (ev) {
     pbr = parseFloat(ev.value.toFixed(2));
-    console.log("pbr "+pbr);
+    console.log("pbr " + pbr);
     playbackrate = pbr;
 });
 
