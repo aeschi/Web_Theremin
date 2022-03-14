@@ -37,19 +37,10 @@ const sampler = new Tone.Sampler({
 
 const reverb = new Tone.Reverb().toDestination();
 
-const player = new Tone.Player({
-    url: 'data/music/Theremin_Begleitung_Theremin_2-5.wav',
-    loop: true,
-    autostart: false,
-}).toDestination();
-
 let detuneMaxValue = 100;
 let playbackrate = 1;
 
 gp = new Tone.GrainPlayer('grainsynth/samples/audio/SH-el.mp3', function () {
-    console.log('GrainPlayer loaded!');
-    console.log('gp.playbackRate:', gp.playbackRate);
-    console.log('gp.detune', gp.detune);
     gp.grainSize = 0.01;
     gp.overlap = 0.02;
     gp.loop = true;
@@ -60,12 +51,14 @@ let playing = false;
 let grainPlaying = false;
 
 function preload() {
-    thereminImg = loadImage('data/image/theremin.png');
+    thereminImg = loadImage('data/image/theremin_bw.png');
     // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
 }
 
 function setup() {
-    canvas = createCanvas(windowWidth, windowHeight);
+    sketchWidth = document.getElementById("canvas").offsetWidth;
+    sketchHeight = document.getElementById("canvas").offsetHeight;
+    canvas = createCanvas(sketchWidth, sketchHeight);
     canvas.parent('canvas');
     canvas.position(0, 0);
 
@@ -88,9 +81,10 @@ function setup() {
 }
 
 function draw() {
-    // background(253, 245, 230, 160);
     canvas.clear();
     face_layer.clear();
+
+    // background(253, 0, 0);
 
     // draw video
     // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
@@ -170,18 +164,13 @@ function draw() {
             if (grainPlaying) {
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
                 const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
-                // console.log("handl y "+handL.y);
-                //console.log("gp pbr "+playbackrate);
-                // console.log("curr pbr "+currPbr);
                 if (currPbr < 0.001) {
-                    console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
                     gp.playbackRate = 0.001;
                 } else {
                     gp.playbackRate = currPbr;
                 }
                 // right hand x position controls amount of detuning. detune maximum set in GUI
                 const currDetune = map(handR.x, 0, video.width, -detuneMaxValue, detuneMaxValue);
-                //  console.log("currDetune:", currDetune)
                 gp.detune = currDetune;
             }
         }
@@ -192,7 +181,8 @@ function draw() {
     image(brush_layer, 0, 0);
 
     // draw theremin illustration
-    image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
+    
+    image(thereminImg, sketchWidth/2 - sketchWidth/5, sketchHeight-sketchWidth/3, sketchWidth/3 , sketchWidth/3);
 }
 
 setInterval(function () {

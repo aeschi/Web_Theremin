@@ -22,7 +22,7 @@ const pane = new Tweakpane({
     expanded: true,
 });
 
-// CLASSIC THEREMIN
+// CLASSIC THEREMIN - transfered
 pane.addSeparator();
 
 const instr = pane.addFolder({
@@ -80,67 +80,27 @@ const sampleBuffer1 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/SH-el.m
     console.log('loaded');
 });
 const sampleBuffer2 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/guitar.wav', () => {
-    console.log('loaded');
+    // console.log('loaded');
 });
 const sampleBuffer3 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/piano+spaceecho.mp3', () => {
-    console.log('loaded');
+    // console.log('loaded');
 });
 const sampleBuffer4 = new Tone.ToneAudioBuffer('data/music/Theremin_Hauptstimme_ohne_Stille.wav', () => {
-    console.log('loaded');
+    // console.log('loaded');
 });
 const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 , Theremin_Melody_1: 3} });
 SourceInput.on('change', function (ev) {
     grainSample = ev.value;
     if (grainSample == 0) {
         gp.stop();
-        //gp.dispose();
-        /*
-        gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function() {
-            console.log("GrainPlayer loaded!")
-            console.log("gp.playbackRate:", gp.playbackRate)
-            console.log("gp.detune", gp.detune)
-            gp.loop = true;
-          }).toDestination();
-          */
-        /*
-        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/SH-el.mp3", () => {
-            console.log("loaded");
-        });
-        */
         gp.buffer = sampleBuffer1;
         grainPlaying = false;
     } else if (grainSample == 1) {
         gp.stop();
-        /*gp.dispose();
-        gp = new Tone.GrainPlayer("grainsynth/samples/audio/guitar.wav", function() {
-            console.log("GrainPlayer loaded!")
-            console.log("gp.playbackRate:", gp.playbackRate)
-            console.log("gp.detune", gp.detune)
-            gp.loop = true;
-          }).toDestination();
-          */
-        /*
-        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/guitar.wav", () => {
-            console.log("loaded");
-        });
-        */
         gp.buffer = sampleBuffer2;
         grainPlaying = false;
     } else if (grainSample == 2) {
         gp.stop();
-        /*gp.dispose();
-        gp = new Tone.GrainPlayer("grainsynth/samples/audio/piano+spaceecho.mp3", function() {
-            console.log("GrainPlayer loaded!")
-            console.log("gp.playbackRate:", gp.playbackRate)
-            console.log("gp.detune", gp.detune)
-            gp.loop = true;
-          }).toDestination();
-          */
-        /*
-        const sampleBuffer = new Tone.ToneAudioBuffer("grainsynth/samples/audio/piano+spaceecho.mp3", () => {
-            console.log("loaded");
-        });
-        */
         gp.buffer = sampleBuffer3;
         grainPlaying = false;
     }  else if (grainSample == 3) {
@@ -159,6 +119,8 @@ const attackInput = f.addInput(PARAMS, 'grainSize', { min: 0.01, max: 0.1, step:
 attackInput.on('change', function (ev) {
     gS = parseFloat(ev.value.toFixed(2));
     gp.grainSize = gS;
+
+    console.log(gp.grainSize);
 });
 
 const decayInput = f.addInput(PARAMS, 'overlap', { min: 0.0, max: 0.1, step: 0.01 });
@@ -179,46 +141,6 @@ changePBR.on('change', function (ev) {
     console.log("pbr "+pbr);
     playbackrate = pbr;
 });
-
-/*
-const f = gs.addFolder({
-    title: 'GRAIN SETTINGS',
-    expanded: true,
-});
-
-const attackInput = f.addInput(PARAMS, 'attack', { min: 0.01, max: 1, step: 0.01 });
-attackInput.on('change', function (ev) {
-    // change something
-    //console.log(ev.value.toFixed(2));
-    att = parseFloat(ev.value.toFixed(2)); // parse incoming value for grainmachine.js
-});
-
-const decayInput = f.addInput(PARAMS, 'decay', { min: 0.01, max: 1, step: 0.01 });
-decayInput.on('change', function (ev) {
-    // change something
-    dec = parseFloat(ev.value.toFixed(2)); // parse incoming value for grainmachine.js
-});
-
-
-/*
-btnGranular.on('click', async () => {
-   // await Tone.start();
-    
-    // if(grainPlaying){
-    //     Tone.getContext().rawContext.suspend();
-    //     grainPlaying = false;
-    // } else {
-    //     console.log(Tone.context.start());
-    //     grainPlaying = true;
-    // }
-    /*grainGain = ctx.createGain();
-    grainGain.connect(ctx.destination);
-    bufferSwitch(grainSample);
-    grainPlaying = true;*/
-/*
-});
-
-*/
 
 // Play Music
 
