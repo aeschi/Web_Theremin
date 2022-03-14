@@ -15,7 +15,7 @@ Tone.Transport.bpm.value = 108;
 //Tone.Transport.loop = true;
 
 // warum is das immer running, obwohl der sound nicht spielt und der context aus ist ???
-console.log("Tone Context "+Tone.getContext().rawContext.state);
+console.log("Tone Context " + Tone.getContext().rawContext.state);
 
 // ### TONE SYNTH
 
@@ -36,6 +36,9 @@ let synth = new Tone.DuoSynth({
 
 // ### TONE SAMPLER
 const env = new Tone.AmplitudeEnvelope().toDestination();
+
+let lastNote = 0;
+let note = 0;
 
 const sampler = new Tone.Sampler({
     urls: {
@@ -136,7 +139,7 @@ function draw() {
             brush_layer.fill(215, 123, 103, 100);
             brush_layer.noStroke();
             */
-           
+
             // size of hand ellipse based on distance between hands
             if (handR.confidence > 0.05 && handL.confidence > 0.05) {
                 d = int(dist(handR.x, handR.y, handL.x, handL.y));
@@ -153,91 +156,81 @@ function draw() {
                 brush_layer.ellipse(rightHandX, rightHandY, d / 10);
                 brush_layer.ellipse(leftHandX, leftHandY, d / 10);
                 */
-            }
 
-            /*
-            // draw face
-            if (nose.confidence > 0.8) {
-                noseX = map(nose.x, 0, 640, 0, width);
-                noseY = map(nose.y, 0, 360, 0, height);
 
-                face_layer.noFill();
-                face_layer.stroke(215, 123, 103);
-
-                face_layer.beginShape();
-                for (let a = 0; a < TWO_PI; a += 0.02) {
-                    let xoff = map(cos(a), -1, 1, 0, 2);
-                    let yoff = map(sin(a), -1, 1, 0, 2);
-                    const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
-                    let x = r * cos(a);
-                    let y = r * sin(a);
-                    vertex(x + noseX, y + noseY);
+                /*
+                // draw face
+                if (nose.confidence > 0.8) {
+                    noseX = map(nose.x, 0, 640, 0, width);
+                    noseY = map(nose.y, 0, 360, 0, height);
+    
+                    face_layer.noFill();
+                    face_layer.stroke(215, 123, 103);
+    
+                    face_layer.beginShape();
+                    for (let a = 0; a < TWO_PI; a += 0.02) {
+                        let xoff = map(cos(a), -1, 1, 0, 2);
+                        let yoff = map(sin(a), -1, 1, 0, 2);
+                        const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
+                        let x = r * cos(a);
+                        let y = r * sin(a);
+                        vertex(x + noseX, y + noseY);
+                    }
+                    face_layer.endShape(CLOSE);
+    
+                    face_layer.arc(noseX, noseY + 15, 40, 40, QUARTER_PI, HALF_PI + QUARTER_PI);
+    
+                    face_layer.noStroke();
+                    face_layer.fill(215, 123, 103);
+                    face_layer.ellipse(noseX - 13, noseY - 10, 3);
+                    face_layer.ellipse(noseX + 13, noseY - 10, 3);
                 }
-                face_layer.endShape(CLOSE);
+                */
 
-                face_layer.arc(noseX, noseY + 15, 40, 40, QUARTER_PI, HALF_PI + QUARTER_PI);
+                // play Theremin sound
+                if (playing) {
+                    // Update oscillator frequency
+                    frequency = map(handR.x, 0, 640, 880, 220);
+                    synth.setNote(frequency);
+                    // trigger synth
+                    synth.triggerAttackRelease(frequency, '0.1');
 
-                face_layer.noStroke();
-                face_layer.fill(215, 123, 103);
-                face_layer.ellipse(noseX - 13, noseY - 10, 3);
-                face_layer.ellipse(noseX + 13, noseY - 10, 3);
-            }
-            */
+                    // Update oscillator volume
+                    synthVolume = map(handL.y, 0, 360, 0, -24);
+                    // synth.volume.value = synthVolume;
 
-            // play Theremin sound
-          if(playing){
-                // Update oscillator frequency
-                frequency = map(handR.x, 0, 640, 880, 220);
-                synth.setNote(frequency);
-                // trigger synth
-                synth.triggerAttackRelease(frequency, '0.1');
+                    //    sampler.volume.value = synthVolume;
+                }
 
-                // Update oscillator volume
-                synthVolume = map(handL.y, 0, 360, 0, -24);
-                // synth.volume.value = synthVolume;
+                if (therSampler) {
+                    frequency = map(handR.x, 0, 640, 880, 220);
+                    // sampler.triggerAttackRelease(frequency, noteDuration);
 
-            //    sampler.volume.value = synthVolume;
-          }
+                    let noteDuration = 0.5;
 
-          if(therSampler){
-            frequency = map(handR.x, 0, 640, 880, 220);
-           // sampler.triggerAttackRelease(frequency, noteDuration);
-        
-           let noteDuration = 0.5;
-           
-           // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann 
-           // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
-           // ist aber verbundener, und eher wie ein flächiger theremin sound
-           // hier envelopes hinzufügen, und die länge der Noten regeln
-            if (frequency > 494 && frequency < 523) {
-                sampler.triggerAttackRelease('B4', noteDuration);
-            } else if (frequency > 466 && frequency < 494) {
-                sampler.triggerAttackRelease('A#4', noteDuration);
-            } else if (frequency > 440 && frequency < 466) {
-                sampler.triggerAttackRelease('A4', noteDuration);
-            } else if (frequency > 415 && frequency < 440) {
-                sampler.triggerAttackRelease('G#4', noteDuration);
-            } else if (frequency > 392 && frequency < 415) {
-                sampler.triggerAttackRelease('G4', noteDuration);
-            } else if (frequency > 370 && frequency < 392) {
-                sampler.triggerAttackRelease('F#4', noteDuration);
-            } else if (frequency > 349 && frequency < 370) {
-                sampler.triggerAttackRelease('F4', noteDuration);
-            } else if (frequency > 329 && frequency < 349) {
-                sampler.triggerAttackRelease('E4', noteDuration);
-            } else if (frequency > 311 && frequency < 329) {
-                sampler.triggerAttackRelease('D#4', noteDuration);
-            } else if (frequency > 294 && frequency < 311) {
-                sampler.triggerAttackRelease('D4', noteDuration);
-            } else if (frequency > 277 && frequency < 294) {
-                sampler.triggerAttackRelease('C#4', noteDuration);
-            } else if (frequency > 262 && frequency < 277) {
-                sampler.triggerAttackRelease('C4', noteDuration);
-            }
-            
-          }
+                    // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann 
+                    // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
+                    // ist aber verbundener, und eher wie ein flächiger theremin sound
+                    // hier envelopes hinzufügen, und die länge der Noten regeln
+                    toNote(frequency);
+                    console.log("cur note " + note);
+                    if (lastNote != 0) {
+                        if (note != lastNote) {
+                            sampler.triggerRelease(lastNote, Tone.now());
+                            sampler.triggerAttack(note, Tone.now());
+                            lastNote = note;
+                        }
+                        //else if same as before continue playin note??
+                    } else if (lastNote == 0) {
+                        console.log("last note ist null");
+                        sampler.triggerAttack(note, Tone.now());
+                        lastNote = note;
 
-      //      if (grainPlaying) {
+                    }
+
+                }
+
+                //      if (grainPlaying) {
                 //left hand height controls playbackrate, maximum playbackrate set in GUI
                 const currPbr = map(handL.y, video.height, 0, playbackrate, 0.001); // values below 0.001 break the grain player
                 // console.log("handl y "+handL.y);
@@ -247,7 +240,7 @@ function draw() {
                 const currGS = map(handR.x, video.width, 0, grainSize, 0);
                 gp.grainSize = currGS;
                 PARAMS.grainSize = currGS;
-                console.log("grainsize "+currGS);
+                console.log("grainsize " + currGS);
 
                 if (currPbr < 0.001) {
                     console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
@@ -263,19 +256,21 @@ function draw() {
                 //  console.log("currDetune:", currDetune)
                 gp.detune = currDetune;
                 PARAMS.detune = currDetune;
-   //         }
+                //         }
+            }
         }
+
+        /*
+        // draw layers
+        image(face_layer, 0, 0);
+        image(brush_layer, 0, 0);
+    
+        // draw theremin illustration
+        image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
+        */
     }
-
-    /*
-    // draw layers
-    image(face_layer, 0, 0);
-    image(brush_layer, 0, 0);
-
-    // draw theremin illustration
-    image(thereminImg, width / 2 - thereminWidth / 1.6, height / 1.6 - thereminHeight / 2, thereminWidth, thereminHeight);
-    */
 }
+
 /*
 setInterval(function () {
     if (frequency > 494 && frequency < 523) {
@@ -305,6 +300,34 @@ setInterval(function () {
     }
 }, 200);
 */
+
+function toNote(frequency) {
+    if (frequency > 494 && frequency < 523) {
+        note = 'B4';
+    } else if (frequency > 466 && frequency < 494) {
+        note = 'A#4';
+    } else if (frequency > 440 && frequency < 466) {
+        note = 'A4';
+    } else if (frequency > 415 && frequency < 440) {
+        note = 'G#4';
+    } else if (frequency > 392 && frequency < 415) {
+        note = 'G4';
+    } else if (frequency > 370 && frequency < 392) {
+        note = 'F#4';
+    } else if (frequency > 349 && frequency < 370) {
+        note = 'F4';
+    } else if (frequency > 329 && frequency < 349) {
+        note = 'E4';
+    } else if (frequency > 311 && frequency < 329) {
+        note = 'D#4';
+    } else if (frequency > 294 && frequency < 311) {
+        note = 'D4';
+    } else if (frequency > 277 && frequency < 294) {
+        note = 'C#4';
+    } else if (frequency > 262 && frequency < 277) {
+        note = 'C4';
+    }
+}
 
 // werden alle nicht verwendet aktuell
 function drawFace() {
