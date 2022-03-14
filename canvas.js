@@ -78,8 +78,25 @@ let therSampler = false;
 let grainPlaying = false;
 
 
+let masterVol = 1;
 
+const masterVolume = new Tone.Volume(masterVol);
+const masterCompressor = new Tone.Compressor({
+  ratio: 12,
+  threshold: -28,
+  release: 0.25,
+  attack: 0.003,
+  knee: 30,
+});
+const masterAnalyser = new Tone.Analyser("waveform", 64);
 
+const gain1 = new Tone.Gain(0.1);
+const gain2 = new Tone.Gain(0.1);
+
+//todo
+//vibrato.frequency.value = "y value" * 10;
+
+Tone.Destination.chain(masterCompressor, masterVolume, masterAnalyser);
 
 /*
 function preload() {
@@ -204,13 +221,13 @@ function draw() {
 
                 if (therSampler) {
                     frequency = map(handR.x, 0, 640, 880, 220);
-                    // sampler.triggerAttackRelease(frequency, noteDuration);
 
                     let noteDuration = 0.5;
 
                     // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann 
                     // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
                     // ist aber verbundener, und eher wie ein flächiger theremin sound
+
                     // hier envelopes hinzufügen, und die länge der Noten regeln
                     toNote(frequency);
                     console.log("cur note " + note);
@@ -222,10 +239,8 @@ function draw() {
                         }
                         //else if same as before continue playin note??
                     } else if (lastNote == 0) {
-                        console.log("last note ist null");
                         sampler.triggerAttack(note, Tone.now());
                         lastNote = note;
-
                     }
 
                 }
