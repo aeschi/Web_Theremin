@@ -20,7 +20,7 @@ function poseNetSetup() {
         poses = results;
     });
     // Hide the video element, and just show the canvas
-    // video.hide();
+     video.hide();
 }
 
 function modelReady() {
