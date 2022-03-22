@@ -75,5 +75,50 @@ btnGrain.addEventListener("click", function () {
         player.stop('+0.3');
     }
      
-     
+ });
+
+ // ------------ VIDEO ------------
+
+ const btnVid = document.querySelector(".btn-vid");
+
+ btnVid.addEventListener("click", function () {
+    if (myVideo.paused) myVideo.play();
+    else myVideo.pause();
+ });
+
+
+//  function setTimeFrame() {
+//     function checkTime() {
+//         if (myVideo.currentTime >= PARAMS.endTime) {
+//             myVideo.currentTime = PARAMS.startTime;
+//         } else {
+//             /* call checkTime every 1/10th 
+//               second until endTime */
+//             setTimeout(checkTime, 100);
+//         }
+//     }
+
+//     myVideo.currentTime = PARAMS.startTime;
+//     myVideo.play();
+//     checkTime();
+// }
+
+// in out range slider
+$(function () {
+    var handle1 = $("#custom-handle-1");
+    var handle2 = $( "#custom-handle-2");
+    $("#slider-range").slider({
+      range: true,
+      min: 0,
+      max: 100,
+      values: [0, 100],
+    slide: function (event, ui) {
+        $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+        },
+    });
+    $("#amount").val(
+        $("#slider-range").slider("values", 0) + " - " +
+        $("#slider-range").slider("values", 1)
+    );
 });
+  

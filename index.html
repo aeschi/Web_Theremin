@@ -21,6 +21,14 @@
       type="text/javascript"
     ></script>
 
+    <!-- JQuery -->
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
     <!-- shepard.js for onboarding tour -->
     <!-- <link rel="stylesheet" href="shepherd-theme-default.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
@@ -115,21 +123,47 @@
 
         <button class="btn-all">ALL</button>
 
-        <tone-loader></tone-loader>
+        <!-- <tone-loader></tone-loader>
         <div id="content">
           <tone-play-toggle></tone-play-toggle>
-        </div>
+        </div> -->
       </section>
 
       <section class="ui-foley">
         <h2>FOLEY</h2>
+        <button class="btn-foley-1">WIND</button>
+        <button class="btn-foley-2">WATER</button>
+        <button class="btn-foley-3">HORSES</button>
+        <button class="btn-foley-4">CARRIAGE</button>
+      </section>
+
+      <section class="ui-video">
+        <h2>VIDEO</h2>
+        <button class="btn-vid">► | ◼︎</button>
+
+        <p>
+          <label for="amount">In & Out Point:</label>
+          <input
+            type="text"
+            id="amount"
+            readonly
+            style="
+              border: 0;
+              color: #ffffff;
+              font-weight: bold;
+              background-color: rgba(0, 0, 0, 0);
+            "
+          />
+        </p>
+
+        <div id="slider-range"></div>
       </section>
     </div>
 
     <script src="thereminGui.js"></script>
 
     <div class=".gui">
-      <!-- <script src="gui.js"></script> -->
+      <script src="gui.js"></script>
     </div>
   </body>
 </html>
