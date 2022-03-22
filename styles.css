@@ -177,29 +177,3 @@ button:active {
   background: rgb(109, 122, 175);
   color: #fff;
 }
-
-/* GUI style */
-:root {
-  --tp-base-background-color: hsla(0, 0%, 0%, 0.2);
-  --tp-base-shadow-color: rgba(109, 122, 175, 0.2);
-  --tp-button-background-color: rgba(215, 123, 103, 0.8);
-  --tp-button-background-color-active: rgba(215, 123, 103, 0.6);
-  --tp-button-background-color-focus: rgba(215, 123, 103, 0.5);
-  --tp-button-background-color-hover: rgba(215, 123, 103, 0.4);
-  --tp-button-foreground-color: hsla(0, 0%, 0%, 0.4);
-  --tp-folder-background-color: hsla(0, 0%, 0%, 0.4);
-  --tp-folder-background-color-active: hsla(0, 0%, 0%, 0);
-  --tp-folder-background-color-focus: hsla(0, 0%, 0%, 0.3);
-  --tp-folder-background-color-hover: hsla(0, 0%, 0%, 0.3);
-  --tp-folder-foreground-color: hsla(0, 0%, 100%, 0.6);
-  --tp-input-background-color: hsla(0, 0%, 0%, 0.3);
-  --tp-input-background-color-active: hsla(0, 0%, 0%, 0.6);
-  --tp-input-background-color-focus: hsla(0, 0%, 0%, 0.5);
-  --tp-input-background-color-hover: hsla(0, 0%, 0%, 0.4);
-  --tp-input-foreground-color: hsla(0, 0%, 100%, 0.7);
-  --tp-input-guide-color: hsla(0, 0%, 100%, 0.1);
-  --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
-  --tp-monitor-foreground-color: hsla(0, 0%, 100%, 0.3);
-  --tp-label-foreground-color: hsla(0, 0%, 100%, 0.7);
-  --tp-separator-color: hsla(0, 0%, 0%, 0.2);
-}
