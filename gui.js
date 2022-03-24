@@ -75,8 +75,8 @@ btnGranular.on('click', () => {
         }
     }
 });
-
-const sampleBuffer1 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/SH-el.mp3', () => {
+/*
+const sampleBuffer1 = new Tone.ToneAudioBuffer("soundfiles/Theremin_Hauptstimme_sound.wav", () => {
     console.log('loaded');
 });
 const sampleBuffer2 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/guitar.wav', () => {
@@ -88,7 +88,8 @@ const sampleBuffer3 = new Tone.ToneAudioBuffer('grainsynth/samples/audio/piano+s
 const sampleBuffer4 = new Tone.ToneAudioBuffer('data/music/Theremin_Hauptstimme_ohne_Stille.wav', () => {
     // console.log('loaded');
 });
-const SourceInput = gs.addInput(PARAMS, 'source', { options: { Synthetic_Sound: 0, Guitar: 1, Piano: 2 , Theremin_Melody_1: 3} });
+*/
+const SourceInput = gs.addInput(PARAMS, 'source', { options: { Theremin_Melody: 0, Guitar: 1, Piano: 2 , Melody_from_Nevsky: 3} });
 SourceInput.on('change', function (ev) {
     grainSample = ev.value;
     if (grainSample == 0) {
