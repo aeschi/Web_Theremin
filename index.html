@@ -61,33 +61,67 @@
           muted
           loop
         >
-          <source
+          <!-- <source
             src="data/video/farmersspring25fps_500px.mp4"
             type="video/mp4"
-          />
+          /> -->
         </video>
         <div class="imgContainer">
-          <img src="./data/image/theremin_bw.png" width="100%" />
+          <img
+            src="./data/image/theremin_bw.png"
+            alt="theremin_bw.png"
+            title="theremin"
+            width="100%"
+          />
         </div>
       </div>
       <div class="logoContainer">
         <a
           href="https://collisions-eisensteinshouse.projekte-filmuni.de/project/"
         >
-          <img src="./data/image/koll_logo_round.svg" width="50px" />
+          <img
+            src="./data/image/koll_logo_round.svg"
+            alt="koll_logo_round.svg"
+            title="logo"
+            width="50px"
+          />
         </a>
       </div>
-      <div class="infoSpeakerContainer">
-        <img src="./data/image/speaker.svg" width="30px" />
+
+      <div class="SpeakerContainer">
+        <input type="checkbox" name="un-mute" id="un-mute" />
+        <label for="un-mute" class="unmute">
+          <img
+            src="./data/image/speaker.svg"
+            alt="Mute_Icon.svg"
+            title="Mute"
+          />
+        </label>
+        <label for="un-mute" class="mute">
+          <img
+            src="./data/image/speaker_mute.svg"
+            alt="Speaker_Icon.svg"
+            title="Unmute"
+          />
+        </label>
       </div>
-      <div class="infoIconContainer">
-        <img src="./data/image/info_icon.svg" width="30px" />
+
+      <div class="infoContainer">
+        <button class="btn-info">
+          <img
+            src="./data/image/info_icon.svg"
+            alt="info_icon.svg"
+            title="Info"
+          />
+        </button>
       </div>
+
       <div id="canvas">
         <script src="canvas.js"></script>
         <!-- <script src="p5sketch.js"></script> -->
       </div>
     </div>
+
     <script src="positionTracking.js"></script>
 
     <div class="ui-bar">

@@ -43,14 +43,14 @@ h2 {
   z-index: 1;
 }
 
-.infoSpeakerContainer {
+.SpeakerContainer {
   position: absolute;
   margin-top: 20px;
   right: 20px;
   z-index: 1;
 }
 
-.infoIconContainer {
+.infoContainer {
   position: absolute;
   margin-top: 70px;
   right: 20px;
@@ -159,6 +159,39 @@ button:hover {
 
 button:active {
   background-color: #7696c6;
+}
+
+.btn-info {
+  opacity: 0.75;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.btn-info:active {
+  background-color: black;
+}
+
+input#un-mute {
+  display: none;
+}
+
+.unmute img {
+  display: none;
+  cursor: pointer;
+}
+
+.mute img {
+  cursor: pointer;
+}
+
+input#un-mute:checked ~ .unmute img {
+  display: initial;
+}
+
+input#un-mute:checked ~ .mute img {
+  display: none;
 }
 
 .slidecontainer {

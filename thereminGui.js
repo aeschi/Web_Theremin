@@ -1,11 +1,32 @@
+const btnInfo = document.querySelector(".btn-info");
 const btnClassic = document.querySelector(".btn-classic");
 const btnGran = document.querySelector(".btn-granular");
 const btnGrain = document.querySelector(".btn-grain");
 const sliderGrainsize = document.getElementById("grainsize");
 const output = document.getElementById("outputGrain");
+let un_mute = document.getElementById("un-mute");
+
+// ------------ SOUND TOGGLE ------------
+
+un_mute.onclick = function () {
+  if (playing) {
+    Tone.getContext().rawContext.suspend();
+    playing = false;
+  } else {
+    Tone.start();
+    playing = true;
+  }
+};
+
+// ------------ INFO ------------
+
+btnInfo.addEventListener("click", function () {
+  alert("an info panel will come here");
+});
 
 // ------------ THEREMIN ------------
 
+// same as toggle sound above
 btnClassic.addEventListener("click", function () {
   if (playing) {
     Tone.getContext().rawContext.suspend();
