@@ -37,6 +37,26 @@ h2 {
   /* z-index: 0; */
 }
 
+.logoContainer {
+  position: absolute;
+  margin: 20px;
+  z-index: 1;
+}
+
+.SpeakerContainer {
+  position: absolute;
+  margin-top: 20px;
+  right: 20px;
+  z-index: 1;
+}
+
+.infoContainer {
+  position: absolute;
+  margin-top: 70px;
+  right: 20px;
+  z-index: 1;
+}
+
 .imgContainer {
   position: absolute;
   /* background-color: #fde386; */
@@ -55,7 +75,7 @@ h2 {
 }
 
 #video-bg {
-  margin-top: 3%;
+  margin-top: 2%;
   width: 50%;
   min-width: 700px;
   height: auto;
@@ -86,26 +106,26 @@ h2 {
 
 .ui-theremin {
   flex: 1;
-  background-color: rgb(0, 0, 0);
-  padding: 0.25rem 2rem;
+  /* background-color: rgb(0, 0, 0); */
+  padding: 0.25rem 1rem;
 }
 
 .ui-music {
   flex: 1;
-  background-color: rgb(0, 0, 0);
-  padding: 0.25rem 2rem;
+  /* background-color: rgb(184, 77, 77); */
+  padding: 0.25rem 1rem;
 }
 
 .ui-foley {
   flex: 1;
-  background-color: rgb(0, 0, 0);
-  padding: 0.25rem 2rem;
+  /* background-color: rgb(0, 0, 0); */
+  padding: 0.25rem 1rem;
 }
 
 .ui-video {
   flex: 0.66;
-  background-color: rgb(0, 0, 0);
-  padding: 0.25rem 2rem;
+  /* background-color: rgb(0, 0, 0); */
+  padding: 0.25rem 1rem;
 }
 
 #slider-range {
@@ -139,6 +159,39 @@ button:hover {
 
 button:active {
   background-color: #7696c6;
+}
+
+.btn-info {
+  opacity: 0.75;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.btn-info:active {
+  background-color: black;
+}
+
+input#un-mute {
+  display: none;
+}
+
+.unmute img {
+  display: none;
+  cursor: pointer;
+}
+
+.mute img {
+  cursor: pointer;
+}
+
+input#un-mute:checked ~ .unmute img {
+  display: initial;
+}
+
+input#un-mute:checked ~ .mute img {
+  display: none;
 }
 
 .slidecontainer {
