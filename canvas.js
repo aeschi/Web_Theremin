@@ -50,7 +50,7 @@ const sampler = new Tone.Sampler({
 const reverb = new Tone.Reverb().toDestination();
 
 const player = new Tone.Player({
-    url: 'data/music/Theremin_Begleitung_Theremin_2-5.wav',
+    url: 'data/music/Theremin_Hauptstimme_ohne_Stille.wav',
     loop: true,
     autostart: false,
 }).toDestination().sync().start(0);
