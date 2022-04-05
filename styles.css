@@ -130,17 +130,26 @@ h2 {
 
 #slider-range {
   border: none;
+  background-color: #444;
 }
 
-.ui-slider-handle {
+.ui-slider { 
+  height: 6px;
+  
+}
+
+.ui-slider .ui-slider-handle{
   border-radius: 100%;
+  background-color: #7696c6;
+  width: 17px;
+  height: 17px;
+  border: none;
 }
 
 button {
-  background-color: #ffffff;
+  background-color: #7696c6;
   border: none;
-  border-radius: 1px;
-  color: rgb(0, 0, 0);
+  color: #fff;
   padding: 15px 10px;
   text-align: center;
   text-decoration: none;
@@ -149,20 +158,24 @@ button {
   font-weight: 700;
   margin: 4px 2px;
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 0.50;
   min-width: 50px;
 }
 
 button:hover {
-  opacity: 1;
+  opacity: .74;
 }
 
 button:active {
   background-color: #7696c6;
 }
 
+.btn-vid{
+  opacity: 1;
+}
+
 .btn-info {
-  opacity: 0.75;
+  opacity: 0.8;
   background-color: black;
   padding: 0;
   margin: 0;
@@ -201,11 +214,11 @@ input#un-mute:checked ~ .mute img {
 .slider {
   -webkit-appearance: none;
   width: 40%;
-  height: 5px;
+  height: 6px;
   border-radius: 5px;
-  background: #d3d3d3;
+  background: #f9f9f9;
   outline: none;
-  opacity: 0.8;
+  opacity: 0.95;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
 }
@@ -217,18 +230,19 @@ input#un-mute:checked ~ .mute img {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
-  background: #fde386;
+  background: #7696c6;
   cursor: pointer;
 }
+
 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #fde386;
+  background: #7696c6;
   cursor: pointer;
 }
 

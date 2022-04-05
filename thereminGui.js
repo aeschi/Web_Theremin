@@ -8,13 +8,11 @@ let un_mute = document.getElementById("un-mute");
 
 // ------------ SOUND TOGGLE ------------
 
-un_mute.onclick = function () {
-  if (playing) {
-    Tone.getContext().rawContext.suspend();
-    playing = false;
-  } else {
+un_mute.onclick = () => {
+  if (Tone.getContext().rawContext.state == "suspended") {
     Tone.start();
-    playing = true;
+  } else {
+    Tone.getContext().rawContext.suspend();
   }
 };
 
@@ -26,13 +24,22 @@ btnInfo.addEventListener("click", function () {
 
 // ------------ THEREMIN ------------
 
+toggleBtnColorActive = (btnName) => {
+  btnName.style.opacity = "1.0";
+};
+
+toggleBtnColorDeact = (btnName) => {
+  btnName.style.opacity = "0.5";
+};
+
 // same as toggle sound above
 btnClassic.addEventListener("click", function () {
   if (playing) {
+    toggleBtnColorDeact(btnClassic);
     Tone.getContext().rawContext.suspend();
     playing = false;
   } else {
-    Tone.start();
+    toggleBtnColorActive(btnClassic);
     playing = true;
   }
 });
@@ -48,6 +55,8 @@ btnGran.addEventListener("click", function () {
       grainPlaying = true;
       gp.start();
     }
+
+    toggleBtnColorDeact(btnGran);
   } else {
     if (grainPlaying) {
       grainPlaying = false;
@@ -57,6 +66,8 @@ btnGran.addEventListener("click", function () {
       grainPlaying = true;
       gp.start();
     }
+
+    toggleBtnColorActive(btnGran);
   }
 });
 
@@ -66,7 +77,6 @@ sliderGrainsize.oninput = function () {
   output.innerHTML = this.value;
   gS = (this.value / 1000).toFixed(2);
   gp.grainSize = gS;
-  console.log(gp.grainSize);
 };
 
 btnGrain.addEventListener("click", function () {
@@ -86,8 +96,10 @@ const btnMain = document.querySelector(".btn-main");
 btnMain.addEventListener("click", function () {
   if (player.state == "stopped") {
     player.start();
+    toggleBtnColorActive(btnMain);
   } else if (player.state == "started") {
     player.stop("+0.3");
+    toggleBtnColorDeact(btnMain);
   }
 });
 
@@ -127,9 +139,6 @@ $(function () {
       }
 
       myVideo.currentTime = ui.values[0];
-      console.log("handle left: " + ui.values[0]);
-
-      console.log("handle right: " + ui.values[1]);
       myVideo.play();
       checkTime();
     },
