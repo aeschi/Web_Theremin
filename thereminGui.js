@@ -34,41 +34,50 @@ toggleBtnColorDeact = (btnName) => {
 
 // same as toggle sound above
 btnClassic.addEventListener("click", function () {
-  if (playing) {
-    toggleBtnColorDeact(btnClassic);
-    Tone.getContext().rawContext.suspend();
-    playing = false;
-  } else {
-    toggleBtnColorActive(btnClassic);
-    playing = true;
+  if (Tone.getContext().rawContext.state == "running") {
+    if (playing) {
+      toggleBtnColorDeact(btnClassic);
+      playing = false;
+    } else {
+      toggleBtnColorActive(btnClassic);
+      playing = true;
+    }
   }
 });
 
 btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH
-
-  if (playing) {
-    if (grainPlaying) {
-      grainPlaying = false;
-      gp.stop();
-    } else {
-      grainPlaying = true;
-      gp.start();
-    }
-
+  if (gp.state == "started") {
+    gp.stop();
     toggleBtnColorDeact(btnGran);
   } else {
-    if (grainPlaying) {
-      grainPlaying = false;
-      gp.stop();
-    } else {
-      Tone.start();
-      grainPlaying = true;
-      gp.start();
-    }
-
+    gp.start();
     toggleBtnColorActive(btnGran);
   }
+  /*
+    if (playing) {
+      if (grainPlaying) {
+        grainPlaying = false;
+        gp.stop();
+      } else {
+        grainPlaying = true;
+        gp.start();
+      }
+  */
+
+  /*
+} else {
+  if (grainPlaying) {
+    grainPlaying = false;
+    gp.stop();
+  } else {
+    Tone.start();
+    grainPlaying = true;
+    gp.start();
+  }
+*/
+
+  //}
 });
 
 // SLIDER EXAMPLE
@@ -85,22 +94,38 @@ btnGrain.addEventListener("click", function () {
 
 // ------------ MUSIC ------------
 
+/*
 const player = new Tone.Player({
   url: "data/music/Theremin_Hauptstimme_ohne_Stille.wav",
   loop: true,
   autostart: false,
 }).toDestination();
+*/
 
 const btnMain = document.querySelector(".btn-main");
 
+/*
+* player is defined in canvas.js
+*/
 btnMain.addEventListener("click", function () {
-  if (player.state == "stopped") {
-    player.start();
-    toggleBtnColorActive(btnMain);
-  } else if (player.state == "started") {
-    player.stop("+0.3");
+  if (player.state == "started") {
+    Tone.Transport.pause();
     toggleBtnColorDeact(btnMain);
+  } else {
+    Tone.Transport.start();
+    toggleBtnColorActive(btnMain);
   }
+  //console.log(player.state);
+
+  /*
+    if (player.state == "stopped") {
+      player.start();
+      toggleBtnColorActive(btnMain);
+    } else if (player.state == "started") {
+      player.stop("+0.3");
+      toggleBtnColorDeact(btnMain);
+    }
+    */
 });
 
 // ------------ FOLEY ------------
@@ -145,8 +170,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-      " - " +
-      $("#slider-range").slider("values", 1) +
-      "sec"
+    " - " +
+    $("#slider-range").slider("values", 1) +
+    "sec"
   );
 });

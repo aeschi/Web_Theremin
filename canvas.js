@@ -61,10 +61,11 @@ let detuneMaxValue = 100;
 let playbackrate = 1;
 let grainSize = 0.1;
 
-gp = new Tone.GrainPlayer("grainsynth/samples/audio/SH-el.mp3", function () {
+gp = new Tone.GrainPlayer("data/samples/audio/SH-el.mp3", function () {
   gp.grainSize = 0.01;
   gp.overlap = 0.02;
   gp.loop = true;
+  gp.playbackRate = 0.1
 }).toDestination();
 
 let playing = false;
@@ -154,7 +155,7 @@ function draw() {
 
         brush_layer.ellipse(rightHandX, rightHandY, d / 10);
         brush_layer.ellipse(leftHandX, leftHandY, d / 10);
-      }
+      //}
 
       // draw face
       if (nose.confidence > 0.8) {
@@ -243,16 +244,16 @@ function draw() {
 
         const currGS = map(handR.x, video.width, 0, grainSize, 0);
         gp.grainSize = currGS;
-        PARAMS.grainSize = currGS;
-        console.log("grainsize " + currGS);
+       // PARAMS.grainSize = currGS;
+       // console.log("grainsize " + currGS);
 
         if (currPbr < 0.001) {
-          console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+         // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
           gp.playbackRate = 0.001;
-          PARAMS.playbackrate = 0.001; // für das gui monitoring
+        //  PARAMS.playbackrate = 0.001; // für das gui monitoring
       } else {
           gp.playbackRate = currPbr;
-          PARAMS.playbackrate = currPbr; // gui monitoring
+        //  PARAMS.playbackrate = currPbr; // gui monitoring
       }
 
         // right hand x position controls amount of detuning. detune maximum set in GUI
@@ -264,7 +265,7 @@ function draw() {
           detuneMaxValue
         );
         gp.detune = currDetune;
-      //}
+      }
     }
   }
 

@@ -3,11 +3,11 @@
 
 
 // Video Helper Function
-/*
+
 let myVideo = document.getElementById('video1');
 let startTime = 0;
 let endTime = 10;
-*/
+
 
 const PARAMS = {
     startTime: startTime,
@@ -102,11 +102,11 @@ thereminBtn.on('click', () => {
     if(playing){
        
         playing = false; 
-        console.log("playing "+ playing);
+        //console.log("playing "+ playing);
     }
     else {
         playing = true;
-        console.log("playing "+ playing);
+       // console.log("playing "+ playing);
     }
 });
 
@@ -217,9 +217,6 @@ attackInput.on('change', function (ev) {
     gp.grainSize = gS;
     grainSize = gS;
 });
-attackInput.on("change", function (ev) {
-  gS = parseFloat(ev.value.toFixed(2));
-  gp.grainSize = gS;
 
 const decayInput = gs.addInput(PARAMS, 'overlap', { min: 0.0, max: 0.1, step: 0.01 });
 decayInput.on('change', function (ev) {
@@ -244,7 +241,6 @@ pane.addMonitor(PARAMS,'grainSize',{ view:'graph', min: 0, max: 1});
 pane.addMonitor(PARAMS,'overlap',{ view:'graph', min: 0, max: 0.1});
 pane.addMonitor(PARAMS,'detune',{ view:'graph', min: 0, max: 800});
 pane.addMonitor(PARAMS,'playbackrate',{ view:'graph', min: 0, max: 2});
-
 pane.addMonitor(PARAMS,'fbdelay',{ view:'graph', min: 0.0, max: 1.0});
 
 
