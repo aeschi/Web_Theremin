@@ -40,7 +40,7 @@ function init() {
     //get IR
     irBuff;
     var getIr = new XMLHttpRequest();
-    getIr.open('get', 'grainsynth/samples/irs/Space4ArtGallery.wav', true);
+    getIr.open('get', '../data/samples/irs/Space4ArtGallery.wav', true);
     getIr.responseType = 'arraybuffer';
 
     getIr.onload = function () {
@@ -97,13 +97,13 @@ function grains(pos, pitch) {
 function bufferSwitch(input) {
     var getSound = new XMLHttpRequest();
     if (input == 0) {
-        getSound.open('get', 'grainsynth/samples/audio/SH-el.mp3', true);
+        getSound.open('get', '.../data/samples/audio/SH-el.mp3', true);
     } else if (input == 1) {
-        getSound.open('get', 'grainsynth/samples/audio/guitar.wav', true);
+        getSound.open('get', '../data/samples/audio/guitar.wav', true);
     } else if (input == 2) {
-        getSound.open('get', 'grainsynth/samples/audio/piano+spaceecho.mp3', true);
+        getSound.open('get', '../data/samples/audio/piano+spaceecho.mp3', true);
     } else if (input == 3) {
-            getSound.open('get', 'grainsynth/samples/audio/tuningorchestra.mp3', true);
+            getSound.open('get', '../data/samples/audio/tuningorchestra.mp3', true);
     } else {
         //nothing
     }
