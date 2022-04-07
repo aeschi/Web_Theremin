@@ -4,7 +4,7 @@
     <title>P5 Web Theremin</title>
 
     <!-- < Tweakpane GUI -->
-    <script src="https://cdn.jsdelivr.net/npm/tweakpane@2.1.1/dist/tweakpane.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tweakpane@2.1.1/dist/tweakpane.min.js"></script> -->
 
     <!-- Embed pep.js for consistent cross-browser pointer events. -->
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
@@ -166,12 +166,11 @@
       <section class="ui-music">
         <h2>MUSIC</h2>
 
-        <button class="btn-main">MAIN</button>
+        <button class="btn-all">ALL</button>
+        <button class="btn-main">MAIN VOICE</button>
         <button class="btn-side-one">SIDE 1</button>
         <button class="btn-side-two">SIDE 2</button>
         <button class="btn-side-three">SIDE 3</button>
-
-        <button class="btn-all">ALL</button>
 
         <!-- <tone-loader></tone-loader>
         <div id="content">
@@ -188,7 +187,7 @@
       </section>
 
       <section class="ui-video">
-        <h2>VIDEO</h2>
+        <h2>FILM</h2>
         <button class="btn-vid">► | ◼︎</button>
 
         <p>
@@ -210,6 +209,7 @@
       </section>
     </div>
 
+    <script src="mixer.js"></script>
     <script src="thereminGui.js"></script>
     <!-- <script src="gui.js"></script> -->
   </body>

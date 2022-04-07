@@ -94,38 +94,83 @@ btnGrain.addEventListener("click", function () {
 
 // ------------ MUSIC ------------
 
-/*
-const player = new Tone.Player({
-  url: "data/music/Theremin_Hauptstimme_ohne_Stille.wav",
-  loop: true,
-  autostart: false,
-}).toDestination();
-*/
-
+const btnAll = document.querySelector(".btn-all");
 const btnMain = document.querySelector(".btn-main");
+const btnSideOne = document.querySelector(".btn-side-one");
+const btnSideTwo = document.querySelector(".btn-side-two");
+const btnSideThree = document.querySelector(".btn-side-three");
 
-/*
-* player is defined in canvas.js
-*/
-btnMain.addEventListener("click", function () {
-  if (player.state == "started") {
-    Tone.Transport.pause();
-    toggleBtnColorDeact(btnMain);
-  } else {
-    Tone.Transport.start();
-    toggleBtnColorActive(btnMain);
-  }
-  //console.log(player.state);
+let muteAll = true;
 
-  /*
-    if (player.state == "stopped") {
-      player.start();
+btnAll.addEventListener("click", () => {
+  Tone.Transport.start();
+
+  soundfiles.forEach(function (val, i) {
+    if (muteAll) {
+      channelMusic[i].mute = false;
+      toggleBtnColorActive(btnAll);
       toggleBtnColorActive(btnMain);
-    } else if (player.state == "started") {
-      player.stop("+0.3");
+      toggleBtnColorActive(btnSideOne);
+      toggleBtnColorActive(btnSideTwo);
+      toggleBtnColorActive(btnSideThree);
+    } else {
+      channelMusic[i].mute = true;
+      toggleBtnColorDeact(btnAll);
       toggleBtnColorDeact(btnMain);
+      toggleBtnColorDeact(btnSideOne);
+      toggleBtnColorDeact(btnSideTwo);
+      toggleBtnColorDeact(btnSideThree);
     }
-    */
+  });
+  muteAll ? (muteAll = false) : (muteAll = true);
+});
+
+btnMain.addEventListener("click", () => {
+  Tone.Transport.start();
+  if (channelMusic[0].mute) {
+    channelMusic[0].mute = false;
+    toggleBtnColorActive(btnMain);
+  } else {
+    channelMusic[0].mute = true;
+    toggleBtnColorDeact(btnMain);
+    toggleBtnColorDeact(btnAll);
+  }
+});
+
+btnSideOne.addEventListener("click", () => {
+  Tone.Transport.start();
+  if (channelMusic[1].mute) {
+    channelMusic[1].mute = false;
+    toggleBtnColorActive(btnSideOne);
+  } else {
+    channelMusic[1].mute = true;
+    toggleBtnColorDeact(btnSideOne);
+    toggleBtnColorDeact(btnAll);
+  }
+});
+
+btnSideTwo.addEventListener("click", () => {
+  Tone.Transport.start();
+  if (channelMusic[2].mute) {
+    channelMusic[2].mute = false;
+    toggleBtnColorActive(btnSideTwo);
+  } else {
+    channelMusic[2].mute = true;
+    toggleBtnColorDeact(btnSideTwo);
+    toggleBtnColorDeact(btnAll);
+  }
+});
+
+btnSideThree.addEventListener("click", () => {
+  Tone.Transport.start();
+  if (channelMusic[3].mute) {
+    channelMusic[3].mute = false;
+    toggleBtnColorActive(btnSideThree);
+  } else {
+    channelMusic[3].mute = true;
+    toggleBtnColorDeact(btnSideThree);
+    toggleBtnColorDeact(btnAll);
+  }
 });
 
 // ------------ FOLEY ------------
@@ -149,8 +194,8 @@ $(function () {
   $("#slider-range").slider({
     range: true,
     min: 0,
-    max: 50,
-    values: [0, 50],
+    max: 48,
+    values: [0, 48],
     slide: function (event, ui) {
       $("#amount").val(ui.values[0] + " - " + ui.values[1] + "sec");
       function checkTime() {
@@ -170,8 +215,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-    " - " +
-    $("#slider-range").slider("values", 1) +
-    "sec"
+      " - " +
+      $("#slider-range").slider("values", 1) +
+      "sec"
   );
 });
