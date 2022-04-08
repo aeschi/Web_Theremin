@@ -12,7 +12,7 @@ Tone.Transport.bpm.value = 108;
 //Tone.Transport.loop = true;
 
 // warum is das immer running, obwohl der sound nicht spielt und der context aus ist ???
-console.log("Tone Context " + Tone.getContext().rawContext.state);
+// console.log("Tone Context " + Tone.getContext().rawContext.state);
 
 // ### TONE SYNTH
 
@@ -152,31 +152,32 @@ function draw() {
 
           face_layer.noFill();
           face_layer.stroke(215, 123, 103);
+          face_layer.ellipse(noseX, noseY, 100);
 
-          face_layer.beginShape();
-          for (let a = 0; a < TWO_PI; a += 0.02) {
-            let xoff = map(cos(a), -1, 1, 0, 2);
-            let yoff = map(sin(a), -1, 1, 0, 2);
-            const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
-            let x = r * cos(a);
-            let y = r * sin(a);
-            vertex(x + noseX, y + noseY);
-          }
-          face_layer.endShape(CLOSE);
+          // face_layer.beginShape();
+          // for (let a = 0; a < TWO_PI; a += 0.02) {
+          //   let xoff = map(cos(a), -1, 1, 0, 2);
+          //   let yoff = map(sin(a), -1, 1, 0, 2);
+          //   const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
+          //   let x = r * cos(a);
+          //   let y = r * sin(a);
+          //   vertex(x + noseX, y + noseY);
+          // }
+          // face_layer.endShape(CLOSE);
 
-          face_layer.arc(
-            noseX,
-            noseY + 15,
-            40,
-            40,
-            QUARTER_PI,
-            HALF_PI + QUARTER_PI
-          );
+          // face_layer.arc(
+          //   noseX,
+          //   noseY + 15,
+          //   40,
+          //   40,
+          //   QUARTER_PI,
+          //   HALF_PI + QUARTER_PI
+          // );
 
           face_layer.noStroke();
           face_layer.fill(215, 123, 103);
-          face_layer.ellipse(noseX - 13, noseY - 10, 3);
-          face_layer.ellipse(noseX + 13, noseY - 10, 3);
+          face_layer.ellipse(noseX - 13, noseY - 10, 1.5, 6);
+          face_layer.ellipse(noseX + 13, noseY - 10, 1.5, 6);
         }
 
         // play Theremin sound

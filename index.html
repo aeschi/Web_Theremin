@@ -51,11 +51,61 @@
   <body>
     <!-- <script src="introduction.js"></script> -->
 
-    <div class="container-canvas">
-      <div id="video-bg">
+    <div class="logoContainer">
+      <a
+        href="https://collisions-eisensteinshouse.projekte-filmuni.de/project/"
+      >
+        <img
+          src="./data/image/koll_logo_round.svg"
+          alt="koll_logo_round.svg"
+          title="logo"
+        />
+      </a>
+    </div>
+
+    <div class="infoContainer">
+      <button class="btn-info">
+        <img
+          src="./data/image/info_icon.svg"
+          alt="info_icon.svg"
+          title="Info"
+        />
+      </button>
+    </div>
+
+    <div class="SpeakerContainer">
+      <input type="checkbox" name="un-mute" id="un-mute" />
+      <label for="un-mute" class="unmute">
+        <img src="./data/image/speaker.svg" alt="Mute_Icon.svg" title="Mute" />
+      </label>
+      <label for="un-mute" class="mute">
+        <img
+          src="./data/image/speaker_mute.svg"
+          alt="Speaker_Icon.svg"
+          title="Unmute"
+        />
+      </label>
+    </div>
+
+    <div class="container-top">
+      <div class="container-canvas">
+        <div class="imgContainer">
+          <img
+            src="./data/image/theremin_bw_nobuttons.png"
+            alt="theremin_bw.png"
+            title="theremin"
+            width="100%"
+          />
+        </div>
+        <div id="canvas">
+          <script src="canvas.js"></script>
+          <!-- <script src="p5sketch.js"></script> -->
+        </div>
+      </div>
+
+      <div id="container-video">
         <video
           id="video1"
-          controls
           controlsList="nofullscreen nodownload"
           autoplay
           muted
@@ -66,59 +116,26 @@
             type="video/mp4"
           />
         </video>
-        <div class="imgContainer">
-          <img
-            src="./data/image/theremin_bw.png"
-            alt="theremin_bw.png"
-            title="theremin"
-            width="100%"
-          />
-        </div>
-      </div>
-      <div class="logoContainer">
-        <a
-          href="https://collisions-eisensteinshouse.projekte-filmuni.de/project/"
-        >
-          <img
-            src="./data/image/koll_logo_round.svg"
-            alt="koll_logo_round.svg"
-            title="logo"
-            width="50px"
-          />
-        </a>
-      </div>
+        <section class="ui-video">
+          <button class="btn-vid">► | ◼︎</button>
 
-      <div class="SpeakerContainer">
-        <input type="checkbox" name="un-mute" id="un-mute" />
-        <label for="un-mute" class="unmute">
-          <img
-            src="./data/image/speaker.svg"
-            alt="Mute_Icon.svg"
-            title="Mute"
-          />
-        </label>
-        <label for="un-mute" class="mute">
-          <img
-            src="./data/image/speaker_mute.svg"
-            alt="Speaker_Icon.svg"
-            title="Unmute"
-          />
-        </label>
-      </div>
+          <p>
+            <!-- <label for="amount">IN & OUT POINT</label> -->
+            <!-- <input
+              type="text"
+              id="amount"
+              readonly
+              style="
+                border: 0;
+                color: #ffffff;
+                /* font-weight: bold; */
+                background-color: rgba(0, 0, 0, 0);
+              "
+            /> -->
+          </p>
 
-      <div class="infoContainer">
-        <button class="btn-info">
-          <img
-            src="./data/image/info_icon.svg"
-            alt="info_icon.svg"
-            title="Info"
-          />
-        </button>
-      </div>
-
-      <div id="canvas">
-        <script src="canvas.js"></script>
-        <!-- <script src="p5sketch.js"></script> -->
+          <div id="slider-range"></div>
+        </section>
       </div>
     </div>
 
@@ -126,11 +143,11 @@
 
     <div class="ui-bar">
       <section class="ui-theremin">
-        <h2>THEREMIN</h2>
+        <h2>INTERACTIVE SOUNDS</h2>
 
-        <button class="btn-classic">CLASSIC</button>
+        <button class="btn-classic">THEREMIN</button>
         <button class="btn-granular">GRANULAR</button>
-        <button class="btn-grain">GRAIN DELAY</button>
+        <!-- <button class="btn-grain">GRAIN DELAY</button> -->
 
         <div class="slidecontainer">
           <p>
@@ -147,7 +164,7 @@
           </p>
         </div>
 
-        <div class="slidecontainer">
+        <!-- <div class="slidecontainer">
           <p>
             SLIDER
             <input
@@ -160,17 +177,17 @@
             />
             <span id="outputSlider"></span>
           </p>
-        </div>
+        </div> -->
       </section>
 
       <section class="ui-music">
-        <h2>MUSIC</h2>
+        <h2>FILM MUSIC</h2>
 
         <button class="btn-all">ALL</button>
         <button class="btn-main">MAIN VOICE</button>
-        <button class="btn-side-one">SIDE 1</button>
-        <button class="btn-side-two">SIDE 2</button>
-        <button class="btn-side-three">SIDE 3</button>
+        <button class="btn-side-one">VOICE 1</button>
+        <button class="btn-side-two">VOICE 2</button>
+        <button class="btn-side-three">VOICE 3</button>
 
         <!-- <tone-loader></tone-loader>
         <div id="content">
@@ -179,33 +196,11 @@
       </section>
 
       <section class="ui-foley">
-        <h2>FOLEY</h2>
+        <h2>ATMOSHPHERE | FOLEY</h2>
         <button class="btn-foley-1">WIND</button>
         <button class="btn-foley-2">WATER</button>
         <button class="btn-foley-3">HORSES</button>
         <button class="btn-foley-4">CARRIAGE</button>
-      </section>
-
-      <section class="ui-video">
-        <h2>FILM</h2>
-        <button class="btn-vid">► | ◼︎</button>
-
-        <p>
-          <label for="amount">IN & OUT POINT</label>
-          <input
-            type="text"
-            id="amount"
-            readonly
-            style="
-              border: 0;
-              color: #ffffff;
-              /* font-weight: bold; */
-              background-color: rgba(0, 0, 0, 0);
-            "
-          />
-        </p>
-
-        <div id="slider-range"></div>
       </section>
     </div>
 

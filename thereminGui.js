@@ -1,7 +1,7 @@
 const btnInfo = document.querySelector(".btn-info");
 const btnClassic = document.querySelector(".btn-classic");
 const btnGran = document.querySelector(".btn-granular");
-const btnGrain = document.querySelector(".btn-grain");
+// const btnGrain = document.querySelector(".btn-grain");
 const sliderGrainsize = document.getElementById("grainsize");
 const output = document.getElementById("outputGrain");
 let un_mute = document.getElementById("un-mute");
@@ -88,9 +88,9 @@ sliderGrainsize.oninput = function () {
   gp.grainSize = gS;
 };
 
-btnGrain.addEventListener("click", function () {
-  // FUNCTIOANLITY GRAIN DELAY
-});
+// btnGrain.addEventListener("click", function () {
+//   // FUNCTIOANLITY GRAIN DELAY
+// });
 
 // ------------ MUSIC ------------
 
