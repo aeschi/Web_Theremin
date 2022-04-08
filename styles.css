@@ -140,14 +140,22 @@ h2 {
 
 .ui-theremin {
   flex: 2;
+  /* background-color: #CF7361; */
+  padding: 0.25em 1rem;
 }
 
 .ui-music {
   flex: 1;
+
+  /* background-color: #9a8e32; */
+  padding: 0.25em 1rem;
 }
 
 .ui-foley {
   flex: 1;
+
+  /* background-color: #317c3c; */
+  padding: 0.25em 1rem;
 }
 
 .ui-slider { 
@@ -156,9 +164,9 @@ h2 {
 
 .ui-slider .ui-slider-handle{
   border-radius: 100%;
-  background-color: #CF7361;
-  width: 17px;
-  height: 17px;
+  background-color: #DED094;
+  width: 15px;
+  height: 15px;
   border: none;
 }
 
@@ -187,27 +195,33 @@ button:active {
 }
 
 .btn-classic {
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.68;
 }
 
 .btn-granular{
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.68;
 }
 
 .btn-grain{
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.68;
 }
 
 .btn-classic:hover {
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.92;
 }
 
 .btn-granular:hover{
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.92;
 }
 
 .btn-grain:hover{
-  background-color: #DED094;
+  background-color: #CF7361;
+  opacity: 0.92;
 }
 
 .btn-info {
@@ -283,7 +297,7 @@ input#un-mute:checked ~ .mute img {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: #DED094;
+  background: #CF7361;
   cursor: pointer;
 }
 
@@ -292,7 +306,7 @@ input#un-mute:checked ~ .mute img {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #DED094;
+  background: #CF7361;
   cursor: pointer;
 }
 
