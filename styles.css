@@ -112,6 +112,11 @@ h2 {
   z-index: 1;
 }
 
+.btn-vid:hover{
+  opacity: 0.70;
+  background-color: #222222;
+}
+
 #slider-range {
   border: none;
   width: 100%;
