@@ -194,8 +194,8 @@ $(function () {
   $("#slider-range").slider({
     range: true,
     min: 0,
-    max: 48,
-    values: [0, 48],
+    max: 274,
+    values: [0, 274],
     slide: function (event, ui) {
       $("#amount").val(ui.values[0] + " - " + ui.values[1] + "sec");
       function checkTime() {
