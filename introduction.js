@@ -10,7 +10,7 @@ const tour = new Shepherd.Tour({
 tour.addStep({
   title: "Hi there!",
   text: `This is a virtual THEREMIN application.\
-  Let's have a look around. This application has several THEREMIN sounds. The 'CLASSIC' sound, the more atmospheric 'GRANULAR SYNTHESIS' one and an examplatory composition for this film scene. `,
+  Let's have a look around. This application has several interactive sounds. The 'THEREMIN' sound, the more atmospheric 'GRANULAR SYNTHESIS' one and ... `,
   buttons: [
     {
       action() {
@@ -30,9 +30,9 @@ tour.addStep({
 });
 
 tour.addStep({
-  title: "Hi there!",
-  text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the '►
- | ◼︎' button for each sound source`,
+  title: "INTERACTIVE SOUNDS",
+  text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
+ button and active one of the interactive sounds (THEREMIN/GRANULAR). `,
   buttons: [
     {
       action() {
@@ -52,8 +52,8 @@ tour.addStep({
 });
 
 tour.addStep({
-  title: "THEREMIN CLASSIC",
-  text: `To explore the classic Theremin sound, click on the '► | ◼︎' button below THEREMIN CLASSIC. Move your left hand up and done to change the volume. Move your right hand through space to change the pitch.`,
+  title: "INTERACTIVE SOUNDS",
+  text: `Move your left hand up and done to change the volume. Move your right hand through space to change the pitch. Also try playing around with the sliders to adjust the settings for the GRANULAR sound.`,
   buttons: [
     {
       action() {
@@ -73,8 +73,8 @@ tour.addStep({
 });
 
 tour.addStep({
-  title: "THEREMIN GRANUALAR SYNTHESIS",
-  text: `Try out different sources and play around with the grain settings to fully explore the possible output for granular synthesis.`,
+  title: "FILM MUSIC",
+  text: `To better understand the value of film music, you can toggle on and of a precomposed piece of film music. You can active ALL sources at once or the MAIN and additional VOICES individually.`,
   buttons: [
     {
       action() {
@@ -94,8 +94,8 @@ tour.addStep({
 });
 
 tour.addStep({
-  title: "THEREMIN MUSIC COMPOSITION",
-  text: `Here you can listen to theremin film music specifically made for this scene. You can apply various filters to the music.`,
+  title: "ATMOSPHERE FOLEY",
+  text: `Aside from film music, atmospheric sound, also called FOLEYS, help with brining a film scene to life. Click on the different sound sources to hear what a difference these sounds can make.`,
   buttons: [
     {
       action() {

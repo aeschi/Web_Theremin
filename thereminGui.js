@@ -93,13 +93,13 @@ const btnSideOne = document.querySelector(".btn-side-one");
 const btnSideTwo = document.querySelector(".btn-side-two");
 const btnSideThree = document.querySelector(".btn-side-three");
 
-let muteAll = true;
+let muteAllMusic = true;
 
 btnAll.addEventListener("click", () => {
   Tone.Transport.start();
 
   soundfiles.forEach(function (val, i) {
-    if (muteAll) {
+    if (muteAllMusic) {
       channelMusic[i].mute = false;
       toggleBtnColorActive(btnAll);
       toggleBtnColorActive(btnMain);
@@ -115,7 +115,7 @@ btnAll.addEventListener("click", () => {
       toggleBtnColorDeact(btnSideThree);
     }
   });
-  muteAll ? (muteAll = false) : (muteAll = true);
+  muteAllMusic ? (muteAllMusic = false) : (muteAllMusic = true);
 });
 
 btnMain.addEventListener("click", () => {
@@ -168,7 +168,37 @@ btnSideThree.addEventListener("click", () => {
 
 // ------------ FOLEY ------------
 
-// need to add foley sounds - where from?
+const btnFoleyOne = document.querySelector(".btn-foley-1");
+const btnFoleyTwo = document.querySelector(".btn-foley-2");
+const btnFoleyThree = document.querySelector(".btn-foley-3");
+const btnFoleyFour = document.querySelector(".btn-foley-4");
+
+toggleButton = (btnName, i) => {
+  Tone.Transport.start();
+  if (channelFoley[i].mute) {
+    channelFoley[i].mute = false;
+    toggleBtnColorActive(btnName);
+  } else {
+    channelFoley[i].mute = true;
+    toggleBtnColorDeact(btnName);
+  }
+};
+
+btnFoleyOne.addEventListener("click", () => {
+  toggleButton(btnFoleyOne, 0);
+});
+
+btnFoleyTwo.addEventListener("click", () => {
+  toggleButton(btnFoleyTwo, 1);
+});
+
+btnFoleyThree.addEventListener("click", () => {
+  toggleButton(btnFoleyThree, 2);
+});
+
+btnFoleyFour.addEventListener("click", () => {
+  toggleButton(btnFoleyFour, 3);
+});
 
 // ------------ VIDEO ------------
 let myVideo = document.getElementById("video1");
