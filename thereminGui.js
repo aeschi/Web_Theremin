@@ -1,4 +1,3 @@
-const btnInfo = document.querySelector(".btn-info");
 const btnClassic = document.querySelector(".btn-classic");
 const btnGran = document.querySelector(".btn-granular");
 // const btnGrain = document.querySelector(".btn-grain");
@@ -16,12 +15,6 @@ un_mute.onclick = () => {
   }
 };
 
-// ------------ INFO ------------
-
-btnInfo.addEventListener("click", function () {
-  alert("an info panel will come here");
-});
-
 // ------------ THEREMIN ------------
 
 toggleBtnColorActive = (btnName) => {
@@ -29,7 +22,7 @@ toggleBtnColorActive = (btnName) => {
 };
 
 toggleBtnColorDeact = (btnName) => {
-  btnName.style.opacity = "0.5";
+  btnName.style.opacity = "0.7";
 };
 
 // same as toggle sound above

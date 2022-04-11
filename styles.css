@@ -8,8 +8,8 @@ body {
   margin: 0;
   padding: 0.15em;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-  font-size: 100%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12pt;
   display: flex;
   flex-direction: column;
 }
@@ -22,35 +22,42 @@ body {
 
 p {
   font-size: 0.75em;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h2 {
-  font-weight: bold;
   padding: 0;
+  /* font-size: 1.5rem; */
 }
 
 .logoContainer img{
   position: absolute;
   margin: 10px;
   z-index: 1;
-  width: 45px;
+  width: 125px;
 }
 
 .infoContainer {
   position: absolute;
   margin-left: 18px;
-  margin-top: 75px;
+  margin-top: 165px;
   z-index: 1;
 }
 
 .SpeakerContainer {
   position: absolute;
-  margin-top: 115px;
+  margin-top: 205px;
   margin-left: 19px;
   z-index: 1;
-  opacity: ;
 }
 
+.triangleContainer {
+  position: absolute;
+  margin-top: 10px;
+  right: 19px;
+  z-index: 1;
+  width: 90px;
+}
 
 .container-top{
   flex:1;
@@ -145,7 +152,7 @@ h2 {
 
 .ui-theremin {
   flex: 2;
-  /* background-color: #CF7361; */
+  /* background-color: #f16834; */
   padding: 0.25em 1rem;
 }
 
@@ -165,18 +172,24 @@ h2 {
 
 .ui-slider { 
   height: 6px;
+  border-radius: none;
+}
+
+.ui-slider-range{
+  border-radius: 0;
+  /* background: #20638d; */
 }
 
 .ui-slider .ui-slider-handle{
-  border-radius: 100%;
-  background-color: #DED094;
-  width: 15px;
+  border-radius: 0;
+  background-color: #ecce86;
+  width: 10px;
   height: 15px;
   border: none;
 }
 
 button {
-  background-color: #7696c6;
+  background-color: #20638d;
   border: none;
   color: #fff;
   padding: 15px 10px;
@@ -187,45 +200,45 @@ button {
   font-weight: 700;
   margin: 4px 2px;
   cursor: pointer;
-  opacity: 0.50;
+  opacity: 0.70;
   min-width: 50px;
 }
 
 button:hover {
-  opacity: .74;
+  opacity: .84;
 }
 
 button:active {
-  background-color: #7696c6;
+  background-color: #20638d;
 }
 
 .btn-classic {
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.68;
 }
 
 .btn-granular{
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.68;
 }
 
 .btn-grain{
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.68;
 }
 
 .btn-classic:hover {
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.92;
 }
 
 .btn-granular:hover{
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.92;
 }
 
 .btn-grain:hover{
-  background-color: #CF7361;
+  background-color: #f16834;
   opacity: 0.92;
 }
 
@@ -302,7 +315,7 @@ input#un-mute:checked ~ .mute img {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: #CF7361;
+  background: #f16834;
   cursor: pointer;
 }
 
@@ -311,29 +324,63 @@ input#un-mute:checked ~ .mute img {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #CF7361;
+  background: #f16834;
   cursor: pointer;
 }
 
-/* .shepherd-element.shepherd-theme-default {
-    margin-bottom: 1px;
-    margin-left: 1px;
-    /* position: block; */
-/* vertical-align: bottom; 
-} */
+.shepherd-element {
+    position: block;
+    border-radius: 0;
+} 
 
-.shepherd-element.shepherd-theme-default .shepherd-content {
-  border-radius: 1px;
+.shepherd-element .shepherd-content {
+  border-radius: 0;
   position: relative;
-  font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
   text-align: left;
-  background: hsla(0, 9%, 42%, 0.1);
+  background: #fdf5e6;
   color: #444;
   font-size: 1.1em;
   line-height: 1.5em;
 }
 
-.shepherd-element.shepherd-theme-default .shepherd-content .shepherd-button {
-  background: rgb(109, 122, 175);
+.shepherd-element .shepherd-content .shepherd-button {
+  background: #20638d;
   color: #fff;
+}
+.shepherd-button {
+  border-radius: 0;
+  display: flex;
+  flex-grow: 1;
+  font-size: 1rem;
+  justify-content: space-around;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 1;
+}
+.shepherd-button:hover {
+  opacity: 0.8;
+}
+
+.shepherd-has-title .shepherd-content .shepherd-cancel-icon {
+  /* margin-top: -7px; */
+  background-color: transparent;
+}
+
+.shepherd-has-title .shepherd-content .shepherd-header {
+  background: transparent;
+  font-family: 'Roboto Slab', serif;
+  padding-bottom: 0;
+  padding-left: 1.25rem;
+}
+
+.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.shepherd-text {
+  font-size: 1rem;
+  padding: 1.25rem;
 }
