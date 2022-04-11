@@ -18,7 +18,7 @@ Tone.Transport.bpm.value = 108;
 
 let synth = new Tone.DuoSynth({
   harmonicity: 0.4,
-  vibratoAmount: 0.05,
+  vibratoAmount: 0.3,
   voice0: {
     oscillator: {
       type: "sine",
@@ -64,7 +64,7 @@ let playing = false;
 let therSampler = false;
 let grainPlaying = false;
 
-let masterVol = 1;
+let masterVol = 1.5;
 
 const masterVolume = new Tone.Volume(masterVol);
 const masterCompressor = new Tone.Compressor({
@@ -83,6 +83,7 @@ const gain2 = new Tone.Gain(0.1);
 //vibrato.frequency.value = "y value" * 10;
 
 Tone.Destination.chain(masterCompressor, masterVolume, masterAnalyser);
+//Tone.Destination.chain(masterVolume, masterAnalyser);
 
 function preload() {
   // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
@@ -192,8 +193,8 @@ function draw() {
           synth.triggerAttackRelease(frequency, "0.1");
 
           // Update oscillator volume
-          synthVolume = map(handL.y, 0, 360, 0, -24);
-          // synth.volume.value = synthVolume;
+          synthVolume = map(handL.y, 0, 360, 0, -50);
+          synth.volume.value = synthVolume;
 
           //sampler.volume.value = synthVolume;
         }
