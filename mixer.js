@@ -28,12 +28,7 @@ soundfiles.map(function (url, i) {
 let channelFoley = [];
 let playerFoley = [];
 
-let foleyfiles = [
-  "Theremin_Hauptstimme",
-  "Theremin_Begleitung_Theremin_2",
-  "Theremin_Begleitung_Theremin_3",
-  "Theremin_Begleitung_Theremin_4",
-];
+let foleyfiles = ["rain", "water", "pigs", "steps"];
 
 foleyfiles.map(function (url, i) {
   channelFoley[i] = new Tone.Channel(1).toDestination();

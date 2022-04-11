@@ -141,119 +141,141 @@ function draw() {
         leftHandX = map(handL.x, 0, 640, 0, width);
         leftHandY = map(handL.y, 0, 360, 0, height);
 
-        brush_layer.ellipse(rightHandX, rightHandY, d / 10);
-        brush_layer.ellipse(leftHandX, leftHandY, d / 10);
-        //}
+        brush_layer.ellipse(rightHandX, rightHandY, d / 5);
+        brush_layer.ellipse(leftHandX, leftHandY, d / 5);
+      }
 
-        // draw face
-        if (nose.confidence > 0.8) {
-          noseX = map(nose.x, 0, 640, 0, width);
-          noseY = map(nose.y, 0, 360, 0, height);
+      // draw face
+      if (nose.confidence > 0.8) {
+        noseX = map(nose.x, 0, 640, 0, width);
+        noseY = map(nose.y, 0, 360, 0, height);
 
-          face_layer.noFill();
-          face_layer.stroke(215, 123, 103);
-          face_layer.ellipse(noseX, noseY, 100);
+        face_layer.noFill();
+        face_layer.stroke(215, 123, 103, 100);
+        face_layer.strokeWeight(3);
+        face_layer.ellipse(noseX, noseY + 50, 120);
 
-          // face_layer.beginShape();
-          // for (let a = 0; a < TWO_PI; a += 0.02) {
-          //   let xoff = map(cos(a), -1, 1, 0, 2);
-          //   let yoff = map(sin(a), -1, 1, 0, 2);
-          //   const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
-          //   let x = r * cos(a);
-          //   let y = r * sin(a);
-          //   vertex(x + noseX, y + noseY);
-          // }
-          // face_layer.endShape(CLOSE);
+        // face_layer.beginShape();
+        // for (let a = 0; a < TWO_PI; a += 0.02) {
+        //   let xoff = map(cos(a), -1, 1, 0, 2);
+        //   let yoff = map(sin(a), -1, 1, 0, 2);
+        //   const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
+        //   let x = r * cos(a);
+        //   let y = r * sin(a);
+        //   vertex(x + noseX, y + noseY);
+        // }
+        // face_layer.endShape(CLOSE);
 
-          // face_layer.arc(
-          //   noseX,
-          //   noseY + 15,
-          //   40,
-          //   40,
-          //   QUARTER_PI,
-          //   HALF_PI + QUARTER_PI
-          // );
+        // face_layer.arc(
+        //   noseX,
+        //   noseY + 15,
+        //   40,
+        //   40,
+        //   QUARTER_PI,
+        //   HALF_PI + QUARTER_PI
+        // );
 
-          face_layer.noStroke();
-          face_layer.fill(215, 123, 103);
-          face_layer.ellipse(noseX - 13, noseY - 10, 1.5, 6);
-          face_layer.ellipse(noseX + 13, noseY - 10, 1.5, 6);
+        face_layer.noStroke();
+        face_layer.fill(215, 123, 103, 100);
+        face_layer.ellipse(noseX - 13, noseY + 40, 3, 6);
+        face_layer.ellipse(noseX + 13, noseY + 40, 3, 6);
+      }
+
+      if (nose.confidence > 0.8) {
+        // noseX = map(nose.x, 0, 640, 0, width);
+        // noseY = map(nose.y, 0, 360, 0, height);
+
+        for (let i = 0; i < poses.length; i++) {
+          let skeleton = poses[i].skeleton;
+          // For every skeleton, loop through all body connections
+          for (let j = 0; j < skeleton.length; j++) {
+            let partA = skeleton[j][0];
+            let partB = skeleton[j][1];
+            stroke(215, 123, 103, 100);
+            strokeWeight(3);
+            line(
+              map(partA.position.x, 0, 640, 0, width),
+              map(partA.position.y, 0, 360, 0, height),
+              map(partB.position.x, 0, 640, 0, width),
+              map(partB.position.y, 0, 360, 0, height)
+            );
+          }
         }
+      }
 
-        // play Theremin sound
-        if (playing) {
-          // trigger synth
-          // synth.triggerAttackRelease('A3', '0.1');
+      // play Theremin sound
+      if (playing) {
+        // trigger synth
+        // synth.triggerAttackRelease('A3', '0.1');
 
-          // Update oscillator frequency
-          frequency = map(handR.x, 0, 640, 880, 220);
-          synth.setNote(frequency);
-          // trigger synth
-          synth.triggerAttackRelease(frequency, "0.1");
+        // Update oscillator frequency
+        frequency = map(handR.x, 0, 640, 880, 220);
+        synth.setNote(frequency);
+        // trigger synth
+        synth.triggerAttackRelease(frequency, "0.1");
 
-          // Update oscillator volume
-          synthVolume = map(handL.y, 0, 360, 0, -24);
-          // synth.volume.value = synthVolume;
+        // Update oscillator volume
+        synthVolume = map(handL.y, 0, 360, 0, -24);
+        // synth.volume.value = synthVolume;
 
-          //sampler.volume.value = synthVolume;
-        }
+        //sampler.volume.value = synthVolume;
+      }
 
-        if (therSampler) {
-          frequency = map(handR.x, 0, 640, 880, 220);
+      if (therSampler) {
+        frequency = map(handR.x, 0, 640, 880, 220);
 
-          let noteDuration = 0.5;
+        let noteDuration = 0.5;
 
-          // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann
-          // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
-          // ist aber verbundener, und eher wie ein flächiger theremin sound
+        // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann
+        // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
+        // ist aber verbundener, und eher wie ein flächiger theremin sound
 
-          // hier envelopes hinzufügen, und die länge der Noten regeln
-          toNote(frequency);
-          console.log("cur note " + note);
-          if (lastNote != 0) {
-            if (note != lastNote) {
-              sampler.triggerRelease(lastNote, Tone.now());
-              sampler.triggerAttack(note, Tone.now());
-              lastNote = note;
-            }
-            //else if same as before continue playin note??
-          } else if (lastNote == 0) {
+        // hier envelopes hinzufügen, und die länge der Noten regeln
+        toNote(frequency);
+        console.log("cur note " + note);
+        if (lastNote != 0) {
+          if (note != lastNote) {
+            sampler.triggerRelease(lastNote, Tone.now());
             sampler.triggerAttack(note, Tone.now());
             lastNote = note;
           }
+          //else if same as before continue playin note??
+        } else if (lastNote == 0) {
+          sampler.triggerAttack(note, Tone.now());
+          lastNote = note;
         }
-
-        // if (grainPlaying) {
-        //left hand height controls playbackrate, maximum playbackrate set in GUI
-        const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
-        // console.log("handl y "+handL.y);
-        //console.log("gp pbr "+playbackrate);
-        // console.log("curr pbr "+currPbr);
-
-        const currGS = map(handR.x, video.width, 0, grainSize, 0);
-        gp.grainSize = currGS;
-        // PARAMS.grainSize = currGS;
-        // console.log("grainsize " + currGS);
-
-        if (currPbr < 0.001) {
-          // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
-          gp.playbackRate = 0.001;
-          //  PARAMS.playbackrate = 0.001; // für das gui monitoring
-        } else {
-          gp.playbackRate = currPbr;
-          //  PARAMS.playbackrate = currPbr; // gui monitoring
-        }
-
-        // right hand x position controls amount of detuning. detune maximum set in GUI
-        const currDetune = map(
-          handR.x, // handR.y
-          0,
-          video.width,
-          -detuneMaxValue,
-          detuneMaxValue
-        );
-        gp.detune = currDetune;
       }
+
+      // if (grainPlaying) {
+      //left hand height controls playbackrate, maximum playbackrate set in GUI
+      const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
+      // console.log("handl y "+handL.y);
+      //console.log("gp pbr "+playbackrate);
+      // console.log("curr pbr "+currPbr);
+
+      const currGS = map(handR.x, video.width, 0, grainSize, 0);
+      gp.grainSize = currGS;
+      // PARAMS.grainSize = currGS;
+      // console.log("grainsize " + currGS);
+
+      if (currPbr < 0.001) {
+        // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+        gp.playbackRate = 0.001;
+        //  PARAMS.playbackrate = 0.001; // für das gui monitoring
+      } else {
+        gp.playbackRate = currPbr;
+        //  PARAMS.playbackrate = currPbr; // gui monitoring
+      }
+
+      // right hand x position controls amount of detuning. detune maximum set in GUI
+      const currDetune = map(
+        handR.x, // handR.y
+        0,
+        video.width,
+        -detuneMaxValue,
+        detuneMaxValue
+      );
+      gp.detune = currDetune;
     }
   }
 
