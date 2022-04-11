@@ -83,7 +83,6 @@ const gain2 = new Tone.Gain(0.1);
 //vibrato.frequency.value = "y value" * 10;
 
 Tone.Destination.chain(masterCompressor, masterVolume, masterAnalyser);
-//Tone.Destination.chain(masterVolume, masterAnalyser);
 
 function preload() {
   // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
