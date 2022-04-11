@@ -49,11 +49,11 @@ const sampler = new Tone.Sampler({
 
 // ### GRAIN PLAYER ###
 
-let detuneMaxValue = 100;
+let detuneMaxValue = 500;
 let playbackrate = 1;
 let grainSize = 0.1;
 
-gp = new Tone.GrainPlayer("data/samples/audio/SH-el.mp3", function () {
+gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav", function () {
   gp.grainSize = 0.01;
   gp.overlap = 0.02;
   gp.loop = true;
