@@ -53,12 +53,15 @@ let detuneMaxValue = 500;
 let playbackrate = 1;
 let grainSize = 0.1;
 
-gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav", function () {
-  gp.grainSize = 0.01;
-  gp.overlap = 0.02;
-  gp.loop = true;
-  gp.playbackRate = 0.1;
-}).toDestination();
+gp = new Tone.GrainPlayer(
+  "data/music/Theremin_Hauptstimme_ohne_Stille.wav",
+  function () {
+    gp.grainSize = 0.01;
+    gp.overlap = 0.02;
+    gp.loop = true;
+    gp.playbackRate = 0.1;
+  }
+).toDestination();
 
 let playing = false;
 let therSampler = false;
@@ -84,10 +87,6 @@ const gain2 = new Tone.Gain(0.1);
 
 Tone.Destination.chain(masterCompressor, masterVolume, masterAnalyser);
 
-function preload() {
-  // thereminMusic = loadSound('data/music/Theremin_Begleitung_Theremin_2-5.wav');
-}
-
 // ### p5 ####################
 
 function setup() {
@@ -111,11 +110,6 @@ function draw() {
   canvas.clear();
   face_layer.clear();
 
-  // background(253, 0, 0);
-
-  // draw video
-  // image(farmerVid, width / 2 - vidSize / 2, windowHeight * 0.05);
-
   // map hand movement to synth and draw keypoints
   if (poses.length > 0) {
     let handR = poses[0].pose.rightWrist;
@@ -125,7 +119,7 @@ function draw() {
 
     if (typeof handR.x !== "undefined") {
       brush_layer.clear();
-      brush_layer.fill(215, 123, 103, 100);
+      brush_layer.fill(183, 100);
       brush_layer.noStroke();
 
       // size of hand ellipse based on distance between hands
@@ -142,7 +136,7 @@ function draw() {
         leftHandY = map(handL.y, 0, 360, 0, height);
 
         brush_layer.ellipse(rightHandX, rightHandY, d / 5);
-        brush_layer.ellipse(leftHandX, leftHandY, d / 5);
+        brush_layer.ellipse(leftHandX, leftHandY, (height - leftHandY) / 3);
       }
 
       // draw face
@@ -150,49 +144,20 @@ function draw() {
         noseX = map(nose.x, 0, 640, 0, width);
         noseY = map(nose.y, 0, 360, 0, height);
 
-        face_layer.noFill();
-        face_layer.stroke(215, 123, 103, 100);
-        face_layer.strokeWeight(3);
-        face_layer.ellipse(noseX, noseY + 50, 120);
-
-        // face_layer.beginShape();
-        // for (let a = 0; a < TWO_PI; a += 0.02) {
-        //   let xoff = map(cos(a), -1, 1, 0, 2);
-        //   let yoff = map(sin(a), -1, 1, 0, 2);
-        //   const r = map(noise(xoff, yoff, 0), 0, 1, 55, 65);
-        //   let x = r * cos(a);
-        //   let y = r * sin(a);
-        //   vertex(x + noseX, y + noseY);
-        // }
-        // face_layer.endShape(CLOSE);
-
-        // face_layer.arc(
-        //   noseX,
-        //   noseY + 15,
-        //   40,
-        //   40,
-        //   QUARTER_PI,
-        //   HALF_PI + QUARTER_PI
-        // );
-
         face_layer.noStroke();
-        face_layer.fill(215, 123, 103, 100);
-        face_layer.ellipse(noseX - 13, noseY + 40, 3, 6);
-        face_layer.ellipse(noseX + 13, noseY + 40, 3, 6);
+        face_layer.fill(183, 100);
+        face_layer.ellipse(noseX, noseY + 50, 120);
       }
 
       if (nose.confidence > 0.8) {
-        // noseX = map(nose.x, 0, 640, 0, width);
-        // noseY = map(nose.y, 0, 360, 0, height);
-
         for (let i = 0; i < poses.length; i++) {
           let skeleton = poses[i].skeleton;
           // For every skeleton, loop through all body connections
           for (let j = 0; j < skeleton.length; j++) {
             let partA = skeleton[j][0];
             let partB = skeleton[j][1];
-            stroke(215, 123, 103, 100);
-            strokeWeight(3);
+            stroke(183, 100);
+            strokeWeight(10);
             line(
               map(partA.position.x, 0, 640, 0, width),
               map(partA.position.y, 0, 360, 0, height),
@@ -214,9 +179,9 @@ function draw() {
         // trigger synth
         synth.triggerAttackRelease(frequency, "0.1");
 
-          // Update oscillator volume
-          synthVolume = map(handL.y, 0, 360, 0, -50);
-          synth.volume.value = synthVolume;
+        // Update oscillator volume
+        synthVolume = map(handL.y, 0, 360, 0, -50);
+        synth.volume.value = synthVolume;
 
         //sampler.volume.value = synthVolume;
       }

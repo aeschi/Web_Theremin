@@ -122,7 +122,13 @@
           />
         </video>
         <section class="ui-video">
-          <button class="btn-vid">► | ◼︎</button>
+          <input type="checkbox" name="play" id="play" />
+          <label for="play" class="play">
+            <img src="./data/image/play.svg" alt="play.svg" title="Play" />
+          </label>
+          <label for="play" class="pause">
+            <img src="./data/image/pause.svg" alt="pause.svg" title="Pause" />
+          </label>
 
           <p>
             <!-- <label for="amount">IN & OUT POINT</label> -->
@@ -151,12 +157,12 @@
         <h2>INTERACTIVE SOUNDS</h2>
 
         <button class="btn-classic">THEREMIN</button>
-        <button class="btn-granular">GRANULAR</button>
+        <button class="btn-granular">GRANULAR SYNTHESIS</button>
         <!-- <button class="btn-grain">GRAIN DELAY</button> -->
 
         <div class="slidecontainer">
           <p>
-            GRAINSIZE
+            GRAIN SIZE
             <input
               type="range"
               min="10"

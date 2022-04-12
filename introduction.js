@@ -33,6 +33,7 @@ tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
  button and active one of the interactive sounds (THEREMIN/GRANULAR). `,
+  attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
       action() {
@@ -54,6 +55,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `Move your left hand up and done to change the volume. Move your right hand through space to change the pitch. Also try playing around with the sliders to adjust the settings for the GRANULAR sound.`,
+  attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
       action() {
@@ -75,6 +77,7 @@ tour.addStep({
 tour.addStep({
   title: "FILM MUSIC",
   text: `To better understand the value of film music, you can toggle on and of a precomposed piece of film music. You can active ALL sources at once or the MAIN and additional VOICES individually.`,
+  attachTo: { element: ".ui-music", on: "top" },
   buttons: [
     {
       action() {
@@ -96,6 +99,7 @@ tour.addStep({
 tour.addStep({
   title: "ATMOSPHERE FOLEY",
   text: `Aside from film music, atmospheric sound, also called FOLEYS, help with brining a film scene to life. Click on the different sound sources to hear what a difference these sounds can make.`,
+  attachTo: { element: ".ui-foley", on: "top" },
   buttons: [
     {
       action() {

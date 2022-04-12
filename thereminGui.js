@@ -4,6 +4,7 @@ const btnGran = document.querySelector(".btn-granular");
 const sliderGrainsize = document.getElementById("grainsize");
 const output = document.getElementById("outputGrain");
 let un_mute = document.getElementById("un-mute");
+let toggleVideo = document.getElementById("play");
 
 // ------------ SOUND TOGGLE ------------
 
@@ -205,12 +206,10 @@ let myVideo = document.getElementById("video1");
 let startTime = 0;
 let endTime = 10;
 
-const btnVid = document.querySelector(".btn-vid");
-
-btnVid.addEventListener("click", function () {
+toggleVideo.onclick = () => {
   if (myVideo.paused) myVideo.play();
   else myVideo.pause();
-});
+};
 
 // in out range slider
 $(function () {

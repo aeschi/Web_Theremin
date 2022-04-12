@@ -118,16 +118,40 @@ h2 {
   justify-content: space-between;
 }
 
-.btn-vid{
-  width: 65px;
-  opacity: 0.45;
-  background-color: #222222;
-  z-index: 1;
+
+input#play {
+  display: none;
 }
 
-.btn-vid:hover{
-  opacity: 0.70;
-  background-color: #222222;
+.play img {
+  display: none;
+  cursor: pointer;
+  opacity: 0.35;
+  width: 35px;
+  transform: translateY(15px);
+}
+
+.pause img {
+  cursor: pointer;
+  opacity: 0.35;
+  width: 35px;
+  transform: translateY(15px);
+}
+
+.play img:hover {
+  opacity: 0.6;
+}
+
+.pause img:hover {
+  opacity: 0.6;
+}
+
+input#play:checked ~ .play img {
+  display: initial;
+}
+
+input#play:checked ~ .pause img {
+  display: none;
 }
 
 #slider-range {
@@ -388,4 +412,8 @@ input#un-mute:checked ~ .mute img {
 .shepherd-text {
   font-size: 1rem;
   padding: 1rem 1.25rem;
+}
+
+.shepherd.tippy-popper[x-placement^="top"] .tippy-arrow{
+  border-top-color: #fdf5e6;
 }
