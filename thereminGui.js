@@ -1,8 +1,13 @@
 const btnClassic = document.querySelector(".btn-classic");
 const btnGran = document.querySelector(".btn-granular");
-// const btnGrain = document.querySelector(".btn-grain");
+/*
+const btnGrainFBDelay = document.querySelector(".btn-grain");
+const btnSoundEffect = document.querySelector(".btn-sndeff");
+*/
 const sliderGrainsize = document.getElementById("grainsize");
+const sliderPlaybackRate = document.getElementById("playbackrate");
 const output = document.getElementById("outputGrain");
+const pbr = document.getElementById("outputPBR");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
 
@@ -38,7 +43,24 @@ btnClassic.addEventListener("click", function () {
     }
   }
 });
-
+/*
+// FUNCTIOANLITY GRAin feedback delay
+btnGrainFBDelay.addEventListener("click", function () {
+  if (Tone.getContext().rawContext.state == "running") {
+    if (gpsoundeffects) {
+      toggleBtnColorDeact(btnGrainFBDelay);
+      gpsoundeffects = false;
+      clock.stop();
+    } else {
+      audioBuffer.buffer = sampleBuffer;
+      toggleBtnColorActive(btnGrainFBDelay);
+      gpsoundeffects = true;
+      clock.start();
+    }
+  }
+});
+*/
+/*
 btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH
   if (gp.state == "started") {
@@ -48,43 +70,105 @@ btnGran.addEventListener("click", function () {
     gp.start();
     toggleBtnColorActive(btnGran);
   }
-  /*
-    if (playing) {
-      if (grainPlaying) {
-        grainPlaying = false;
-        gp.stop();
-      } else {
-        grainPlaying = true;
-        gp.start();
-      }
+  });
   */
 
-  /*
-} else {
-  if (grainPlaying) {
-    grainPlaying = false;
-    gp.stop();
-  } else {
-    Tone.start();
-    grainPlaying = true;
-    gp.start();
+btnGran.addEventListener("click", function () {
+  // FUNCTIOANLITY GRANULAR SYNTH
+  if (Tone.getContext().rawContext.state == "running") {
+    if (grainPlaying) {
+      //Tone.Transport.stop();
+      gp.stop();
+      toggleBtnColorDeact(btnGran);
+      grainPlaying = false;
+      gain.mute = true;
+    }
+    else {
+      //Tone.Transport.start();
+      gp.start();
+      toggleBtnColorActive(btnGran);
+      grainPlaying = true;
+      gain.mute = false;
+    }
   }
-*/
-
-  //}
 });
 
-// SLIDER EXAMPLE
+
+/*
+  if (playing) {
+    if (grainPlaying) {
+      grainPlaying = false;
+      gp.stop();
+    } else {
+      grainPlaying = true;
+      gp.start();
+    }
+*/
+
+/*
+} else {
+if (grainPlaying) {
+  grainPlaying = false;
+  gp.stop();
+} else {
+  Tone.start();
+  grainPlaying = true;
+  gp.start();
+}
+*/
+
+//}
+
+
+// GRAIN SIZE SLIDER
 output.innerHTML = sliderGrainsize.value;
 sliderGrainsize.oninput = function () {
   output.innerHTML = this.value;
   gS = (this.value / 1000).toFixed(2);
   gp.grainSize = gS;
+  /*
+  playerMusic[0].grainSize = gS;
+  playerMusic[1].grainSize = gS;
+  */
 };
 
-// btnGrain.addEventListener("click", function () {
-//   // FUNCTIOANLITY GRAIN DELAY
-// });
+// PLAYBACK RATE SLIDER
+pbr.innerHTML = sliderPlaybackRate.value;
+sliderPlaybackRate.oninput = function () {
+  pbr.innerHTML = this.value;
+  //gS = (this.value / 1000).toFixed(2);
+  gp.playbackRate = this.value;
+/*
+ playerMusic[0].playbackRate = this.value;
+ playerMusic[1].playbackRate = this.value;
+ playerMusic[2].playbackRate = this.value;
+ playerMusic[3].playbackRate = this.value;
+ */
+ console.log(gp.playbackRate);
+};
+
+
+let fbDelay;
+/*
+btnSoundEffect.addEventListener("click", function () {
+  if (Tone.getContext().rawContext.state == "running") {
+    if (soundefftoggle) {
+      Tone.Transport.stop();
+      toggleBtnColorDeact(btnSoundEffect);
+      soundefftoggle = false;
+    }
+    else {
+      audioBuffer.buffer = playerMusic[0].buffer;
+      console.log("buffer "+playerMusic[0].buffer);
+      Tone.Transport.start();
+      toggleBtnColorActive(btnSoundEffect);
+      soundefftoggle = true;
+     // audioBuffer.buffer = playerMusic[0].buffer;
+    }
+  }
+});
+*/
+
 
 // ------------ MUSIC ------------
 
@@ -237,8 +321,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-      " - " +
-      $("#slider-range").slider("values", 1) +
-      "sec"
+    " - " +
+    $("#slider-range").slider("values", 1) +
+    "sec"
   );
 });

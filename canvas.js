@@ -48,24 +48,49 @@ const sampler = new Tone.Sampler({
 }).toDestination();
 
 // ### GRAIN PLAYER ###
-
-let detuneMaxValue = 500;
+let detuneMaxValue = 800;
 let playbackrate = 1;
 let grainSize = 0.1;
 
-gp = new Tone.GrainPlayer(
-  "data/music/Theremin_Hauptstimme_ohne_Stille.wav",
-  function () {
-    gp.grainSize = 0.01;
-    gp.overlap = 0.02;
-    gp.loop = true;
-    gp.playbackRate = 0.1;
-  }
-).toDestination();
+const gain = new Tone.Gain(0.5).toDestination();
+//gain.mute = true;
+// doesnt not work
+//const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
+const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").toDestination();
+gp.loop = true;
+//gp.connect(gain);
+const gpCh = new Tone.Channel(1).toDestination();
+gp.connect(gpCh).connect(gain);
+//gain.toDestination();
+
+// ### SOUND EFFECTS SETTINGS
+let fbdelay;
+// sample file
+let audioFile = "data/music/Theremin_Hauptstimme_ohne_Stille.wav";
+// tone audio buffer can be assigner to gp.buffer
+const sampleBuffer = new Tone.ToneAudioBuffer(audioFile, () => {
+  console.log('loaded');
+});
+// audio buffer to apply sound effects to
+const audioBuffer = new Tone.ToneBufferSource(audioFile, () => {
+  console.log('loaded');
+  grainBuffer.buffer = audioBuffer.buffer;
+}).toDestination();
+// buffer should loop during interaction
+audioBuffer.loop = true;
+
+
+let audioBufTemp = sampleBuffer;
+
+// ### INTERACTIVE SOUND HANDLERS
 
 let playing = false;
 let therSampler = false;
 let grainPlaying = false;
+let gpsoundeffects = false;
+let soundefftoggle = false;
+
+// ### GLOBAL SOUND SETTINGS
 
 let masterVol = 1.5;
 
@@ -211,42 +236,123 @@ function draw() {
         }
       }
 
-      // if (grainPlaying) {
-      //left hand height controls playbackrate, maximum playbackrate set in GUI
-      const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
-      // console.log("handl y "+handL.y);
-      //console.log("gp pbr "+playbackrate);
-      // console.log("curr pbr "+currPbr);
-
-      const currGS = map(handR.x, video.width, 0, grainSize, 0);
-      gp.grainSize = currGS;
-      // PARAMS.grainSize = currGS;
-      // console.log("grainsize " + currGS);
-
-      if (currPbr < 0.001) {
-        // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
-        gp.playbackRate = 0.001;
-        //  PARAMS.playbackrate = 0.001; // für das gui monitoring
-      } else {
-        gp.playbackRate = currPbr;
-        //  PARAMS.playbackrate = currPbr; // gui monitoring
+      if (soundefftoggle) {
+        audioBuffer.buffer = playerMusic[0].buffer;
+        let audioLenInSec = audioBuffer.buffer.length / Tone.getContext().rawContext.sampleRate;
+        let handPercent = handR.y / (360 / 100) // percent hand height wrt video height
+        let audioPercent = (audioBuffer.buffer.length / 100);
+        let audioPercToHand = (audioPercent * handPercent) / Tone.getContext().rawContext.sampleRate;
+        if (audioPercToHand < audioLenInSec) {
+          const delayNum = map(handR.x, 0, video.width, 0, 1);
+          const soundDelay = new Tone.Time(delayNum).toNotation();
+          console.log("sound delay " + soundDelay);
+          const fb = map(audioPercToHand, 0, audioLenInSec, 0, 1);
+          if (fb < 0.3) {
+           
+            playerMusic[0].connect(feedbackDelay9);   
+                
+          }
+        //  else if (fb > 0.3 && fb < 0.5) {
+         //   playerMusic[0].connect(feedbackDelay9).toDestination();
+        //  }
+          else if (fb > 0.3 && fb < 0.7) {
+            
+            audioBuffer.connect(fbd6).connect(fbd5).connect(fbd4).toDestination();
+            playerMusic[0].buffer = audioBuffer.buffer;
+           
+          }
+          else {
+        //    playerMusic[0].connect(feedbackDelay11).connect(feedbackDelay6).connect(fbdel1).toDestination();
+          }
+        }
       }
 
-      // right hand x position controls amount of detuning. detune maximum set in GUI
-      const currDetune = map(
-        handR.x, // handR.y
-        0,
-        video.width,
-        -detuneMaxValue,
-        detuneMaxValue
-      );
-      gp.detune = currDetune;
+
+      if (gpsoundeffects) {
+        let audioLenInSec = audioBuffer.buffer.length / Tone.getContext().rawContext.sampleRate;
+        let handPercent = handR.y / (360 / 100) // percent hand height wrt video height
+        let audioPercent = (audioBuffer.buffer.length / 100);
+        let audioPercToHand = (audioPercent * handPercent) / Tone.getContext().rawContext.sampleRate;
+        if (audioPercToHand > audioLenInSec) {
+          //hand movement is outside the valid range
+          clock.pause();
+        }
+        else if (audioPercToHand < 0) {
+          clock.pause();
+        }
+        else if (audioPercToHand < audioLenInSec) {
+          if (clock.state == "paused") {
+            console.log("start clock");
+            clock.start(); // continues melody
+          }
+            // movement is within valid audio length range
+            //where is the hand in audio file
+            let fb = map(audioPercToHand, 0, audioLenInSec, 0, 1);
+            console.log("feedback " + fb);
+            if (fb < 0.3) {
+              fbdelay = null;
+            }
+            else if (fb > 0.3 && fb < 0.5) {
+              //fbdelay = fbd1;
+              fbdelay = feedbackDelay9;
+            }
+            else if (fb > 0.5 && fb < 0.7) {
+              fbdelay = 1;
+            }
+            else {
+              fbdelay = 2;
+            }
+          }
+
+          // PARAMS.fbdelay = fb;
+          //         console.log("gs "+grainSize +" pbr "+playbackRate+" detune "+detune);   
+      
+      }
+
+      if (grainPlaying) {
+        //left hand height controls playbackrate, maximum playbackrate set in GUI
+        //const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
+        // console.log("handl y "+handL.y);
+        //console.log("gp pbr "+playbackrate);
+        // console.log("curr pbr "+currPbr);
+
+       // const currGS = map(handR.x, video.width, 0, grainSize, 0);
+       // gp.grainSize = currGS;
+        // PARAMS.grainSize = currGS;
+        // console.log("grainsize " + currGS);
+/*
+        if (currPbr < 0.001) {
+          // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+          gp.playbackRate = 0.001;
+          //  PARAMS.playbackrate = 0.001; // für das gui monitoring
+        } else {
+          gp.playbackRate = currPbr;
+          //  PARAMS.playbackrate = currPbr; // gui monitoring
+        }
+*/
+        // right hand x position controls amount of detuning. detune maximum set in GUI
+        const currDetune = map(
+          handR.x, // handR.y
+          0,
+          video.width,
+          -detuneMaxValue,
+          detuneMaxValue
+        );
+        gp.detune = currDetune;
+
+        const gpVol = map(handL.y, video.height, 0,  0.5, -2.0);
+        console.log(gpVol);
+       // gp.volume.value = gpVol;
+       gain.gain.value = gpVol;
+        
+      }
+
+
+      // draw layers
+      image(face_layer, 0, 0);
+      image(brush_layer, 0, 0);
     }
   }
-
-  // draw layers
-  image(face_layer, 0, 0);
-  image(brush_layer, 0, 0);
 }
 
 /*
