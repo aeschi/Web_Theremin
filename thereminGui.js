@@ -6,8 +6,10 @@ const btnSoundEffect = document.querySelector(".btn-sndeff");
 */
 const sliderGrainsize = document.getElementById("grainsize");
 const sliderPlaybackRate = document.getElementById("playbackrate");
+const sliderFoleyGain = document.getElementById("foleygain");
 const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
+const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
 
@@ -145,6 +147,23 @@ sliderPlaybackRate.oninput = function () {
  playerMusic[3].playbackRate = this.value;
  */
  console.log(gp.playbackRate);
+};
+
+// FOLEY GAIN SLIDER 
+// PLAYBACK RATE SLIDER
+foleygain.innerHTML = sliderFoleyGain.value;
+sliderFoleyGain.oninput = function () {
+  foleygain.innerHTML = this.value;
+  playerFoley[0].volume.value = this.value;
+  playerFoley[1].volume.value = this.value;
+  playerFoley[2].volume.value = this.value;
+  playerFoley[3].volume.value = this.value;
+  /*
+  channelFoley[0].volume.value = this.value;
+  channelFoley[1].volume.value = this.value;
+  channelFoley[2].volume.value = this.value;
+  channelFoley[3].volume.value = this.value;
+  */
 };
 
 

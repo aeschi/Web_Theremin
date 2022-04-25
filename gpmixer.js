@@ -31,6 +31,7 @@ let playerFoley = [];
 let foleyfiles = ["rain", "water", "pigs", "steps"];
 
 foleyfiles.map(function (url, i) {
+  channelGain[i] = new Tone.Gain(-3.0).toDestination();
   channelFoley[i] = new Tone.Channel(1).toDestination();
   channelFoley[i].mute = true;
 
@@ -40,5 +41,5 @@ foleyfiles.map(function (url, i) {
   })
     .sync()
     .start(0);
-  playerFoley[i].connect(channelFoley[i]);
+  playerFoley[i].connect(channelFoley[i]).connect(channelGain[i]);
 });
