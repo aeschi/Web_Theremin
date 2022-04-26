@@ -10,7 +10,7 @@ const tour = new Shepherd.Tour({
 tour.addStep({
   title: "Hi there!",
   text: `This is a virtual THEREMIN application.\
-  Let's have a look around. This application has several interactive sounds. The 'THEREMIN' sound, the more atmospheric 'GRANULAR SYNTHESIS' one and ... `,
+  Let's have a look around. This application has several interactive sounds. The 'THEREMIN' sound, the more atmospheric 'GRANULAR THEREMIN' one and ... `,
   buttons: [
     {
       action() {
@@ -32,7 +32,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
- button and active one of the interactive sounds (THEREMIN/GRANULAR). `,
+ button and active one of the interactive sounds (THEREMIN/GRANULAR THEREMIN/GRAIN DELAY). `,
   attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
@@ -54,8 +54,52 @@ tour.addStep({
 
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Move your left hand up and done to change the volume. Move your right hand through space to change the pitch. Also try playing around with the sliders to adjust the settings for the GRANULAR sound.`,
+  text: `Move your left hand up and down to change the volume. Move your right hand through space to change the pitch.`,
   attachTo: { element: ".ui-theremin", on: "top" },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+  id: "creating",
+});
+
+tour.addStep({
+  title: "INTERACTIVE SOUNDS",
+  text: `Move your left hand up and down to change the volume. Move your right hand through space to change the pitch. Also try playing around with the sliders to adjust the settings for the GRANULAR sounds.`,
+  attachTo: { element: ".ui-granular", on: "top" },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+  id: "creating",
+});
+
+tour.addStep({
+  title: "INTERACTIVE SOUNDS",
+  text: `Move your right hand across the canvas to play with the GRAIN DELAY. Activate the checkbox and move left hand up and down to control the sound playbackrate. You can also use the slider PLAYBACK RATE.`,
+  attachTo: { element: ".ui-graindelay", on: "top" },
   buttons: [
     {
       action() {

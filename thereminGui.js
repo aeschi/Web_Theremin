@@ -1,14 +1,13 @@
 const btnClassic = document.querySelector(".btn-classic");
 const btnGran = document.querySelector(".btn-granular");
-/*
 const btnGrainFBDelay = document.querySelector(".btn-grain");
-const btnSoundEffect = document.querySelector(".btn-sndeff");
-*/
+//const btnSoundEffect = document.querySelector(".btn-sndeff");
 const sliderGrainsize = document.getElementById("grainsize");
 const sliderPlaybackRate = document.getElementById("playbackrate");
 const sliderFoleyGain = document.getElementById("foleygain");
 const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
+const grainpbr = document.getElementById("grainpbr");
 const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
@@ -45,23 +44,36 @@ btnClassic.addEventListener("click", function () {
     }
   }
 });
-/*
+
 // FUNCTIOANLITY GRAin feedback delay
 btnGrainFBDelay.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
-    if (gpsoundeffects) {
+    if (grainfbdelay) {
       toggleBtnColorDeact(btnGrainFBDelay);
-      gpsoundeffects = false;
-      clock.stop();
+      grainfbdelay = false;
+      pbrcontrol = false;
+      clock1.stop();
     } else {
       audioBuffer.buffer = sampleBuffer;
       toggleBtnColorActive(btnGrainFBDelay);
-      gpsoundeffects = true;
-      clock.start();
+      grainfbdelay = true;
+      clock1.start();
     }
   }
 });
-*/
+
+grainpbr.addEventListener("click", function () {
+  if(pbrcontrol){
+    pbrcontrol = false;
+  }
+  else {
+    if(grainfbdelay){
+    pbrcontrol = true;
+  }
+  else alert("Please activate GRAIN DELAY");
+}
+});
+
 /*
 btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH
@@ -127,6 +139,7 @@ output.innerHTML = sliderGrainsize.value;
 sliderGrainsize.oninput = function () {
   output.innerHTML = this.value;
   gS = (this.value / 1000).toFixed(2);
+  grainSize = gS;
   gp.grainSize = gS;
   /*
   playerMusic[0].grainSize = gS;
@@ -139,6 +152,7 @@ pbr.innerHTML = sliderPlaybackRate.value;
 sliderPlaybackRate.oninput = function () {
   pbr.innerHTML = this.value;
   //gS = (this.value / 1000).toFixed(2);
+  playbackrate = this.value;
   gp.playbackRate = this.value;
 /*
  playerMusic[0].playbackRate = this.value;
@@ -167,7 +181,8 @@ sliderFoleyGain.oninput = function () {
 };
 
 
-let fbDelay;
+
+
 /*
 btnSoundEffect.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
