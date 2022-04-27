@@ -41,7 +41,7 @@ let note = 0;
 
 const samplerThereminAnalog = new Tone.Sampler({
   urls: {
-    C0: "data/theremin/ThereminSamplesAnalog/c.wav",
+    C0: "data/theremin/ThereminSamplesAnalog/C.wav",
     C1: "data/theremin/ThereminSamplesAnalog/c1.wav",
     C2: "data/theremin/ThereminSamplesAnalog/c2.wav",
     C3: "data/theremin/ThereminSamplesAnalog/c3.wav",
