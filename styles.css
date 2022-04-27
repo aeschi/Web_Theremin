@@ -181,16 +181,23 @@ input#play:checked ~ .pause img {
 }
 
 .ui-theremin {
-  flex: 1;
+  flex: 0.81;
   /* background-color: #f16834; */
   padding: 0.25em 1rem;
 }
 
-.ui-graindelay {
-  flex: 1;
+.ui-granular{
+  flex: 0.61;
   /* background-color: #f16834; */
   padding: 0.25em 1rem;
 }
+
+.ui-graindelay{
+  flex: 0.41;
+  /* background-color: #f16834; */
+  padding: 0.25em 1rem;
+}
+
 
 .ui-music {
   flex: 1;
@@ -248,6 +255,11 @@ button:active {
 }
 
 .btn-classic {
+  background-color: #f16834;
+  opacity: 0.68;
+}
+
+.btn-sampler {
   background-color: #f16834;
   opacity: 0.68;
 }

@@ -1,4 +1,5 @@
 const btnClassic = document.querySelector(".btn-classic");
+const btnSampler = document.querySelector(".btn-sampler");
 const btnGran = document.querySelector(".btn-granular");
 const btnGrainFBDelay = document.querySelector(".btn-grain");
 //const btnSoundEffect = document.querySelector(".btn-sndeff");
@@ -41,6 +42,19 @@ btnClassic.addEventListener("click", function () {
     } else {
       toggleBtnColorActive(btnClassic);
       playing = true;
+    }
+  }
+});
+
+// same as toggle sound above
+btnSampler.addEventListener("click", function () {
+  if (Tone.getContext().rawContext.state == "running") {
+    if (therSampler) {
+      toggleBtnColorDeact(btnSampler);
+      therSampler = false;
+    } else {
+      toggleBtnColorActive(btnSampler);
+      therSampler = true;
     }
   }
 });
@@ -153,7 +167,7 @@ sliderPlaybackRate.oninput = function () {
   pbr.innerHTML = this.value;
   //gS = (this.value / 1000).toFixed(2);
   playbackrate = this.value;
-  gp.playbackRate = this.value;
+  gp.playbackRate = playbackrate;
 /*
  playerMusic[0].playbackRate = this.value;
  playerMusic[1].playbackRate = this.value;

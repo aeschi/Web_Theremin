@@ -37,15 +37,38 @@ const env = new Tone.AmplitudeEnvelope().toDestination();
 let lastNote = 0;
 let note = 0;
 
-const sampler = new Tone.Sampler({
+//const gainSampler = new Tone.Gain(0.5).toDestination();
+
+const samplerThereminAnalog = new Tone.Sampler({
   urls: {
-    C4: "data/music/c4.mp3",
-    "G#4": "data/music/g-4.mp3",
-    E4: "data/music/e4.mp3",
+    C0: "data/theremin/ThereminSamplesAnalog/c.wav",
+    C1: "data/theremin/ThereminSamplesAnalog/c1.wav",
+    C2: "data/theremin/ThereminSamplesAnalog/c2.wav",
+    C3: "data/theremin/ThereminSamplesAnalog/c3.wav",
+    C4: "data/theremin/ThereminSamplesAnalog/c4.wav",
   },
   release: 0.5,
+  attack: 0.4,
+  vibratoAmount: 0.4,
   // baseUrl: 'https://tonejs.github.io/audio/salamander/',
 }).toDestination();
+
+
+const samplerThereminAnalogFiltered = new Tone.Sampler({
+  urls: {
+    C0: "data/theremin/ThereminSamplesAnalog/C-f.wav",
+    C1: "data/theremin/ThereminSamplesAnalog/c1-f.wav",
+    C2: "data/theremin/ThereminSamplesAnalog/c2-f.wav",
+    C3: "data/theremin/ThereminSamplesAnalog/c3-f.wav",
+    C4: "data/theremin/ThereminSamplesAnalog/c4-f.wav",
+  },
+  release: 0.5,
+  attack: 0.4,
+  vibratoAmount: 0.4,
+  // baseUrl: 'https://tonejs.github.io/audio/salamander/',
+}).toDestination();
+
+//samplerThereminAnalogFiltered.connect(gainSampler).toDestination();
 
 // ### GRAIN PLAYER ###
 let detuneMaxValue = 1000;
@@ -56,8 +79,9 @@ const gain = new Tone.Gain(0.5).toDestination();
 //gain.mute = true;
 // doesnt not work
 //const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
-const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
+const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").toDestination();
 gp.loop = true;
+gp.playbackRate = 1;
 //gp.connect(gain);
 const gpCh = new Tone.Channel(1).toDestination();
 gp.connect(gpCh).connect(gain);
@@ -216,30 +240,48 @@ function draw() {
         //sampler.volume.value = synthVolume;
       }
 
-      if (therSampler) {
-        frequency = map(handR.x, 0, 640, 880, 220);
+      // same as drawing
+      if (handR.confidence > 0.2) {
+        if (therSampler) {
 
-        let noteDuration = 0.5;
+          const vol = map(handL.y, 360, 0, 0.5, -40);
+          //console.log(gpVol);
+          // gp.volume.value = gpVol;
 
-        // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann
-        // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
-        // ist aber verbundener, und eher wie ein flächiger theremin sound
 
-        // hier envelopes hinzufügen, und die länge der Noten regeln
-        toNote(frequency);
-        console.log("cur note " + note);
-        if (lastNote != 0) {
-          if (note != lastNote) {
-            sampler.triggerRelease(lastNote, Tone.now());
-            sampler.triggerAttack(note, Tone.now());
-            lastNote = note;
-          }
-          //else if same as before continue playin note??
-        } else if (lastNote == 0) {
-          sampler.triggerAttack(note, Tone.now());
-          lastNote = note;
+          frequency = map(handR.x, 0, 640, 880, 60);
+
+          let noteDuration = 0.5;
+
+          // ok, vielleicht kann man hier probieren ein längeres sauberes theremin sample zu bekommen, und dann
+          // mit asynchroner granular synthese etwas zu machen? dann klingt das ähnlich vom timbre des samples
+          // ist aber verbundener, und eher wie ein flächiger theremin sound
+
+          // hier envelopes hinzufügen, und die länge der Noten regeln
+          const note = new Tone.Frequency(frequency).toNote();
+
+          //toNote(frequency);
+          //  note = frequency; 
+          //  console.log("cur note " + note);
+          /*
+            if (lastNote != 0) {
+              if (note != lastNote) {
+                samplerThereminAnalog.triggerRelease(lastNote, Tone.now());
+                samplerThereminAnalog.triggerAttack(note, Tone.now());
+                lastNote = note;
+              }
+              //else if same as before continue playin note??
+            } else if (lastNote == 0) {
+              samplerThereminAnalog.triggerAttack(note, Tone.now());
+              lastNote = note;
+            }
+            */
+          samplerThereminAnalogFiltered.triggerAttackRelease(note, 0.5);
+          samplerThereminAnalogFiltered.volume.value = vol;
+          //  console.log(note + " " + frequency + " " + samplerThereminAnalog.volume.value + " " + handR.x + " " + handL.y);
         }
       }
+
       /*
             // test with grain player
             if (soundefftoggle) {
@@ -342,7 +384,7 @@ function draw() {
             if (clock1.state == "paused") {
               console.log("start clock");
               clock1.start(); // continues melody
-              console.log("started");
+              // console.log("started");
             }
             if (pbrcontrol) {
               const currPbr = map(handL.y, 0, 360, 0.001, 2);
@@ -366,45 +408,45 @@ function draw() {
               let arr = fbdelayMap.get(float(del));
 
               //const ind = Math.floor(random(1, 4)) - 1;
-              const ind = 7;
+              const ind = 3;
               // console.log("del fb ind " + del + " " + fb);
               if (fb >= 0 && fb < 0.15) {
-                console.log("next 1");
+                //console.log("next 1");
                 //fbdelay = arr[0];
                 fbdelay = arr[ind];
               }
               if (fb >= 0.15 && fb < 0.25) {
-                console.log("next 2");
+                // console.log("next 2");
                 fbdelay = arr[1];
                 //fbdelay = arr[ind];
               }
               if (fb >= 0.25 && fb < 0.35) {
-                console.log("next 3");
+                //console.log("next 3");
                 fbdelay = arr[2];
                 //fbdelay = arr[ind];
               }
               if (fb >= 0.35 && fb < 0.45) {
-                console.log("next 4");
+                // console.log("next 4");
                 fbdelay = arr[3];
                 //fbdelay = arr[ind];
               }
               if (fb >= 0.45 && fb < 0.55) {
-                console.log("next 5");
+                //console.log("next 5");
                 fbdelay = arr[4];
                 //fbdelay = arr[ind];
               }
               if (fb >= 0.55 && fb < 0.65) {
-                console.log("next 6");
+                // console.log("next 6");
                 fbdelay = arr[5];
                 // fbdelay = arr[ind];
               }
               if (fb >= 0.65 && fb < 0.75) {
-                console.log("next 7");
+                //console.log("next 7");
                 fbdelay = arr[6];
                 // fbdelay = arr[ind];
               }
               if (fb >= 0.75 && fb <= 0.85) {
-                console.log("next 8");
+                //console.log("next 8");
                 fbdelay = arr[7];
                 //fbdelay = arr[ind];
               }
@@ -413,45 +455,58 @@ function draw() {
           }
         }
       }
-      // granular button is activated
-      if (grainPlaying) {
-        //left hand height controls playbackrate, maximum playbackrate set in GUI
-        //const currPbr = map(handL.y, 0, video.height, 0.001, playbackrate); // values below 0.001 break the grain player
-        // console.log("handl y "+handL.y);
-        //console.log("gp pbr "+playbackrate);
-        // console.log("curr pbr "+currPbr);
 
-        // const currGS = map(handR.x, video.width, 0, grainSize, 0);
-         gp.grainSize = grainSize;
-         gp.playbackRate.value = playbackrate;
-        // PARAMS.grainSize = currGS;
-        // console.log("grainsize " + currGS);
-        /*
-                if (currPbr < 0.001) {
-                  // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
-                  gp.playbackRate = 0.001;
-                  //  PARAMS.playbackrate = 0.001; // für das gui monitoring
-                } else {
-                  gp.playbackRate = currPbr;
-                  //  PARAMS.playbackrate = currPbr; // gui monitoring
-                }
-        */
-        // right hand x position controls amount of detuning. detune maximum set in GUI
-        const currDetune = map(
-          handR.x, // handR.y
-          0,
-          video.width,
-          -detuneMaxValue,
-          detuneMaxValue
-        );
-        gp.detune = currDetune;
+      // same as drawing
+      if (handR.confidence > 0.2) {
+        // granular button is activated
+        if (grainPlaying) {
 
-        const gpVol = map(handL.y, video.height, 0, 0.5, -2.0);
-        console.log(gpVol);
-        // gp.volume.value = gpVol;
-        gain.gain.value = gpVol;
+          //left hand height controls playbackrate, maximum playbackrate set in GUI
+          if (handR.y >= 0 && handR.y <= 360) {
+            const currPbr = map(handR.y, 0, 360, 0.02, 2); // values below 0.001 break the grain player
+
+            // console.log("handl y "+handL.y);
+            //console.log("gp pbr "+playbackrate);
+            // console.log("curr pbr "+currPbr);
+
+            // const currGS = map(handR.x, video.width, 0, grainSize, 0);
+            // PARAMS.grainSize = currGS;
+            // console.log("grainsize " + currGS);
+            /*
+                    if (currPbr < 0.001) {
+                      // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+                      gp.playbackRate = 0.001;
+                      //  PARAMS.playbackrate = 0.001; // für das gui monitoring
+                    } else {
+                      gp.playbackRate = currPbr;
+                      //  PARAMS.playbackrate = currPbr; // gui monitoring
+                    }
+            */
+            // right hand x position controls amount of detuning. detune maximum set in GUI
+            const currDetune = map(
+              handR.x, // handR.y
+              0,
+              640,
+              0,
+              1000
+            );
+            //  gp.detune = currDetune;
 
 
+            const interval = currDetune / 100;
+            //intervaltofrequencyratio function from tone js
+            // gp.playbackRate = Math.pow(2, (interval / 12));
+
+            gp.playbackRate = currPbr.toFixed(3);
+            console.log(gp.playbackRate);
+
+
+            const gpVol = map(handL.y, video.height, 0, 0.5, -20);
+            //console.log(gpVol);
+            // gp.volume.value = gpVol;
+            gp.volume.value = gpVol;
+          }
+        }
       }
 
 
@@ -493,6 +548,50 @@ setInterval(function () {
 */
 
 function toNote(frequency) {
+  /*
+  note = "C" 128,43
+  note = "D" 144,16
+  note = "E" 161,82
+  note = "F" 171,44
+  note = "G" 192,43
+  note = "A" 216
+  note = "H" 242,45
+
+  note ="C1" 256,87;
+  note ="D1" 288,33;
+  note ="E1" 323,63;
+  note ="F1" 342,88;
+  note ="G1" 384,87;
+  note ="A1" 432;
+  note ="H1" 484,90;
+
+  note ="C2" 513,74;
+  note ="D2" 576,65;
+  note ="E2" 647,27;
+  note ="F2" 685,76;
+  note ="G2" 769,74;
+  note ="A2" 864,
+  note ="H2" 969,81;
+
+  note ="C3" 1027,5;
+  note ="D3" 1153,3;
+  note ="E3" 1294,5;
+  note ="F3" 1371,5;
+  note ="G3" 1539,5;
+  note ="A3" 1728
+  note ="H3" 1939,6;
+
+  note ="C4" 2054,9;
+  note ="D4" 2306,6;
+  note ="E4" 2589,1;
+  note ="F4" 2743;
+  note ="G4" 3078,9;
+  note ="A4" 3456
+  note ="H4" 3879,2;
+
+*/
+
+
   if (frequency > 494 && frequency < 523) {
     note = "B4";
   } else if (frequency > 466 && frequency < 494) {
