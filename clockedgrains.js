@@ -83,7 +83,7 @@ grainBuf.loop = true;
  
 
   if(pbrcontrol){
-  grainBuf.playbackRate.value = playbackrate;
+  grainBuf.playbackRate.value = graindelay_pbrate;
   }
   else {
     const interval = detune / 100;

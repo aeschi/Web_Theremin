@@ -48,7 +48,7 @@ const sampler = new Tone.Sampler({
 }).toDestination();
 
 // ### GRAIN PLAYER ###
-let detuneMaxValue = 800;
+let detuneMaxValue = 1000;
 let playbackrate = 1;
 let grainSize = 0.1;
 
@@ -56,7 +56,7 @@ const gain = new Tone.Gain(0.5).toDestination();
 //gain.mute = true;
 // doesnt not work
 //const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
-const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").toDestination();
+const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
 gp.loop = true;
 //gp.connect(gain);
 const gpCh = new Tone.Channel(1).toDestination();
@@ -67,6 +67,7 @@ gp.connect(gpCh).connect(gain);
 let fbdelay;
 // interactive pbr control
 let pbrcontrol = false;
+let graindelay_pbrate;
 // sample file
 let audioFile = "data/music/Theremin_Hauptstimme_ohne_Stille.wav";
 // tone audio buffer can be assigner to gp.buffer
@@ -345,8 +346,7 @@ function draw() {
             }
             if (pbrcontrol) {
               const currPbr = map(handL.y, 0, 360, 0.001, 2);
-              playbackrate = currPbr;
-              console.log("current pbr " + playbackrate);
+              graindelay_pbrate = currPbr;
             }
             // feedback amount = where hand is vertically in relation to audio file length
             const fbNum = map(audioPercToHand, 0, audioLenInSec, 0, 1);
@@ -422,7 +422,8 @@ function draw() {
         // console.log("curr pbr "+currPbr);
 
         // const currGS = map(handR.x, video.width, 0, grainSize, 0);
-        // gp.grainSize = currGS;
+         gp.grainSize = grainSize;
+         gp.playbackRate.value = playbackrate;
         // PARAMS.grainSize = currGS;
         // console.log("grainsize " + currGS);
         /*
@@ -449,6 +450,7 @@ function draw() {
         console.log(gpVol);
         // gp.volume.value = gpVol;
         gain.gain.value = gpVol;
+
 
       }
 
