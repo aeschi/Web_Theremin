@@ -13,6 +13,19 @@ const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
 
+const motiv1 = document.querySelector("motiv1");
+const motiv2 = document.querySelector("motiv2");
+const motiv3 = document.querySelector("motiv3");
+const motiv4 = document.querySelector("motiv4");
+const melody1 = document.querySelector("melody1");
+const melody2 = document.querySelector("melody2");
+const melody3 = document.querySelector("melody3");
+const melody4 = document.querySelector("melody4");
+const begl1 = document.querySelector("begl1");
+const begl2 = document.querySelector("begl2");
+const begl3 = document.querySelector("begl3");
+const begl4 = document.querySelector("begl4");
+
 // ------------ SOUND TOGGLE ------------
 
 un_mute.onclick = () => {

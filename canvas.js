@@ -79,7 +79,7 @@ const gain = new Tone.Gain(0.5).toDestination();
 //gain.mute = true;
 // doesnt not work
 //const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
-const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").toDestination();
+const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
 gp.loop = true;
 gp.playbackRate = 1;
 //gp.connect(gain);
