@@ -8,6 +8,8 @@ let thereminMusic;
 // suspend sound on page upon loading page
 Tone.getContext().rawContext.suspend();
 
+
+
 Tone.Transport.bpm.value = 108;
 //Tone.Transport.loop = true;
 
