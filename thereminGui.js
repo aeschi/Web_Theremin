@@ -9,30 +9,22 @@ const sliderFoleyGain = document.getElementById("foleygain");
 const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
 const grainpbr = document.getElementById("grainpbr");
-const foleygain = document.getElementById("outputfoleyGain");
+//const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
 
-const motiv1 = document.querySelector("motiv1");
-const motiv2 = document.querySelector("motiv2");
-const motiv3 = document.querySelector("motiv3");
-const motiv4 = document.querySelector("motiv4");
-const melody1 = document.querySelector("melody1");
-const melody2 = document.querySelector("melody2");
-const melody3 = document.querySelector("melody3");
-const melody4 = document.querySelector("melody4");
-const begl1 = document.querySelector("begl1");
-const begl2 = document.querySelector("begl2");
-const begl3 = document.querySelector("begl3");
-const begl4 = document.querySelector("begl4");
+
 
 // ------------ SOUND TOGGLE ------------
 
 un_mute.onclick = () => {
   if (Tone.getContext().rawContext.state == "suspended") {
     Tone.start();
+    Tone.Transport.start();
+    console.log(Tone.Transport.state);
   } else {
     Tone.getContext().rawContext.suspend();
+    
   }
 };
 
@@ -190,8 +182,10 @@ sliderPlaybackRate.oninput = function () {
  console.log(gp.playbackRate);
 };
 
+
 // FOLEY GAIN SLIDER 
 // PLAYBACK RATE SLIDER
+/*
 foleygain.innerHTML = sliderFoleyGain.value;
 sliderFoleyGain.oninput = function () {
   foleygain.innerHTML = this.value;
@@ -199,15 +193,8 @@ sliderFoleyGain.oninput = function () {
   playerFoley[1].volume.value = this.value;
   playerFoley[2].volume.value = this.value;
   playerFoley[3].volume.value = this.value;
-  /*
-  channelFoley[0].volume.value = this.value;
-  channelFoley[1].volume.value = this.value;
-  channelFoley[2].volume.value = this.value;
-  channelFoley[3].volume.value = this.value;
-  */
 };
-
-
+*/
 
 
 /*
@@ -229,10 +216,100 @@ btnSoundEffect.addEventListener("click", function () {
   }
 });
 */
+const motiv1 = document.getElementById("motiv1");
+const motiv2 = document.getElementById("motiv2");
+const motiv3 = document.getElementById("motiv3");
+const motiv4 = document.getElementById("motiv4");
+const motiv5 = document.getElementById("motiv5");
+const melody1 = document.getElementById("melody1"); // 0:15 melodie bulle
+const melody2 = document.getElementById("melody2"); // 0:51 milchregen, 1:15 melodie milchregen
+const melody3 = document.getElementById("melody3"); // 2:21 melodie tiere
+const melody4 = document.getElementById("melody4"); // 3:20 melodie traktor im kreis
+const melody5 = document.getElementById("melody5"); // 4:04 melodie bauhaus molkerei
+const begl1 = document.getElementById("begl1");
+const begl2 = document.getElementById("begl2");
+const begl3 = document.getElementById("begl3");
+const begl4 = document.getElementById("begl4");
+const begl5 = document.getElementById("begl5");
+
+
+// --------------- FILMMUSIK ------------
+/*
+motiv1.addEventListener("click", function () {
+  if (Tone.getContext().rawContext.state == "running") {
+    Tone.Transport.start();
+    if(myVideo.currentTime > 51){
+      myVideo.currentTime = 51;
+      
+      // maybe start melody player here
+    }
+    else {
+      channelMusic[0].mute = false;
+    }
+  }
+});
+*/
+toggleButtonMusic = (btnName, i) => {
+ // Tone.Transport.start();
+  console.log("transport started");
+  if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
+    channelMusic[i].mute = false;
+    channelMusicBegleitung[i].mute = false;
+    toggleBtnColorActive(btnName);
+    console.log("yes");
+  } else {
+    channelMusic[i].mute = true;
+    toggleBtnColorDeact(btnName);
+    console.log("yes");
+  }
+};
+
+toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
+ // Tone.Transport.start();
+  console.log("transport started");
+  if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
+    channelMusic[i].mute = false;
+    channelMusicBegleitung[i].mute = false;
+    toggleBtnColorActive(btnName);
+    toggleBtnColorActive(btnName2);
+    toggleBtnColorActive(btnName3);
+    console.log("yes");
+  } else {
+    channelMusic[i].mute = true;
+    channelMusicBegleitung[i].mute = true;
+    toggleBtnColorDeact(btnName);
+    toggleBtnColorDeact(btnName2);
+    toggleBtnColorDeact(btnName3);
+    console.log("yes");
+  }
+};
+
+
+
+motiv1.addEventListener("click", () => {
+  toggleButtonMusicMotiv(motiv1, melody1, begl1,0);
+});
+
+motiv2.addEventListener("click", () => {
+  toggleButtonMusicMotiv(motiv2, melody2, begl2, 1);
+});
+
+motiv3.addEventListener("click", () => {
+  toggleButtonMusicMotiv(motiv3, melody3, begl3, 2);
+});
+
+motiv4.addEventListener("click", () => {
+  toggleButtonMusicMotiv(motiv4, melody4, begl4, 3);
+});
+
+motiv5.addEventListener("click", () => {
+  toggleButtonMusicMotiv(motiv5, melody5, begl5, 4);
+});
+
 
 
 // ------------ MUSIC ------------
-
+/*
 const btnAll = document.querySelector(".btn-all");
 const btnMain = document.querySelector(".btn-main");
 const btnSideOne = document.querySelector(".btn-side-one");
@@ -311,13 +388,13 @@ btnSideThree.addEventListener("click", () => {
     toggleBtnColorDeact(btnAll);
   }
 });
-
+*/
 // ------------ FOLEY ------------
 
-const btnFoleyOne = document.querySelector(".btn-foley-1");
-const btnFoleyTwo = document.querySelector(".btn-foley-2");
-const btnFoleyThree = document.querySelector(".btn-foley-3");
-const btnFoleyFour = document.querySelector(".btn-foley-4");
+const btnFoleyOne = document.querySelector(".btn-foley-rain");
+const btnFoleyTwo = document.querySelector(".btn-foley-water");
+const btnFoleyThree = document.querySelector(".btn-foley-pigs");
+const btnFoleyFour = document.querySelector(".btn-foley-engine");
 
 toggleButton = (btnName, i) => {
   Tone.Transport.start();
@@ -348,6 +425,7 @@ btnFoleyFour.addEventListener("click", () => {
 
 // ------------ VIDEO ------------
 let myVideo = document.getElementById("video1");
+
 let startTime = 0;
 let endTime = 10;
 
@@ -361,8 +439,8 @@ $(function () {
   $("#slider-range").slider({
     range: true,
     min: 0,
-    max: 274,
-    values: [0, 274],
+    max: 300,
+    values: [0, 300],
     slide: function (event, ui) {
       $("#amount").val(ui.values[0] + " - " + ui.values[1] + "sec");
       function checkTime() {
