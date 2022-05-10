@@ -241,19 +241,31 @@ input#play:checked ~ .pause img {
 .filmsounds {
   display: grid;
   flex: 1;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.timeline {
+  display: flex;
+  flex: 1;
+  grid-template-rows: 10px;
 }
 
 .motive {
   display: grid;
   grid-template-columns: 11fr 17fr 12fr 9fr 11fr; 
-  grid-template-rows: 40px 40px 40px;
+  grid-template-rows: 40px 40px;
  /* column-gap: 10px;*/
  /* row-gap: 10px;*/
   flex: 1;
   justify-items: stretch;
   align-items: stretch;
   justify-content: stretch;
+}
+
+.filmmusik {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 40px;
 }
 
 .btn-motiv {

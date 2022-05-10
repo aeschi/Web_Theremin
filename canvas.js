@@ -162,6 +162,7 @@ function setup() {
 }
 
 function draw() {
+  amp = new p5.Amplitude();
   canvas.clear();
   face_layer.clear();
 
