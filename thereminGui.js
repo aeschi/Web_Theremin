@@ -24,7 +24,7 @@ un_mute.onclick = () => {
     console.log(Tone.Transport.state);
   } else {
     Tone.getContext().rawContext.suspend();
-    
+
   }
 };
 
@@ -82,15 +82,15 @@ btnGrainFBDelay.addEventListener("click", function () {
 });
 
 grainpbr.addEventListener("click", function () {
-  if(pbrcontrol){
+  if (pbrcontrol) {
     pbrcontrol = false;
   }
   else {
-    if(grainfbdelay){
-    pbrcontrol = true;
+    if (grainfbdelay) {
+      pbrcontrol = true;
+    }
+    else alert("Please activate GRAIN DELAY");
   }
-  else alert("Please activate GRAIN DELAY");
-}
 });
 
 /*
@@ -173,13 +173,13 @@ sliderPlaybackRate.oninput = function () {
   //gS = (this.value / 1000).toFixed(2);
   playbackrate = this.value;
   gp.playbackRate = playbackrate;
-/*
- playerMusic[0].playbackRate = this.value;
- playerMusic[1].playbackRate = this.value;
- playerMusic[2].playbackRate = this.value;
- playerMusic[3].playbackRate = this.value;
- */
- console.log(gp.playbackRate);
+  /*
+   playerMusic[0].playbackRate = this.value;
+   playerMusic[1].playbackRate = this.value;
+   playerMusic[2].playbackRate = this.value;
+   playerMusic[3].playbackRate = this.value;
+   */
+  console.log(gp.playbackRate);
 };
 
 
@@ -232,6 +232,17 @@ const begl3 = document.getElementById("begl3");
 const begl4 = document.getElementById("begl4");
 const begl5 = document.getElementById("begl5");
 
+let motiv1toggled = false;
+let motiv2toggled = false;
+let motiv3toggled = false;
+let motiv4toggled = false;
+let motiv5toggled = false;
+let anymotivtoggled = false;
+let anymelodytoggled = false;
+let anybegltoggled = false;
+let toggled = [false, false, false, false, false];
+let lasttoggled = -1;
+let lasttoggledbuttons = [];
 
 // --------------- FILMMUSIK ------------
 /*
@@ -250,7 +261,7 @@ motiv1.addEventListener("click", function () {
 });
 */
 toggleButtonMusic = (btnName, i) => {
- // Tone.Transport.start();
+  // Tone.Transport.start();
   console.log("transport started");
   if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
     channelMusic[i].mute = false;
@@ -264,30 +275,190 @@ toggleButtonMusic = (btnName, i) => {
   }
 };
 
+
+
+
+checkMarks = (start, end) => {
+  if ((myVideo.currentTime + 1) >= end) {
+    console.log("video reached mark out");
+    myVideo.currentTime = start;
+    myVideo.play();
+    return;
+   
+  };
+};
+
+
+playBetween = (a, b) => {
+ 
+  if (myVideo.currentTime >= a && myVideo.currentTime <= b) {
+    myVideo.play();
+  }
+  else {
+    myVideo.currentTime = a;
+  }
+  
+};
+
+let timerID;
+
+playVideoScene = (i) => {
+  let start = starttimes[i];
+  let end = starttimes[i + 1] - 1;
+
+  console.log("start " + start + " end " + end);
+
+  playBetween(start, end);
+  timerID = setInterval(() => checkMarks(start, end), 100);
+
+  myVideo.play();
+
+
+};
+
+
 toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
- // Tone.Transport.start();
-  console.log("transport started");
+  /*
+  if (lasttoggled != i) {
+    // start looping scene i 
+    //myVideo.currentTime = starttimes[i];
+    clearInterval(timerID);
+    playVideoScene(i);
+    
+  }
+  else {
+   
+  // deactivate looping scene
+    console.log("clearin timer ");
+    clearInterval(timerID);
+    
+  }
+
+*/
+
   if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
+    // either non active or new button activated
+    // deactivate last activated if its a different one
+    if (lasttoggled >= 0) { // maybe find another solution for this
+      if (lasttoggled != i) {
+
+        clearInterval(timerID);
+       
+        // clicked new motiv button
+        /*
+        Tone.Transport.scheduleOnce(function(time){
+          channelMusic[lasttoggled].volume.rampTo(-10,1);
+        }, Tone.now());
+        Tone.Transport.scheduleOnce(function(time){
+          channelMusicBegleitung[lasttoggled].volume.rampTo(-10,1);
+        }, Tone.now());
+        */
+
+        //HOW TO REMOVE CLICKS
+
+        channelMusic[lasttoggled].volume.rampTo(-10, 0.5);
+        channelMusicBegleitung[lasttoggled].volume.rampTo(-10, 0.5);
+        channelMusic[lasttoggled].mute = true;
+        channelMusicBegleitung[lasttoggled].mute = true;
+
+
+        toggleBtnColorDeact(lasttoggledbuttons[0]);
+        toggleBtnColorDeact(lasttoggledbuttons[1]);
+        toggleBtnColorDeact(lasttoggledbuttons[2]);
+        toggled[i] = true;
+        toggled[lasttoggled] = false;
+
+      }
+    }
+    clearInterval(timerID);
+    playVideoScene(i);
+
+    //channelGain[i].gain.rampTo(0.05,1);
+    channelMusic[i].volume.rampTo(0.05, 0.5);
     channelMusic[i].mute = false;
+
+    //HOW TO REMOVE CLICKS
+    channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
     channelMusicBegleitung[i].mute = false;
+
+
+
     toggleBtnColorActive(btnName);
     toggleBtnColorActive(btnName2);
     toggleBtnColorActive(btnName3);
-    console.log("yes");
-  } else {
+    toggled[i] = true;
+    lasttoggled = i;
+    lasttoggledbuttons = [btnName, btnName2, btnName3];
+    anymotivtoggled = true;
+    anymelodytoggled = true;
+    anybegltoggled = true;
+
+  }
+
+
+  else {
+     // deactivate looping scene
+     console.log("clearin timer ");
+     clearInterval(timerID);
+    // deactivate the currently playing one
+    /*
+    Tone.Transport.scheduleOnce(function(time){
+      channelMusic[i].volume.rampTo(-10,1);
+    }, Tone.now());
+    Tone.Transport.scheduleOnce(function(time){
+      channelMusicBegleitung[i].volume.rampTo(-10,1);
+    }, Tone.now());
+    */
+    channelMusic[i].volume.rampTo(-10, 0.5);
+    channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
+
     channelMusic[i].mute = true;
     channelMusicBegleitung[i].mute = true;
+
     toggleBtnColorDeact(btnName);
     toggleBtnColorDeact(btnName2);
     toggleBtnColorDeact(btnName3);
-    console.log("yes");
+    toggled[i] = false;
+
+  }
+
+};
+
+toggleButtonMelody = (btnName, i) => {
+  // Tone.Transport.start();
+
+  if (channelMusic[i].mute) {
+    channelMusic[i].volume.rampTo(0.05, 0.5);
+    channelMusic[i].mute = false;
+    toggleBtnColorActive(btnName);
+   
+  } else {
+    channelMusic[i].volume.rampTo(-10, 0.5);
+    channelMusic[i].mute = true;
+    toggleBtnColorDeact(btnName);
+ 
   }
 };
 
 
+toggleButtonBegleitung = (btnName, i) => {
+  // Tone.Transport.start();
+ 
+  if (channelMusicBegleitung[i].mute) {
+    channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
+    channelMusicBegleitung[i].mute = false;
+    toggleBtnColorActive(btnName);
+   
+  } else {
+    channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
+    channelMusicBegleitung[i].mute = true;
+    toggleBtnColorDeact(btnName);
+ 
+  }
+};
 
 motiv1.addEventListener("click", () => {
-  toggleButtonMusicMotiv(motiv1, melody1, begl1,0);
+  toggleButtonMusicMotiv(motiv1, melody1, begl1, 0);
 });
 
 motiv2.addEventListener("click", () => {
@@ -307,6 +478,47 @@ motiv5.addEventListener("click", () => {
 });
 
 
+melody1.addEventListener("click", () => {
+  toggleButtonMelody(melody1, 0);
+});
+
+melody2.addEventListener("click", () => {
+  toggleButtonMelody(melody2, 1);
+});
+
+melody3.addEventListener("click", () => {
+  toggleButtonMelody(melody3, 2);
+});
+
+melody4.addEventListener("click", () => {
+  toggleButtonMelody(melody4, 3);
+});
+
+melody5.addEventListener("click", () => {
+  toggleButtonMelody(melody5, 4);
+});
+
+
+begl1.addEventListener("click", () => {
+  toggleButtonBegleitung(begl1, 0);
+});
+
+begl2.addEventListener("click", () => {
+  toggleButtonBegleitung(begl2, 1);
+});
+
+begl3.addEventListener("click", () => {
+  toggleButtonBegleitung(begl3, 2);
+});
+
+begl4.addEventListener("click", () => {
+  toggleButtonBegleitung(begl4, 3);
+});
+
+begl5.addEventListener("click", () => {
+  toggleButtonBegleitung(begl5, 4);
+});
+
 
 // ------------ MUSIC ------------
 /*
@@ -315,12 +527,12 @@ const btnMain = document.querySelector(".btn-main");
 const btnSideOne = document.querySelector(".btn-side-one");
 const btnSideTwo = document.querySelector(".btn-side-two");
 const btnSideThree = document.querySelector(".btn-side-three");
-
+ 
 let muteAllMusic = true;
-
+ 
 btnAll.addEventListener("click", () => {
   Tone.Transport.start();
-
+ 
   soundfiles.forEach(function (val, i) {
     if (muteAllMusic) {
       channelMusic[i].mute = false;
@@ -340,7 +552,7 @@ btnAll.addEventListener("click", () => {
   });
   muteAllMusic ? (muteAllMusic = false) : (muteAllMusic = true);
 });
-
+ 
 btnMain.addEventListener("click", () => {
   Tone.Transport.start();
   if (channelMusic[0].mute) {
@@ -352,7 +564,7 @@ btnMain.addEventListener("click", () => {
     toggleBtnColorDeact(btnAll);
   }
 });
-
+ 
 btnSideOne.addEventListener("click", () => {
   Tone.Transport.start();
   if (channelMusic[1].mute) {
@@ -364,7 +576,7 @@ btnSideOne.addEventListener("click", () => {
     toggleBtnColorDeact(btnAll);
   }
 });
-
+ 
 btnSideTwo.addEventListener("click", () => {
   Tone.Transport.start();
   if (channelMusic[2].mute) {
@@ -376,7 +588,7 @@ btnSideTwo.addEventListener("click", () => {
     toggleBtnColorDeact(btnAll);
   }
 });
-
+ 
 btnSideThree.addEventListener("click", () => {
   Tone.Transport.start();
   if (channelMusic[3].mute) {

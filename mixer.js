@@ -1,9 +1,11 @@
 // MUSIC
 
+let channelGain = [];
 let channelMusic = [];
 let playerMusic = [];
 let playerMusicBegleitung = [];
 let channelMusicBegleitung = [];
+let channelGainBegleitung = [];
 
 /*
 let soundfiles = [
@@ -30,7 +32,7 @@ let soundfiles_begleitung = [
   "TRAUM_T5_Begleitung_w_oRev_trim", 
 ];
 
-let starttimes = [0, 75, 141, 200, 244]; // Startzeiten der einzelnen Video-Szenen/Motive in sec.
+let starttimes = [0, 74, 142, 201.5, 245, 300]; // Startzeiten der einzelnen Video-Szenen/Motive in sec.
 
 
 /*
@@ -66,6 +68,8 @@ pl1.connect(ch1);
 */
 
 soundfiles.map(function (url, i) {
+ 
+  //channelGain[i] = new Tone.Gain(0).toDestination();
   channelMusic[i] = new Tone.Channel(1).toDestination();
   channelMusic[i].mute = true;
 
@@ -80,6 +84,7 @@ soundfiles.map(function (url, i) {
 
 
 soundfiles_begleitung.map(function (url, i) {
+  //channelGainBegleitung[i] = new Tone.Gain(0).toDestination();
   channelMusicBegleitung[i] = new Tone.Channel(1).toDestination();
   channelMusicBegleitung[i].mute = true;
 
