@@ -34,19 +34,19 @@ h2 {
   position: absolute;
   margin: 10px;
   z-index: 1;
-  width: 125px;
+  width: 90px;
 }
 
 .infoContainer {
   position: absolute;
   margin-left: 18px;
-  margin-top: 165px;
+  margin-top: 125px;
   z-index: 1;
 }
 
 .SpeakerContainer {
   position: absolute;
-  margin-top: 205px;
+  margin-top: 175px;
   margin-left: 19px;
   z-index: 1;
 }
@@ -530,7 +530,7 @@ input#un-mute:checked ~ .mute img {
   position: relative;
   font-family: 'Montserrat', sans-serif;
   text-align: left;
-  background: #fdf5e6;
+  background: #ffffff;
   color: #444;
   font-size: 1.1em;
   line-height: 1.5em;

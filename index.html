@@ -1,109 +1,144 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>P5 Web Theremin</title>
 
-<head>
-  <title>P5 Web Theremin</title>
+    <!-- < Tweakpane GUI -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tweakpane@2.1.1/dist/tweakpane.min.js"></script> -->
 
-  <!-- < Tweakpane GUI -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/tweakpane@2.1.1/dist/tweakpane.min.js"></script> -->
+    <!-- Embed pep.js for consistent cross-browser pointer events. -->
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
 
-  <!-- Embed pep.js for consistent cross-browser pointer events. -->
-  <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <!-- ML5 for posenet -->
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
 
-  <!-- ML5 for posenet -->
-  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <!-- p5.js  -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
 
-  <!-- p5.js  -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <!-- tone.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.32/Tone.min.js"
+      type="text/javascript"
+    ></script>
 
-  <!-- tone.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.32/Tone.min.js" type="text/javascript"></script>
+    <!-- JQuery -->
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
-  <!-- JQuery -->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- shepard.js for onboarding tour -->
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
 
-  <!-- shepard.js for onboarding tour -->
-  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@5.0.1/dist/js/shepherd.js"></script>
+    <!-- font-family -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400&display=swap");
+    </style>
 
-  <!-- font-family -->
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400&display=swap");
-  </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap");
+    </style>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap");
-  </style>
+    <!-- css for grain params html gui -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
 
-  <!-- css for grain params html gui -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-</head>
+  <body>
+    <script src="introduction.js"></script>
 
-<body>
-  <script src="introduction.js"></script>
-
-  <div class="logoContainer">
-    <a href="https://eisensteinshouse.projekte-filmuni.de/">
-      <img src="./data/image/koll_logo.png" alt="koll_logo_round.png" title="logo" />
-    </a>
-  </div>
-
-  <div class="infoContainer">
-    <button class="btn-info" onclick="tour.start()">
-      <img src="./data/image/info_icon.svg" alt="info_icon.svg" title="Info" />
-    </button>
-  </div>
-
-  <div class="SpeakerContainer">
-    <input type="checkbox" name="un-mute" id="un-mute" />
-    <label for="un-mute" class="unmute">
-      <img src="./data/image/speaker.svg" alt="Mute_Icon.svg" title="Mute" />
-    </label>
-    <label for="un-mute" class="mute">
-      <img src="./data/image/speaker_mute.svg" alt="Speaker_Icon.svg" title="Unmute" />
-    </label>
-  </div>
-
-  <div class="triangleContainer">
-    <a href="https://eisensteinshouse.projekte-filmuni.de/">
-      <img src="./data/image/triangle.svg" alt="triangle.svg" title="triangle" />
-    </a>
-  </div>
-
-  <div class="container-top">
-    <div class="container-canvas">
-      <div class="imgContainer">
-        <img src="./data/image/theremin_bw_logo.png" alt="theremin_bw.png" title="theremin" width="100%" />
-      </div>
-      <div id="canvas">
-        <script src="mixer.js"></script>
-        <script src="fbdelaymap.js"></script>
-        <script src="clockedgrains.js"></script>
-        <script src="canvas.js"></script>
-        <!-- <script src="p5sketch.js"></script> -->
-      </div>
+    <div class="logoContainer">
+      <a href="https://eisensteinshouse.projekte-filmuni.de/">
+        <img src="./data/image/koll_logo.svg" alt="koll_logo" title="logo" />
+      </a>
     </div>
 
-    <div id="container-video">
-      <video id="video1" controlsList="nofullscreen nodownload" autoplay loop>
-        <source src="data/video/Theremin_for_web_small.mp4" type="video/mp4" />
-      </video>
-      <section class="ui-video">
-        <input type="checkbox" name="play" id="play" />
-        <label for="play" class="play">
-          <img src="./data/image/play.svg" alt="play.svg" title="Play" />
-        </label>
-        <label for="play" class="pause">
-          <img src="./data/image/pause.svg" alt="pause.svg" title="Pause" />
-        </label>
+    <div class="infoContainer">
+      <button class="btn-info" onclick="tour.start()">
+        <img
+          src="./data/image/info_icon.svg"
+          alt="info_icon.svg"
+          title="Info"
+          width="40px"
+        />
+      </button>
+    </div>
 
-        <p>
-          <!-- <label for="amount">IN & OUT POINT</label> -->
-          <!-- <input
+    <div class="SpeakerContainer">
+      <input type="checkbox" name="un-mute" id="un-mute" />
+      <label for="un-mute" class="unmute">
+        <img
+          src="./data/image/speaker.png"
+          alt="Mute_Icon"
+          title="Mute"
+          width="40px"
+        />
+      </label>
+      <label for="un-mute" class="mute">
+        <img
+          src="./data/image/speaker_mute.png"
+          alt="Speaker_Icon"
+          title="Unmute"
+          width="40px"
+        />
+      </label>
+    </div>
+
+    <div class="triangleContainer">
+      <a href="https://eisensteinshouse.projekte-filmuni.de/">
+        <img
+          src="./data/image/triangle.svg"
+          alt="triangle.svg"
+          title="triangle"
+        />
+      </a>
+    </div>
+
+    <div class="container-top">
+      <div class="container-canvas">
+        <div class="imgContainer">
+          <img
+            src="./data/image/theremin_bw_logo.png"
+            alt="theremin_bw.png"
+            title="theremin"
+            width="100%"
+          />
+        </div>
+        <div id="canvas">
+          <script src="mixer.js"></script>
+          <script src="fbdelaymap.js"></script>
+          <script src="clockedgrains.js"></script>
+          <script src="canvas.js"></script>
+          <!-- <script src="p5sketch.js"></script> -->
+        </div>
+      </div>
+
+      <div id="container-video">
+        <video id="video1" controlsList="nofullscreen nodownload" autoplay loop>
+          <source
+            src="data/video/Theremin_for_web_small.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <section class="ui-video">
+          <input type="checkbox" name="play" id="play" />
+          <label for="play" class="play">
+            <img src="./data/image/play.svg" alt="play.svg" title="Play" />
+          </label>
+          <label for="play" class="pause">
+            <img src="./data/image/pause.svg" alt="pause.svg" title="Pause" />
+          </label>
+
+          <p>
+            <!-- <label for="amount">IN & OUT POINT</label> -->
+            <!-- <input
               type="text"
               id="amount"
               readonly
@@ -114,45 +149,59 @@
                 background-color: rgba(0, 0, 0, 0);
               "
             /> -->
-        </p>
+          </p>
 
-        <div id="slider-range"></div>
-      </section>
-    </div>
-  </div>
-
-  <script src="positionTracking.js"></script>
-
-  <div class="ui-bar">
-
-    <div class="interactive">
-      <h3 class="heading1">INTERACTIVE SOUNDS</h3>
-      <button class="btn-classic">THEREMIN</button>
-      <button class="btn-sampler">SAMPLER</button>
-      <button class="btn-granular">GRANULAR SYNTHESIS</button>
-      <button class="btn-grain">GRAIN DELAY</button>
-      <div class="slidecontainer slidergrainsize">
-        <p>
-          GRAIN SIZE
-          <input type="range" min="5" max="100" value="50" step="1" class="slider" id="grainsize" />
-          <span id="outputGrain"></span>
-        </p>
-      </div>
-      <div class="slidecontainer sliderpbrate">
-        <p>
-          PLAYBACK RATE
-          <input type="range" min="0.01" max="2.0" value="1.0" step="0.01" class="slider" id="playbackrate" />
-          <span id="outputPBR"></span>
-        </p>
-      </div>
-      <div class="toggle" id="grainpbr">
-        <p>left hand</p>
-        <input type="checkbox">
+          <div id="slider-range"></div>
+        </section>
       </div>
     </div>
 
+    <script src="positionTracking.js"></script>
 
-    <!--
+    <div class="ui-bar">
+      <div class="interactive">
+        <h3 class="heading1">INTERACTIVE SOUNDS</h3>
+        <button class="btn-classic">THEREMIN</button>
+        <button class="btn-sampler">SAMPLER</button>
+        <button class="btn-granular">GRANULAR SYNTHESIS</button>
+        <button class="btn-grain">GRAIN DELAY</button>
+        <div class="slidecontainer slidergrainsize">
+          <p>
+            GRAIN SIZE
+            <input
+              type="range"
+              min="5"
+              max="100"
+              value="50"
+              step="1"
+              class="slider"
+              id="grainsize"
+            />
+            <span id="outputGrain"></span>
+          </p>
+        </div>
+        <div class="slidecontainer sliderpbrate">
+          <p>
+            PLAYBACK RATE
+            <input
+              type="range"
+              min="0.01"
+              max="2.0"
+              value="1.0"
+              step="0.01"
+              class="slider"
+              id="playbackrate"
+            />
+            <span id="outputPBR"></span>
+          </p>
+        </div>
+        <div class="toggle" id="grainpbr">
+          <p>left hand</p>
+          <input type="checkbox" />
+        </div>
+      </div>
+
+      <!--
     <section class="ui-granular">
       <h2>
         <br>
@@ -190,18 +239,11 @@
 
   -->
 
-
-
-
-
-
-    <!--
+      <!--
         <button class="btn-sndeff">SOUND EFFECT</button>
       -->
 
-
-
-    <!-- <div class="slidecontainer">
+      <!-- <div class="slidecontainer">
           <p>
             SLIDER
             <input
@@ -309,8 +351,6 @@
    
 -->
 
-
-  <script src="thereminGui.js"></script>
-</body>
-
+    <script src="thereminGui.js"></script>
+  </body>
 </html>
