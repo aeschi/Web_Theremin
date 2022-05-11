@@ -1,5 +1,5 @@
 // MUSIC
-
+let playerMeter = [];
 let channelGain = [];
 let channelMusic = [];
 let playerMusic = [];
@@ -68,7 +68,7 @@ pl1.connect(ch1);
 */
 
 soundfiles.map(function (url, i) {
- 
+  playerMeter[i] = new Tone.Meter();
   //channelGain[i] = new Tone.Gain(0).toDestination();
   channelMusic[i] = new Tone.Channel(1).toDestination();
   channelMusic[i].mute = true;
@@ -79,7 +79,9 @@ soundfiles.map(function (url, i) {
   })
     .sync()
     .start(0);
-  playerMusic[i].connect(channelMusic[i]);
+    
+  playerMusic[i].connect(channelMusic[i]).connect(playerMeter[i]);
+  //playerMusic[i].connect(playerMeter[i]);
 });
 
 
