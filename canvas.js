@@ -79,17 +79,6 @@ var c = function (p) {
   let playbackrate = 1;
   let grainSize = 0.1;
 
-  const gain = new Tone.Gain(0.5).toDestination();
-  //gain.mute = true;
-  // doesnt not work
-  //const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
-  const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
-  gp.loop = true;
-  gp.playbackRate = 1;
-  //gp.connect(gain);
-  const gpCh = new Tone.Channel(1).toDestination();
-  gp.connect(gpCh).connect(gain);
-  //gain.toDestination();
 
   // ### SOUND EFFECTS SETTINGS
   let fbdelay;
@@ -176,6 +165,7 @@ var c = function (p) {
       let d = 30;
 
       if (typeof handR.x !== "undefined") {
+       
         brush_layer.clear();
         brush_layer.fill(183, 100);
         brush_layer.noStroke();
@@ -461,58 +451,118 @@ var c = function (p) {
           }
         }
 
-        // same as drawing
-        if (handR.confidence > 0.2) {
-          // granular button is activated
-          if (grainPlaying) {
+            if (myp5.grainPlaying) {
+              let currPbr;
+              console.log("in grain playng");
+              if (handR.y >= 0 && handR.y <= 360) {
+                currPbr = p.map(handR.y, 0, 360, 0.02, 1.5); 
+  
+                gp.grainSize = currPbr.toFixed(2);
+  
+              }
+                // console.log("handl y "+handL.y);
+                //console.log("gp pbr "+playbackrate);
+                // console.log("curr pbr "+currPbr);
+  
+                // const currGS = map(handR.x, video.width, 0, grainSize, 0);
+                // PARAMS.grainSize = currGS;
+                // console.log("grainsize " + currGS);
+                /*
+                        if (currPbr < 0.001) {
+                          // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+                          gp.playbackRate = 0.001;
+                          //  PARAMS.playbackrate = 0.001; // für das gui monitoring
+                        } else {
+                          gp.playbackRate = currPbr;
+                          //  PARAMS.playbackrate = currPbr; // gui monitoring
+                        }
+                */
+                // right hand x position controls amount of detuning. detune maximum set in GUI
+                const fbNum = p.map(
+                  handR.x, // handR.y
+                  0,
+                  640,
+                  0,
+                  0.9
+                );
 
-            //left hand height controls playbackrate, maximum playbackrate set in GUI
-            if (handR.y >= 0 && handR.y <= 360) {
-              const currPbr = map(handR.y, 0, 360, 0.02, 2); // values below 0.001 break the grain player
+                const fb = fbNum.toFixed(1);
+  
+                 // ranges of the defined feedbach delay nodes
+                 if (fb <= 0.8 && fb >= 0.2) {
+                  // if (fbdelayMap.has(float(del))) {
+                  console.log("fb "+ fb);
+                  // get feedback delay node corresponding to delay time from the stored map
+                  let arr = fbdelayMap.get(p.float(fb));
 
-              // console.log("handl y "+handL.y);
-              //console.log("gp pbr "+playbackrate);
-              // console.log("curr pbr "+currPbr);
-
-              // const currGS = map(handR.x, video.width, 0, grainSize, 0);
-              // PARAMS.grainSize = currGS;
-              // console.log("grainsize " + currGS);
-              /*
-                      if (currPbr < 0.001) {
-                        // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
-                        gp.playbackRate = 0.001;
-                        //  PARAMS.playbackrate = 0.001; // für das gui monitoring
-                      } else {
-                        gp.playbackRate = currPbr;
-                        //  PARAMS.playbackrate = currPbr; // gui monitoring
-                      }
-              */
-              // right hand x position controls amount of detuning. detune maximum set in GUI
-              const currDetune = map(
-                handR.x, // handR.y
-                0,
-                640,
-                0,
-                1000
-              );
-              //  gp.detune = currDetune;
-
-
-              const interval = currDetune / 100;
-              //intervaltofrequencyratio function from tone js
-              // gp.playbackRate = Math.pow(2, (interval / 12));
-
-              gp.playbackRate = currPbr.toFixed(3);
-              console.log(gp.playbackRate);
-
-
-              const gpVol = map(handL.y, video.height, 0, 0.5, -20);
-              //console.log(gpVol);
-              // gp.volume.value = gpVol;
-              gp.volume.value = gpVol;
-            }
-          }
-        }
+                  console.log(arr);
+  
+                  //const ind = Math.floor(random(1, 4)) - 1;
+                  const ind = 3;
+                  // console.log("del fb ind " + del + " " + fb);
+                  if (fb >= 0 && fb < 0.15) {
+                    //console.log("next 1");
+                    //fbdelay = arr[0];
+                    fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.15 && fb < 0.25) {
+                    // console.log("next 2");
+                    fbdelay = arr[1];
+                    //fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.25 && fb < 0.35) {
+                    //console.log("next 3");
+                    fbdelay = arr[2];
+                    //fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.35 && fb < 0.45) {
+                    // console.log("next 4");
+                    fbdelay = arr[3];
+                    //fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.45 && fb < 0.55) {
+                    //console.log("next 5");
+                    fbdelay = arr[4];
+                    //fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.55 && fb < 0.65) {
+                    // console.log("next 6");
+                    fbdelay = arr[5];
+                    // fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.65 && fb < 0.75) {
+                    //console.log("next 7");
+                    fbdelay = arr[6];
+                    // fbdelay = arr[ind];
+                  }
+                  if (fb >= 0.75 && fb <= 0.85) {
+                    //console.log("next 8");
+                    fbdelay = arr[7];
+                    //fbdelay = arr[ind];
+                  }
+                } else { fbdelay = fbd27; }
+  
+  
+                gp.connect(fbdelay);
+          
+                //  gp.detune = currDetune;
+                  
+  
+               // const interval = currDetune / 100;
+                //intervaltofrequencyratio function from tone js
+                // gp.playbackRate = Math.pow(2, (interval / 12));
+  
+                gp.playbackRate = currPbr.toFixed(3);
+                console.log(gp.playbackRate);
+  
+  
+                const gpVol = p.map(handL.y, video.height, 0, 0.5, -20);
+                //console.log(gpVol);
+                // gp.volume.value = gpVol;
+                gp.volume.value = gpVol;
+              }
+            
+          
 
 
         // draw layers

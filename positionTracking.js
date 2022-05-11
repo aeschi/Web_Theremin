@@ -24,5 +24,5 @@ function poseNetSetup() {
 }
 
 function modelReady() {
-  // console.log('poseNet model Loaded');
+   console.log('poseNet model Loaded');
 }

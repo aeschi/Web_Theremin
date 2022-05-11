@@ -109,18 +109,20 @@ btnGran.addEventListener("click", function () {
 btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH
   if (Tone.getContext().rawContext.state == "running") {
-    if (grainPlaying) {
+    if (myp5.grainPlaying) {
       //Tone.Transport.stop();
+     
       gp.stop();
       toggleBtnColorDeact(btnGran);
-      grainPlaying = false;
+      myp5.grainPlaying = false;
       gain.mute = true;
     }
     else {
       //Tone.Transport.start();
+     
       gp.start();
       toggleBtnColorActive(btnGran);
-      grainPlaying = true;
+      myp5.grainPlaying = true;
       gain.mute = false;
     }
   }

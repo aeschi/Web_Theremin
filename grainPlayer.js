@@ -1,4 +1,35 @@
 
+
+
+
+
+//let grainPlaying = false;
+
+
+const gain = new Tone.Gain(0.5).toDestination();
+//const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
+const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
+gp.loop = true;
+gp.playbackRate = 1;
+//gp.connect(gain);
+const gpCh = new Tone.Channel(1).toDestination();
+gp.connect(gpCh).connect(gain);
+//gain.toDestination();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 let grainSynth = new Tone.synth(
     attack = 0.1,
     release = 0.1
@@ -42,3 +73,4 @@ return Tone.Offline(() => {
 //console.log(Tone.context._context);
 
 //ctx = Tone.context._context;
+*/
