@@ -244,6 +244,9 @@ let toggled = [false, false, false, false, false];
 let lasttoggled = -1;
 let lasttoggledbuttons = [];
 
+let melodyButtons = [melody1, melody2, melody3, melody4, melody5];
+let beglButtons = [begl1, begl2, begl3, begl4, begl5];
+
 // --------------- FILMMUSIK ------------
 /*
 motiv1.addEventListener("click", function () {
@@ -284,20 +287,20 @@ checkMarks = (start, end) => {
     myVideo.currentTime = start;
     myVideo.play();
     return;
-   
+
   };
 };
 
 
 playBetween = (a, b) => {
- 
+
   if (myVideo.currentTime >= a && myVideo.currentTime <= b) {
     myVideo.play();
   }
   else {
     myVideo.currentTime = a;
   }
-  
+
 };
 
 let timerID;
@@ -318,108 +321,110 @@ playVideoScene = (i) => {
 
 
 toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
-  /*
-  if (lasttoggled != i) {
-    // start looping scene i 
-    //myVideo.currentTime = starttimes[i];
-    clearInterval(timerID);
-    playVideoScene(i);
-    
-  }
-  else {
-   
-  // deactivate looping scene
-    console.log("clearin timer ");
-    clearInterval(timerID);
-    
-  }
-
-*/
-
-  if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
-    // either non active or new button activated
-    // deactivate last activated if its a different one
-    if (lasttoggled >= 0) { // maybe find another solution for this
-      if (lasttoggled != i) {
-
-        clearInterval(timerID);
-       
-        // clicked new motiv button
-        /*
-        Tone.Transport.scheduleOnce(function(time){
-          channelMusic[lasttoggled].volume.rampTo(-10,1);
-        }, Tone.now());
-        Tone.Transport.scheduleOnce(function(time){
-          channelMusicBegleitung[lasttoggled].volume.rampTo(-10,1);
-        }, Tone.now());
-        */
-
-        //HOW TO REMOVE CLICKS
-
-        channelMusic[lasttoggled].volume.rampTo(-10, 0.5);
-        channelMusicBegleitung[lasttoggled].volume.rampTo(-10, 0.5);
-        channelMusic[lasttoggled].mute = true;
-        channelMusicBegleitung[lasttoggled].mute = true;
-
-
-        toggleBtnColorDeact(lasttoggledbuttons[0]);
-        toggleBtnColorDeact(lasttoggledbuttons[1]);
-        toggleBtnColorDeact(lasttoggledbuttons[2]);
-        toggled[i] = true;
-        toggled[lasttoggled] = false;
-
-      }
-    }
-    clearInterval(timerID);
-    playVideoScene(i);
-
-    //channelGain[i].gain.rampTo(0.05,1);
-    channelMusic[i].volume.rampTo(0.05, 0.5);
-    channelMusic[i].mute = false;
-
-    //HOW TO REMOVE CLICKS
-    channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
-    channelMusicBegleitung[i].mute = false;
-
-
-
-    toggleBtnColorActive(btnName);
-    toggleBtnColorActive(btnName2);
-    toggleBtnColorActive(btnName3);
-    toggled[i] = true;
-    lasttoggled = i;
-    lasttoggledbuttons = [btnName, btnName2, btnName3];
-    anymotivtoggled = true;
-    anymelodytoggled = true;
-    anybegltoggled = true;
-
-  }
-
-
-  else {
-     // deactivate looping scene
-     console.log("clearin timer ");
-     clearInterval(timerID);
-    // deactivate the currently playing one
+  if (!myVideo.paused) {
     /*
-    Tone.Transport.scheduleOnce(function(time){
-      channelMusic[i].volume.rampTo(-10,1);
-    }, Tone.now());
-    Tone.Transport.scheduleOnce(function(time){
-      channelMusicBegleitung[i].volume.rampTo(-10,1);
-    }, Tone.now());
-    */
-    channelMusic[i].volume.rampTo(-10, 0.5);
-    channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
+    if (lasttoggled != i) {
+      // start looping scene i 
+      //myVideo.currentTime = starttimes[i];
+      clearInterval(timerID);
+      playVideoScene(i);
+      
+    }
+    else {
+     
+    // deactivate looping scene
+      console.log("clearin timer ");
+      clearInterval(timerID);
+      
+    }
+  
+  */
 
-    channelMusic[i].mute = true;
-    channelMusicBegleitung[i].mute = true;
+    if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
+      // either non active or new button activated
+      // deactivate last activated if its a different one
+      if (lasttoggled >= 0) { // maybe find another solution for this
+        if (lasttoggled != i) {
 
-    toggleBtnColorDeact(btnName);
-    toggleBtnColorDeact(btnName2);
-    toggleBtnColorDeact(btnName3);
-    toggled[i] = false;
+          clearInterval(timerID);
 
+          // clicked new motiv button
+          /*
+          Tone.Transport.scheduleOnce(function(time){
+            channelMusic[lasttoggled].volume.rampTo(-10,1);
+          }, Tone.now());
+          Tone.Transport.scheduleOnce(function(time){
+            channelMusicBegleitung[lasttoggled].volume.rampTo(-10,1);
+          }, Tone.now());
+          */
+
+          //HOW TO REMOVE CLICKS
+
+          channelMusic[lasttoggled].volume.rampTo(-10, 0.5);
+          channelMusicBegleitung[lasttoggled].volume.rampTo(-10, 0.5);
+          channelMusic[lasttoggled].mute = true;
+          channelMusicBegleitung[lasttoggled].mute = true;
+
+
+          toggleBtnColorDeact(lasttoggledbuttons[0]);
+          toggleBtnColorDeact(lasttoggledbuttons[1]);
+          toggleBtnColorDeact(lasttoggledbuttons[2]);
+          toggled[i] = true;
+          toggled[lasttoggled] = false;
+
+        }
+      }
+      clearInterval(timerID);
+      playVideoScene(i);
+
+      //channelGain[i].gain.rampTo(0.05,1);
+      channelMusic[i].volume.rampTo(0.05, 0.5);
+      channelMusic[i].mute = false;
+
+      //HOW TO REMOVE CLICKS
+      channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
+      channelMusicBegleitung[i].mute = false;
+
+
+
+      toggleBtnColorActive(btnName);
+      toggleBtnColorActive(btnName2);
+      toggleBtnColorActive(btnName3);
+      toggled[i] = true;
+      lasttoggled = i;
+      lasttoggledbuttons = [btnName, btnName2, btnName3];
+      anymotivtoggled = true;
+      anymelodytoggled = true;
+      anybegltoggled = true;
+
+    }
+
+
+    else {
+      // deactivate looping scene
+      console.log("clearin timer ");
+      clearInterval(timerID);
+      // deactivate the currently playing one
+      /*
+      Tone.Transport.scheduleOnce(function(time){
+        channelMusic[i].volume.rampTo(-10,1);
+      }, Tone.now());
+      Tone.Transport.scheduleOnce(function(time){
+        channelMusicBegleitung[i].volume.rampTo(-10,1);
+      }, Tone.now());
+      */
+      channelMusic[i].volume.rampTo(-10, 0.5);
+      channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
+
+      channelMusic[i].mute = true;
+      channelMusicBegleitung[i].mute = true;
+
+      toggleBtnColorDeact(btnName);
+      toggleBtnColorDeact(btnName2);
+      toggleBtnColorDeact(btnName3);
+      toggled[i] = false;
+
+    }
   }
 
 };
@@ -431,29 +436,29 @@ toggleButtonMelody = (btnName, i) => {
     channelMusic[i].volume.rampTo(0.05, 0.5);
     channelMusic[i].mute = false;
     toggleBtnColorActive(btnName);
-   
+
   } else {
     channelMusic[i].volume.rampTo(-10, 0.5);
     channelMusic[i].mute = true;
     toggleBtnColorDeact(btnName);
- 
+
   }
 };
 
 
 toggleButtonBegleitung = (btnName, i) => {
   // Tone.Transport.start();
- 
+
   if (channelMusicBegleitung[i].mute) {
     channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
     channelMusicBegleitung[i].mute = false;
     toggleBtnColorActive(btnName);
-   
+
   } else {
     channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
     channelMusicBegleitung[i].mute = true;
     toggleBtnColorDeact(btnName);
- 
+
   }
 };
 
@@ -641,9 +646,56 @@ let myVideo = document.getElementById("video1");
 let startTime = 0;
 let endTime = 10;
 
+let mutedSound = [];
+let mutedBegl = [];
+let mutedButtonsM =  []; 
+let mutedButtonsP = [];
+
+
 toggleVideo.onclick = () => {
-  if (myVideo.paused) myVideo.play();
-  else myVideo.pause();
+  if (myVideo.paused) {
+    myVideo.play();
+    
+    for(i = 0; i < mutedSound.length; i ++){
+      mutedSound[i].mute = false;
+     
+
+    }
+    for(i = 0; i < mutedBegl.length; i ++){
+      mutedBegl[i].mute = false;
+      
+    }
+    for(i = 0; i < mutedButtonsM.length; i ++){
+      toggleBtnColorActive(mutedButtonsM[i]);
+    }
+    for(i = 0; i < mutedButtonsP.length; i ++){
+      toggleBtnColorActive(mutedButtonsP[i]);
+    }
+    mutedSound = [];
+    mutedBegl = [];
+    mutedButtonsM =  []; 
+    mutedButtonsP = [];
+  }
+  else {
+    myVideo.pause();
+    for (i = 0; i < channelMusic.length; i++) {
+      if (channelMusic[i].mute == false) {
+        channelMusic[i].mute = true;
+        toggleBtnColorDeact(melodyButtons[i]);
+        mutedButtonsM.push(melodyButtons[i]);
+        mutedSound.push(channelMusic[i]);
+
+
+      }
+      if (channelMusicBegleitung[i].mute == false) {
+        channelMusicBegleitung[i].mute = true;
+        toggleBtnColorDeact(beglButtons[i]);
+        mutedButtonsP.push(beglButtons[i]);
+        mutedBegl.push(channelMusicBegleitung[i]);
+      }
+    // console.log("sound " +mutedSound + " begl " + mutedBegl);
+    }
+  }
 };
 
 // in out range slider

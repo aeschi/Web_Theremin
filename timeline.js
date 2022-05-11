@@ -2,8 +2,10 @@ var t = function (p) {
 
 
 
-    let volhistory = [];
-    let waveform = [];
+    let volhistoryM = [];
+    let volhistoryP = [];
+    let waveformM = [];
+    let waveformP = [];
 
     let meter;
 
@@ -15,9 +17,10 @@ var t = function (p) {
         timeline.parent("timeline");
        // timeline.position(500, 530);
 
-        waveform = new Tone.Waveform(16);
+        waveformM = new Tone.Waveform(16);
+        waveformP = new Tone.Waveform(16);
 
-        meter = new Tone.Meter();
+        //meter = new Tone.Meter();
         /*
           channelMusic[0].connect(waveform);
           channelMusic[1].connect(waveform);
@@ -41,11 +44,25 @@ var t = function (p) {
                 //  vol = playerMeter[1].getValue();
                 //console.log(meter.getValue());
                 //vol = Math.random();
-                channelMusic[i].connect(waveform);
-                wav = waveform.getValue();
-                volhistory.push(wav[0].toFixed(4));
-                console.log("wav " + wav[0].toFixed(3));
-                console.log(volhistory);
+                channelMusic[i].connect(waveformM);
+                wav = waveformM.getValue();
+                volhistoryM.push(wav[0].toFixed(4));
+               // console.log("wav " + wav[0].toFixed(3));
+               
+                // p.beginShape();
+                // p.point(440 + vol.toFixed(2), 550);
+                //  p.endShape();
+                //  console.log("wavform " + wav);
+            }
+            if (!channelMusicBegleitung[i].mute) {
+                //  vol = playerMeter[1].getValue();
+                //console.log(meter.getValue());
+                //vol = Math.random();
+                channelMusicBegleitung[i].connect(waveformP);
+                wav = waveformP.getValue();
+                volhistoryP.push(wav[0].toFixed(4));
+               // console.log("wav " + wav[0].toFixed(3));
+               
                 // p.beginShape();
                 // p.point(440 + vol.toFixed(2), 550);
                 //  p.endShape();
@@ -57,17 +74,24 @@ var t = function (p) {
 
 
         p.beginShape();
-        for (i = 0; i < volhistory.length; i++) {
+        for (i = 0; i < volhistoryM.length; i++) {
             //for(j =0; j < volhistory[i].length; j++){
-            let y = p.map(volhistory[i], -0.1, 0.1, 0, 70);
+            let y = p.map(volhistoryM[i], -0.1, 0.1, 0, 70);
+            p.vertex(i,y);
+        }
+        for (i = 0; i < volhistoryP.length; i++) {
+            //for(j =0; j < volhistory[i].length; j++){
+            let y = p.map(volhistoryP[i], -0.1, 0.1, 30, 100);
             p.vertex(i,y);
         }
         p.endShape();
 
 
-        if (volhistory.length > sketchWidth) {
-            volhistory.splice(0, 1);
+        if (volhistoryM.length > sketchWidth &&  volhistoryP.length > sketchWidth) {
+            volhistoryM.splice(0, 1);
+            volhistoryP.splice(0, 1);
         }
+      
 
 
     }
