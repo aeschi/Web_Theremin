@@ -458,7 +458,9 @@ var c = function (p) {
                 currPbr = p.map(handR.y, 0, 360, 0.02, 1.5); 
   
                 gp.grainSize = currPbr.toFixed(2);
-  
+                
+              } else {
+                currPbr = 1.0;
               }
                 // console.log("handl y "+handL.y);
                 //console.log("gp pbr "+playbackrate);
@@ -487,11 +489,11 @@ var c = function (p) {
                 );
 
                 const fb = fbNum.toFixed(1);
-  
+                console.log("fb "+ fb);
                  // ranges of the defined feedbach delay nodes
                  if (fb <= 0.8 && fb >= 0.2) {
                   // if (fbdelayMap.has(float(del))) {
-                  console.log("fb "+ fb);
+                  
                   // get feedback delay node corresponding to delay time from the stored map
                   let arr = fbdelayMap.get(p.float(fb));
 
@@ -561,6 +563,7 @@ var c = function (p) {
                 // gp.volume.value = gpVol;
                 gp.volume.value = gpVol;
               }
+            
             
           
 
