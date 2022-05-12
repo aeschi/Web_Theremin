@@ -74,33 +74,12 @@ var c = function (p) {
 
   //samplerThereminAnalogFiltered.connect(gainSampler).toDestination();
 
-  // ### GRAIN PLAYER ###
-  let detuneMaxValue = 1000;
-  let playbackrate = 1;
-  let grainSize = 0.1;
 
 
-  // ### SOUND EFFECTS SETTINGS
-  let fbdelay;
-  // interactive pbr control
-  let pbrcontrol = false;
-  let graindelay_pbrate;
-  // sample file
-  let audioFile = "data/music/Theremin_Hauptstimme_ohne_Stille.wav";
-  // tone audio buffer can be assigner to gp.buffer
-  const sampleBuffer = new Tone.ToneAudioBuffer(audioFile, () => {
-    console.log('loaded');
-  });
-  // audio buffer to apply sound effects to
-  const audioBuffer = new Tone.ToneBufferSource(audioFile, () => {
-    console.log('loaded');
-    grainBuffer.buffer = audioBuffer.buffer;
-  }).toDestination();
-  // buffer should loop during interaction
-  audioBuffer.loop = true;
 
 
-  let audioBufTemp = sampleBuffer;
+
+
 
 
   // ### INTERACTIVE SOUND HANDLERS
@@ -218,18 +197,18 @@ var c = function (p) {
 
 
         // play Theremin sound
-        if (playing) {
+        if (myp5.playing) {
           // trigger synth
           // synth.triggerAttackRelease('A3', '0.1');
 
           // Update oscillator frequency
-          frequency = map(handR.x, 0, 640, 880, 220);
+          frequency = p.map(handR.x, 0, 640, 880, 220);
           synth.setNote(frequency);
           // trigger synth
           synth.triggerAttackRelease(frequency, "0.1");
 
           // Update oscillator volume
-          synthVolume = map(handL.y, 0, 360, 0, -50);
+          synthVolume = p.map(handL.y, 0, 360, 0, -50);
           synth.volume.value = synthVolume;
 
           //sampler.volume.value = synthVolume;
@@ -237,14 +216,14 @@ var c = function (p) {
 
         // same as drawing
         if (handR.confidence > 0.2) {
-          if (therSampler) {
+          if (myp5.therSampler) {
 
-            const vol = map(handL.y, 360, 0, 0.5, -40);
+            const vol = p.map(handL.y, 360, 0, 0.5, -40);
             //console.log(gpVol);
             // gp.volume.value = gpVol;
 
 
-            frequency = map(handR.x, 0, 640, 880, 60);
+            frequency = p.map(handR.x, 0, 640, 880, 60);
 
             let noteDuration = 0.5;
 
@@ -359,7 +338,7 @@ var c = function (p) {
         // same as drawing
         if (handR.confidence > 0.2) {
 
-          if (grainfbdelay) {
+          if (myp5.grainfbdelay) {
 
 
             let audioLenInSec = audioBuffer.buffer.length / Tone.getContext().rawContext.sampleRate;
@@ -381,16 +360,16 @@ var c = function (p) {
                 clock1.start(); // continues melody
                 // console.log("started");
               }
-              if (pbrcontrol) {
-                const currPbr = map(handL.y, 0, 360, 0.001, 2);
+              if (myp5.pbrcontrol) {
+                const currPbr = p.map(handL.y, 0, 360, 0.001, 2);
                 graindelay_pbrate = currPbr;
               }
               // feedback amount = where hand is vertically in relation to audio file length
-              const fbNum = map(audioPercToHand, 0, audioLenInSec, 0, 1);
+              const fbNum = p.map(audioPercToHand, 0, audioLenInSec, 0, 1);
               const fb = fbNum.toFixed(2);
               // delay amount = where right hand is related to the webcam image width
               // TODO : change delay to distance between the two hands
-              const delayNum = map(handR.x, 0, video.width, 0, 1);
+              const delayNum = p.map(handR.x, 0, video.width, 0, 1);
               // delay time in musical notation (not used yet)
               const soundDelay = new Tone.Time(delayNum).toNotation();
               const del = delayNum.toFixed(1);
@@ -400,7 +379,7 @@ var c = function (p) {
                 // if (fbdelayMap.has(float(del))) {
 
                 // get feedback delay node corresponding to delay time from the stored map
-                let arr = fbdelayMap.get(float(del));
+                let arr = fbdelayMap.get(p.float(del));
 
                 //const ind = Math.floor(random(1, 4)) - 1;
                 const ind = 3;
@@ -460,7 +439,7 @@ var c = function (p) {
                 gp.grainSize = currPbr.toFixed(2);
                 
               } else {
-                currPbr = 1.0;
+                currPbr = 0.1;
               }
                 // console.log("handl y "+handL.y);
                 //console.log("gp pbr "+playbackrate);

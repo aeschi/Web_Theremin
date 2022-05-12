@@ -41,12 +41,12 @@ toggleBtnColorDeact = (btnName) => {
 // same as toggle sound above
 btnClassic.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
-    if (playing) {
+    if (myp5.playing) {
       toggleBtnColorDeact(btnClassic);
-      playing = false;
+      myp5.playing = false;
     } else {
       toggleBtnColorActive(btnClassic);
-      playing = true;
+      myp5.playing = true;
     }
   }
 });
@@ -54,12 +54,12 @@ btnClassic.addEventListener("click", function () {
 // same as toggle sound above
 btnSampler.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
-    if (therSampler) {
+    if (myp5.therSampler) {
       toggleBtnColorDeact(btnSampler);
-      therSampler = false;
+      myp5.therSampler = false;
     } else {
       toggleBtnColorActive(btnSampler);
-      therSampler = true;
+      myp5.therSampler = true;
     }
   }
 });
@@ -67,27 +67,29 @@ btnSampler.addEventListener("click", function () {
 // FUNCTIOANLITY GRAin feedback delay
 btnGrainFBDelay.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
-    if (grainfbdelay) {
+    if (myp5.grainfbdelay) {
       toggleBtnColorDeact(btnGrainFBDelay);
-      grainfbdelay = false;
-      pbrcontrol = false;
+      myp5.grainfbdelay = false;
+      myp5.pbrcontrol = false;
       clock1.stop();
     } else {
       audioBuffer.buffer = sampleBuffer;
       toggleBtnColorActive(btnGrainFBDelay);
-      grainfbdelay = true;
+      myp5.grainfbdelay = true;
       clock1.start();
     }
   }
 });
 
+myp5.pbrcontrol = false; 
+
 grainpbr.addEventListener("click", function () {
-  if (pbrcontrol) {
+  if (myp5.pbrcontrol) {
     pbrcontrol = false;
   }
   else {
-    if (grainfbdelay) {
-      pbrcontrol = true;
+    if (myp5.grainfbdelay) {
+      myp5.pbrcontrol = true;
     }
     else alert("Please activate GRAIN DELAY");
   }

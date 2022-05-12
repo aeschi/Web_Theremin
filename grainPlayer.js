@@ -1,5 +1,8 @@
 
-
+  // ### GRAIN PLAYER ###
+  let detuneMaxValue = 1000;
+  let playbackrate = 1;
+  let grainSize = 0.1;
 
 
 
