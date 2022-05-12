@@ -8,6 +8,8 @@ const sliderPlaybackRate = document.getElementById("playbackrate");
 const sliderFoleyGain = document.getElementById("foleygain");
 const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
+const outgainGrainsynth = document.getElementById("grainSynthGain");
+const outgrainSynthgain = document.getElementById("outGrainsynthGain");
 const grainpbr = document.getElementById("grainpbr");
 //const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
@@ -177,7 +179,8 @@ sliderPlaybackRate.oninput = function () {
   pbr.innerHTML = this.value;
   //gS = (this.value / 1000).toFixed(2);
   playbackrate = this.value;
-  gp.playbackRate = playbackrate;
+  //gp.playbackRate = playbackrate;
+  gp.set({playbackRate:playbackrate});
   /*
    playerMusic[0].playbackRate = this.value;
    playerMusic[1].playbackRate = this.value;
@@ -187,6 +190,12 @@ sliderPlaybackRate.oninput = function () {
   console.log(gp.playbackRate);
 };
 
+
+grainSynthGain.innerHTML = outgainGrainsynth.value;
+outgainGrainsynth.oninput = function () {
+  outgrainSynthgain.innerHTML = this.value;
+  gp.volume.value = this.value;
+};
 
 // FOLEY GAIN SLIDER 
 // PLAYBACK RATE SLIDER

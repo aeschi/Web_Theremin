@@ -185,7 +185,7 @@ input#play:checked ~ .pause img {
 .interactive {
   display: grid;
   grid-template-columns: 0.5fr 0.5fr 1fr 1fr;
-  grid-template-rows: 50px 50px 30px 20px;
+  grid-template-rows: 50px 50px 30px 20px 20px;
   flex: 1;
   justify-items: start;
   align-items: start;
@@ -224,6 +224,11 @@ input#play:checked ~ .pause img {
 .sliderpbrate {
   grid-column: 3;
   grid-row: 4;
+}
+
+.slidergaingrainsynth {
+  grid-column: 3;
+  grid-row: 5;
 }
 
 .btn-grain {

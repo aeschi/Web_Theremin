@@ -11,9 +11,10 @@
 
 const gain = new Tone.Gain(0.5).toDestination();
 //const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").sync().start(0);
-const gp = new Tone.GrainPlayer("data/music/water.wav").toDestination();
+const gp = new Tone.GrainPlayer("data/music/Theremin_Hauptstimme_ohne_Stille.wav").toDestination();
+gp.set({playbackRate:0.1, grainSize:0.1});
 gp.loop = true;
-gp.playbackRate = 1;
+//gp.playbackRate = 1;
 //gp.connect(gain);
 const gpCh = new Tone.Channel(1).toDestination();
 gp.connect(gpCh).connect(gain);
