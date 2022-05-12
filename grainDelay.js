@@ -2,7 +2,9 @@
   // ### SOUND EFFECTS SETTINGS
   let fbdelay;
   // interactive pbr control
-  let pbrcontrol = false;
+  //let pbrcontrol = false;
+  //let grainfbdelay = false;
+
   let graindelay_pbrate;
   // sample file
   let audioFile = "data/music/Theremin_Hauptstimme_ohne_Stille.wav";

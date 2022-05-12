@@ -64,6 +64,7 @@ btnSampler.addEventListener("click", function () {
   }
 });
 
+
 // FUNCTIOANLITY GRAin feedback delay
 btnGrainFBDelay.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
@@ -81,11 +82,11 @@ btnGrainFBDelay.addEventListener("click", function () {
   }
 });
 
-myp5.pbrcontrol = false; 
+
 
 grainpbr.addEventListener("click", function () {
   if (myp5.pbrcontrol) {
-    pbrcontrol = false;
+    myp5.pbrcontrol = false;
   }
   else {
     if (myp5.grainfbdelay) {

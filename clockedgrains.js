@@ -82,7 +82,7 @@ grainBuf.loop = true;
  */
  
 
-  if(pbrcontrol){
+  if(myp5.pbrcontrol){
   grainBuf.playbackRate.value = graindelay_pbrate;
   }
   else {
