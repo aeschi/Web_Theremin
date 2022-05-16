@@ -1,7 +1,7 @@
-const btnClassic = document.querySelector(".btn-classic");
-const btnSampler = document.querySelector(".btn-sampler");
-const btnGran = document.querySelector(".btn-granular");
-const btnGrainFBDelay = document.querySelector(".btn-grain");
+const btnClassic = document.querySelector(".btn.classic");
+const btnSampler = document.querySelector(".btn.sampler");
+const btnGran = document.querySelector(".btn.granular");
+// const btnGrainFBDelay = document.querySelector(".btn-grain");
 //const btnSoundEffect = document.querySelector(".btn-sndeff");
 const sliderGrainsize = document.getElementById("grainsize");
 const sliderPlaybackRate = document.getElementById("playbackrate");
@@ -10,12 +10,10 @@ const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
 const outgainGrainsynth = document.getElementById("grainSynthGain");
 const outgrainSynthgain = document.getElementById("outGrainsynthGain");
-const grainpbr = document.getElementById("grainpbr");
+// const grainpbr = document.getElementById("grainpbr");
 //const foleygain = document.getElementById("outputfoleyGain");
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
-
-
 
 // ------------ SOUND TOGGLE ------------
 
@@ -26,7 +24,6 @@ un_mute.onclick = () => {
     console.log(Tone.Transport.state);
   } else {
     Tone.getContext().rawContext.suspend();
-
   }
 };
 
@@ -48,6 +45,7 @@ btnClassic.addEventListener("click", function () {
       myp5.playing = false;
     } else {
       toggleBtnColorActive(btnClassic);
+      console.log(btnClassic);
       myp5.playing = true;
     }
   }
@@ -66,37 +64,32 @@ btnSampler.addEventListener("click", function () {
   }
 });
 
-
 // FUNCTIOANLITY GRAin feedback delay
-btnGrainFBDelay.addEventListener("click", function () {
-  if (Tone.getContext().rawContext.state == "running") {
-    if (myp5.grainfbdelay) {
-      toggleBtnColorDeact(btnGrainFBDelay);
-      myp5.grainfbdelay = false;
-      myp5.pbrcontrol = false;
-      clock1.stop();
-    } else {
-      audioBuffer.buffer = sampleBuffer;
-      toggleBtnColorActive(btnGrainFBDelay);
-      myp5.grainfbdelay = true;
-      clock1.start();
-    }
-  }
-});
+// btnGrainFBDelay.addEventListener("click", function () {
+//   if (Tone.getContext().rawContext.state == "running") {
+//     if (myp5.grainfbdelay) {
+//       toggleBtnColorDeact(btnGrainFBDelay);
+//       myp5.grainfbdelay = false;
+//       myp5.pbrcontrol = false;
+//       clock1.stop();
+//     } else {
+//       audioBuffer.buffer = sampleBuffer;
+//       toggleBtnColorActive(btnGrainFBDelay);
+//       myp5.grainfbdelay = true;
+//       clock1.start();
+//     }
+//   }
+// });
 
-
-
-grainpbr.addEventListener("click", function () {
-  if (myp5.pbrcontrol) {
-    myp5.pbrcontrol = false;
-  }
-  else {
-    if (myp5.grainfbdelay) {
-      myp5.pbrcontrol = true;
-    }
-    else alert("Please activate GRAIN DELAY");
-  }
-});
+// grainpbr.addEventListener("click", function () {
+//   if (myp5.pbrcontrol) {
+//     myp5.pbrcontrol = false;
+//   } else {
+//     if (myp5.grainfbdelay) {
+//       myp5.pbrcontrol = true;
+//     } else alert("Please activate GRAIN DELAY");
+//   }
+// });
 
 /*
 btnGran.addEventListener("click", function () {
@@ -116,15 +109,14 @@ btnGran.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
     if (myp5.grainPlaying) {
       //Tone.Transport.stop();
-     
+
       gp.stop();
       toggleBtnColorDeact(btnGran);
       myp5.grainPlaying = false;
       gain.mute = true;
-    }
-    else {
+    } else {
       //Tone.Transport.start();
-     
+
       gp.start();
       toggleBtnColorActive(btnGran);
       myp5.grainPlaying = true;
@@ -132,7 +124,6 @@ btnGran.addEventListener("click", function () {
     }
   }
 });
-
 
 /*
   if (playing) {
@@ -159,7 +150,6 @@ if (grainPlaying) {
 
 //}
 
-
 // GRAIN SIZE SLIDER
 output.innerHTML = sliderGrainsize.value;
 sliderGrainsize.oninput = function () {
@@ -180,7 +170,7 @@ sliderPlaybackRate.oninput = function () {
   //gS = (this.value / 1000).toFixed(2);
   playbackrate = this.value;
   //gp.playbackRate = playbackrate;
-  gp.set({playbackRate:playbackrate});
+  gp.set({ playbackRate: playbackrate });
   /*
    playerMusic[0].playbackRate = this.value;
    playerMusic[1].playbackRate = this.value;
@@ -190,14 +180,13 @@ sliderPlaybackRate.oninput = function () {
   console.log(gp.playbackRate);
 };
 
-
 grainSynthGain.innerHTML = outgainGrainsynth.value;
 outgainGrainsynth.oninput = function () {
   outgrainSynthgain.innerHTML = this.value;
   gp.volume.value = this.value;
 };
 
-// FOLEY GAIN SLIDER 
+// FOLEY GAIN SLIDER
 // PLAYBACK RATE SLIDER
 /*
 foleygain.innerHTML = sliderFoleyGain.value;
@@ -209,7 +198,6 @@ sliderFoleyGain.oninput = function () {
   playerFoley[3].volume.value = this.value;
 };
 */
-
 
 /*
 btnSoundEffect.addEventListener("click", function () {
@@ -292,29 +280,21 @@ toggleButtonMusic = (btnName, i) => {
   }
 };
 
-
-
-
 checkMarks = (start, end) => {
-  if ((myVideo.currentTime + 1) >= end) {
+  if (myVideo.currentTime + 1 >= end) {
     console.log("video reached mark out");
     myVideo.currentTime = start;
     myVideo.play();
     return;
-
-  };
+  }
 };
 
-
 playBetween = (a, b) => {
-
   if (myVideo.currentTime >= a && myVideo.currentTime <= b) {
     myVideo.play();
-  }
-  else {
+  } else {
     myVideo.currentTime = a;
   }
-
 };
 
 let timerID;
@@ -329,10 +309,7 @@ playVideoScene = (i) => {
   timerID = setInterval(() => checkMarks(start, end), 100);
 
   myVideo.play();
-
-
 };
-
 
 toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
   if (!myVideo.paused) {
@@ -357,9 +334,9 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
     if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
       // either non active or new button activated
       // deactivate last activated if its a different one
-      if (lasttoggled >= 0) { // maybe find another solution for this
+      if (lasttoggled >= 0) {
+        // maybe find another solution for this
         if (lasttoggled != i) {
-
           clearInterval(timerID);
 
           // clicked new motiv button
@@ -379,13 +356,11 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
           channelMusic[lasttoggled].mute = true;
           channelMusicBegleitung[lasttoggled].mute = true;
 
-
           toggleBtnColorDeact(lasttoggledbuttons[0]);
           toggleBtnColorDeact(lasttoggledbuttons[1]);
           toggleBtnColorDeact(lasttoggledbuttons[2]);
           toggled[i] = true;
           toggled[lasttoggled] = false;
-
         }
       }
       clearInterval(timerID);
@@ -399,8 +374,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
       channelMusicBegleitung[i].mute = false;
 
-
-
       toggleBtnColorActive(btnName);
       toggleBtnColorActive(btnName2);
       toggleBtnColorActive(btnName3);
@@ -410,11 +383,7 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       anymotivtoggled = true;
       anymelodytoggled = true;
       anybegltoggled = true;
-
-    }
-
-
-    else {
+    } else {
       // deactivate looping scene
       console.log("clearin timer ");
       clearInterval(timerID);
@@ -437,10 +406,8 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       toggleBtnColorDeact(btnName2);
       toggleBtnColorDeact(btnName3);
       toggled[i] = false;
-
     }
   }
-
 };
 
 toggleButtonMelody = (btnName, i) => {
@@ -450,15 +417,12 @@ toggleButtonMelody = (btnName, i) => {
     channelMusic[i].volume.rampTo(0.05, 0.5);
     channelMusic[i].mute = false;
     toggleBtnColorActive(btnName);
-
   } else {
     channelMusic[i].volume.rampTo(-10, 0.5);
     channelMusic[i].mute = true;
     toggleBtnColorDeact(btnName);
-
   }
 };
-
 
 toggleButtonBegleitung = (btnName, i) => {
   // Tone.Transport.start();
@@ -467,12 +431,10 @@ toggleButtonBegleitung = (btnName, i) => {
     channelMusicBegleitung[i].volume.rampTo(0.05, 0.5);
     channelMusicBegleitung[i].mute = false;
     toggleBtnColorActive(btnName);
-
   } else {
     channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
     channelMusicBegleitung[i].mute = true;
     toggleBtnColorDeact(btnName);
-
   }
 };
 
@@ -496,7 +458,6 @@ motiv5.addEventListener("click", () => {
   toggleButtonMusicMotiv(motiv5, melody5, begl5, 4);
 });
 
-
 melody1.addEventListener("click", () => {
   toggleButtonMelody(melody1, 0);
 });
@@ -517,7 +478,6 @@ melody5.addEventListener("click", () => {
   toggleButtonMelody(melody5, 4);
 });
 
-
 begl1.addEventListener("click", () => {
   toggleButtonBegleitung(begl1, 0);
 });
@@ -537,7 +497,6 @@ begl4.addEventListener("click", () => {
 begl5.addEventListener("click", () => {
   toggleButtonBegleitung(begl5, 4);
 });
-
 
 // ------------ MUSIC ------------
 /*
@@ -662,35 +621,30 @@ let endTime = 10;
 
 let mutedSound = [];
 let mutedBegl = [];
-let mutedButtonsM =  []; 
+let mutedButtonsM = [];
 let mutedButtonsP = [];
-
 
 toggleVideo.onclick = () => {
   if (myVideo.paused) {
     myVideo.play();
-    
-    for(i = 0; i < mutedSound.length; i ++){
-      mutedSound[i].mute = false;
-     
 
+    for (i = 0; i < mutedSound.length; i++) {
+      mutedSound[i].mute = false;
     }
-    for(i = 0; i < mutedBegl.length; i ++){
+    for (i = 0; i < mutedBegl.length; i++) {
       mutedBegl[i].mute = false;
-      
     }
-    for(i = 0; i < mutedButtonsM.length; i ++){
+    for (i = 0; i < mutedButtonsM.length; i++) {
       toggleBtnColorActive(mutedButtonsM[i]);
     }
-    for(i = 0; i < mutedButtonsP.length; i ++){
+    for (i = 0; i < mutedButtonsP.length; i++) {
       toggleBtnColorActive(mutedButtonsP[i]);
     }
     mutedSound = [];
     mutedBegl = [];
-    mutedButtonsM =  []; 
+    mutedButtonsM = [];
     mutedButtonsP = [];
-  }
-  else {
+  } else {
     myVideo.pause();
     for (i = 0; i < channelMusic.length; i++) {
       if (channelMusic[i].mute == false) {
@@ -698,8 +652,6 @@ toggleVideo.onclick = () => {
         toggleBtnColorDeact(melodyButtons[i]);
         mutedButtonsM.push(melodyButtons[i]);
         mutedSound.push(channelMusic[i]);
-
-
       }
       if (channelMusicBegleitung[i].mute == false) {
         channelMusicBegleitung[i].mute = true;
@@ -707,7 +659,7 @@ toggleVideo.onclick = () => {
         mutedButtonsP.push(beglButtons[i]);
         mutedBegl.push(channelMusicBegleitung[i]);
       }
-    // console.log("sound " +mutedSound + " begl " + mutedBegl);
+      // console.log("sound " +mutedSound + " begl " + mutedBegl);
     }
   }
 };
@@ -738,8 +690,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-    " - " +
-    $("#slider-range").slider("values", 1) +
-    "sec"
+      " - " +
+      $("#slider-range").slider("values", 1) +
+      "sec"
   );
 });

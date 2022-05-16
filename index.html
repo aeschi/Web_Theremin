@@ -161,152 +161,94 @@
     <script src="positionTracking.js"></script>
 
     <div class="ui-bar">
-      <div class="interactive">
-       
-        <button class="btn-classic">THEREMIN</button>
-        <button class="btn-sampler">SAMPLER</button>
-        <button class="btn-granular">GRANULAR SYNTHESIS</button>
-        <button class="btn-grain">GRAIN DELAY</button>
-        <div class="slidecontainer slidergrainsize">
-          <p>
-            GRAIN SIZE
-            <input
-              type="range"
-              min="5"
-              max="100"
-              value="50"
-              step="1"
-              class="slider"
-              id="grainsize"
-            />
-            <span id="outputGrain"></span>
-          </p>
+      <div class="ui-interactive">
+        <div class="ui-interactive-buttons">
+          <button class="btn classic">THEREMIN</button>
+          <button class="btn sampler">SAMPLER</button>
+          <button class="btn effect">SOUND EFFECTS</button>
+          <button class="btn granular">GRANULAR SYNTHESIS</button>
         </div>
-        <div class="slidecontainer sliderpbrate">
-          <p>
-            PLAYBACK RATE
-            <input
-              type="range"
-              min="0.01"
-              max="2.0"
-              value="0.1"
-              step="0.01"
-              class="slider"
-              id="playbackrate"
-            />
-            <span id="outputPBR"></span>
-          </p>
+        <div class="ui-interactive-settings">
+          <div class="slidecontainer slidergrainsize">
+            <p>
+              GRAIN SIZE
+              <input
+                type="range"
+                min="5"
+                max="100"
+                value="50"
+                step="1"
+                class="slider"
+                id="grainsize"
+              />
+              <span id="outputGrain"></span>
+            </p>
+          </div>
+          <div class="slidecontainer sliderpbrate">
+            <p>
+              PLAYBACK RATE
+              <input
+                type="range"
+                min="0.01"
+                max="2.0"
+                value="0.1"
+                step="0.01"
+                class="slider"
+                id="playbackrate"
+              />
+              <span id="outputPBR"></span>
+            </p>
+          </div>
+          <div class="slidecontainer slidergaingrainsynth">
+            <p>
+              GAIN
+              <input
+                type="range"
+                min="-20"
+                max="3"
+                value="-1"
+                step="1"
+                class="slider"
+                id="grainSynthGain"
+              />
+              <span id="outGrainsynthGain"></span>
+            </p>
+          </div>
+
+          <h5>attach to hand</h5>
+          <div class="toggle" id="grainpbr">
+            <p><input type="checkbox" /> grain size</p>
+          </div>
+          <div class="toggle" id="grainpbr">
+            <p><input type="checkbox" /> playback rate</p>
+          </div>
+          <div class="toggle" id="grainpbr">
+            <p><input type="checkbox" /> grain delay</p>
+          </div>
         </div>
-        <div class="slidecontainer slidergaingrainsynth">
-          <p>
-            GAIN
-            <input
-              type="range"
-              min="-20"
-              max="3"
-              value="-1"
-              step="1"
-              class="slider"
-              id="grainSynthGain"
-            />
-            <span id="outGrainsynthGain"></span>
-          </p>
-        </div>
-        <div class="toggle" id="grainpbr">
-          <p>left hand</p>
-          <input type="checkbox" />
+        <div class="ui-filmsounds-label">
+          <h4>SCENE</h4>
+          <h4>MELODY</h4>
+          <h4>POLYPHONE</h4>
+          <h4>FOLEY</h4>
         </div>
       </div>
 
-      <!--
-    <section class="ui-granular">
-      <h2>
-        <br>
-      </h2>
-      <button class="btn-granular">GRANULAR SYNTHESIS</button>
-      <div class="slidecontainer">
-        <p>
-          GRAIN SIZE
-          <input type="range" min="5" max="100" value="50" step="1" class="slider" id="grainsize" />
-          <span id="outputGrain"></span>
-        </p>
-      </div>
-      <div class="slidecontainer">
-        <p>
-          PLAYBACK RATE
-          <input type="range" min="0.01" max="2.0" value="1.0" step="0.01" class="slider" id="playbackrate" />
-          <span id="outputPBR"></span>
-        </p>
-      </div>
-    </section>
-
-
-    <section class="ui-graindelay">
-      <h2>
-        <br>
-      </h2>
-      <button class="btn-grain">GRAIN DELAY</button>
-      <p>
-        <span class="toggle" id="grainpbr">
-          <label>left hand</label>
-          <input type="checkbox">
-        </span>
-      </p>
-    </section>
-
-  -->
-
-      <!--
-        <button class="btn-sndeff">SOUND EFFECT</button>
-      -->
-
-      <!-- <div class="slidecontainer">
-          <p>
-            SLIDER
-            <input
-              type="range"
-              min="10"
-              max="100"
-              value="50"
-              class="slider"
-              id="sliderName"
-            />
-            <span id="outputSlider"></span>
-          </p>
-        </div> -->
-
-      <div class="filmsounds">
-        <div id="timeline">
-          <script src="timeline.js"></script>
+      <div class="ui-filmsounds">
+        <div class="ui-filmsounds-scene">
+          <button class="btn-motiv" id="motiv1">BULLS BLESSING</button>
+          <button class="btn-motiv" id="motiv2">MILK RAIN</button>
+          <button class="btn-motiv" id="motiv3">FERTILITY</button>
+          <button class="btn-motiv" id="motiv4">TRACTOR DANCE</button>
+          <button class="btn-motiv" id="motiv5">ADVANCE</button>
         </div>
-        <div class="motive">
-          <button class="btn-motiv" id="motiv1">Bullen-Segen</button>
-          <button class="btn-motiv" id="motiv2">Milchregen</button>
-          <button class="btn-motiv" id="motiv3">Fruchtbarkeit</button>
-          <button class="btn-motiv" id="motiv4">Traktoren-Tanz</button>
-          <button class="btn-motiv" id="motiv5">Fortschritt</button>
-          <div class="filmmusik">
-            <button class="btn-filmmusik" id="melody1">M</button>
-            <button class="btn-filmmusik" id="begl1">P</button>
-          </div>
-          <div class="filmmusik">
-            <button class="btn-filmmusik" id="melody2">M</button>
-            <button class="btn-filmmusik" id="begl2">P</button>
-          </div>
-          <div class="filmmusik">
-            <button class="btn-filmmusik" id="melody3">M</button>
-            <button class="btn-filmmusik" id="begl3">P</button>
-          </div>
-          <div class="filmmusik">
-            <button class="btn-filmmusik" id="melody4">M</button>
-            <button class="btn-filmmusik" id="begl4">P</button>
-          </div>
-          <div class="filmmusik">
-            <button class="btn-filmmusik" id="melody5">M</button>
-            <button class="btn-filmmusik" id="begl5">P</button>
-          </div>
+        <div class="ui-filmsounds-melody">
+          <button class="btn-filmmusik" id="melody1">M</button>
         </div>
-        <div class="foleys">
+        <div class="ui-filmsounds-polyphone">
+          <button class="btn-filmmusik" id="begl1">P</button>
+        </div>
+        <div class="ui-filmsounds-foley">
           <button class="btn-foley-rain">RAIN</button>
           <button class="btn-foley-water">WATER</button>
           <button class="btn-foley-steps">STEPS</button>
@@ -315,56 +257,6 @@
         </div>
       </div>
     </div>
-
-    <!--
-        <div class="filmsounds">
-  <div class="motive">
-    <section class="ui-motiv">
-      <button class="btn-motiv">Motiv 1</button>
-      <section class="ui-voice">
-        <button class="btn-filmmusik">Melody</button>
-        <button class="btn-filmmusik">Polyphon</button>
-      </section>
-    </section>
-    <section class="ui-motiv">
-      <button class="btn-motiv">Motiv 2</button>
-      <section class="ui-voice">
-        <button class="btn-filmmusik">Melody</button>
-        <button class="btn-filmmusik">Polyphon</button>
-      </section>
-    </section>
-    <section class="ui-motiv">
-      <button class="btn-motiv">Motiv 3</button>
-      <section class="ui-voice">
-        <button class="btn-filmmusik">Melody</button>
-        <button class="btn-filmmusik">Polyphon</button>
-      </section>
-    </section>
-    <section class="ui-motiv">
-      <button class="btn-motiv">Motiv 4</button>
-      <section class="ui-voice">
-        <button class="btn-filmmusik">Melody</button>
-        <button class="btn-filmmusik">Polyphon</button>
-      </section>
-    </section>
-    </div>
-    <div class="foleys">
-      <button class="btn-foley">RAIN</button>
-      <button class="btn-foley">WATER</button>
-      <button class="btn-foley">PIGS</button>
-      <button class="btn-foley">STEPS</button>
-      <div class="slidecontainer">
-        <p>
-          GAIN
-          <input type="range" min="-20" max="1" value="-3" step="1" class="slider" id="foleygain" />
-          <span id="outputfoleyGain"></span>
-        </p>
-      </div>
-    </div>
-  </div>
-
-   
--->
 
     <script src="thereminGui.js"></script>
   </body>
