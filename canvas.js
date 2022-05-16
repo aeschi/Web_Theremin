@@ -360,95 +360,109 @@ var c = function (p) {
                 clock1.start(); // continues melody
                 // console.log("started");
               }
-              if (myp5.pbrcontrol) {
-                const currPbr = p.map(handL.y, 0, 360, 0.001, 2);
-                graindelay_pbrate = currPbr;
+
+              if (handL.y >= 0 && handL.y <= 360) {
+                graindelay_pbrate = p.map(handL.y, 0, 360, 0.001, 2);
               }
-              // feedback amount = where hand is vertically in relation to audio file length
-              const fbNum = p.map(audioPercToHand, 0, audioLenInSec, 0, 1);
-              const fb = fbNum.toFixed(2);
-              // delay amount = where right hand is related to the webcam image width
-              // TODO : change delay to distance between the two hands
-              const delayNum = p.map(handR.x, 0, video.width, 0, 1);
-              // delay time in musical notation (not used yet)
-              const soundDelay = new Tone.Time(delayNum).toNotation();
-              const del = delayNum.toFixed(1);
+              else {
+                graindelay_pbrate = 0.1;
+              }
+            
+            // feedback amount = where hand is vertically in relation to audio file length
+            const fbNum = p.map(audioPercToHand, 0, audioLenInSec, 0, 1);
+            const fb = fbNum.toFixed(2);
+            // delay amount = where right hand is related to the webcam image width
+            // TODO : change delay to distance between the two hands
+            const delayNum = p.map(handR.x, 0, video.width, 0, 1);
+            // delay time in musical notation (not used yet)
+            const soundDelay = new Tone.Time(delayNum).toNotation();
+            const del = delayNum.toFixed(1);
 
-              // ranges of the defined feedbach delay nodes
-              if (del <= 0.8 && del >= 0.2) {
-                // if (fbdelayMap.has(float(del))) {
+            // ranges of the defined feedbach delay nodes
+            if (del <= 0.8 && del >= 0.2) {
+              // if (fbdelayMap.has(float(del))) {
 
-                // get feedback delay node corresponding to delay time from the stored map
-                let arr = fbdelayMap.get(p.float(del));
-                console.log(arr);
-                //const ind = Math.floor(random(1, 4)) - 1;
-                const ind = 3;
-                // console.log("del fb ind " + del + " " + fb);
-                if (fb >= 0 && fb < 0.15) {
-                  //console.log("next 1");
-                  //fbdelay = arr[0];
-                  fbdelay = arr[ind];
-                }
-                if (fb >= 0.15 && fb < 0.25) {
-                  // console.log("next 2");
-                  fbdelay = arr[1];
-                  //fbdelay = arr[ind];
-                }
-                if (fb >= 0.25 && fb < 0.35) {
-                  //console.log("next 3");
-                  fbdelay = arr[2];
-                  //fbdelay = arr[ind];
-                }
-                if (fb >= 0.35 && fb < 0.45) {
-                  // console.log("next 4");
-                  fbdelay = arr[3];
-                  //fbdelay = arr[ind];
-                }
-                if (fb >= 0.45 && fb < 0.55) {
-                  //console.log("next 5");
-                  fbdelay = arr[4];
-                  //fbdelay = arr[ind];
-                }
-                if (fb >= 0.55 && fb < 0.65) {
-                  // console.log("next 6");
-                  fbdelay = arr[5];
-                  // fbdelay = arr[ind];
-                }
-                if (fb >= 0.65 && fb < 0.75) {
-                  //console.log("next 7");
-                  fbdelay = arr[6];
-                  // fbdelay = arr[ind];
-                }
-                if (fb >= 0.75 && fb <= 0.85) {
-                  //console.log("next 8");
-                  fbdelay = arr[7];
-                  //fbdelay = arr[ind];
-                }
-              } else { fbdelay = fbd27; }
+              // get feedback delay node corresponding to delay time from the stored map
+              let arr = fbdelayMap.get(p.float(del));
+              console.log(arr);
+              //const ind = Math.floor(random(1, 4)) - 1;
+              const ind = 3;
+              // console.log("del fb ind " + del + " " + fb);
+              if (fb >= 0 && fb < 0.15) {
+                //console.log("next 1");
+                //fbdelay = arr[0];
+                fbdelay = arr[ind];
+              }
+              if (fb >= 0.15 && fb < 0.25) {
+                // console.log("next 2");
+                fbdelay = arr[1];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.25 && fb < 0.35) {
+                //console.log("next 3");
+                fbdelay = arr[2];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.35 && fb < 0.45) {
+                // console.log("next 4");
+                fbdelay = arr[3];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.45 && fb < 0.55) {
+                //console.log("next 5");
+                fbdelay = arr[4];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.55 && fb < 0.65) {
+                // console.log("next 6");
+                fbdelay = arr[5];
+                // fbdelay = arr[ind];
+              }
+              if (fb >= 0.65 && fb < 0.75) {
+                //console.log("next 7");
+                fbdelay = arr[6];
+                // fbdelay = arr[ind];
+              }
+              if (fb >= 0.75 && fb <= 0.85) {
+                //console.log("next 8");
+                fbdelay = arr[7];
+                //fbdelay = arr[ind];
+              }
+            } else { fbdelay = fbd27; }
 
-            }
           }
         }
+      }
 
-        if (myp5.grainPlaying) {
-          let gS;
-          let currPbr;
-          let fbNum;
+      if (myp5.grainPlaying) {
+        let gS;
+        let currPbr;
+        let fbNum;
 
-          console.log("in grain playng");
+        console.log("in grain playng");
 
-          let xLenHand = 640/2;
-         // let yLenHand = 360/2; 
+        let xLenHand = 640 / 2;
+        // let yLenHand = 360/2; 
 
-          if (handR.y >= 0 && handR.y <= 360) {
-            gS = p.map(handR.y, 0, 360, 0.02, 1.5);
-
-           // gp.grainSize(gS.toFixed(2));
-
+        
+        if(grainSizeEnabled){
+          console.log("grain size enabled");
+          if (handR.x >= xLenHand && handR.x <= 640) {
+            //gS = p.map(handR.y, 0, 360, 0.02, 1.5);
+            gS = ((p.map(handR.x, xLenHand, 640, 5, 100)) / 1000).toFixed(2);
+  
+            // gp.grainSize(gS.toFixed(2));
+  
           } else {
             gS = 0.1;
           }
+          melPl.set({ grainSize: gS, overlap: (gS / 3) });
+          beglPl.set({ grainSize: gS, overlap: (gS / 3) });
+        }
 
+        
+        
+        /*
           if (handR.x >= xLenHand && handR.x <= 640) {
 
             fbNum = p.map(
@@ -463,39 +477,48 @@ var c = function (p) {
           }
 
           const fb = fbNum.toFixed(1);
+         */
+        /*
+        if (handL.y >= 0 && handL.y <= 360) {
+          currPbr = p.map(handR.y, 0, 360, 0.05, 0.7);
+        }
+        else {
+          currPbr = 0.05;
+        }
+
+        if(currPbr <= 0 ){
+          currPbr = 0.1;
+        }
+    */
+
+       
+
+
+
+
+
+
+        /*
+                if (currPbr < 0.001) {
+                  // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
+                  gp.playbackRate = 0.001;
+                  //  PARAMS.playbackrate = 0.001; // für das gui monitoring
+                } else {
+                  gp.playbackRate = currPbr;
+                  //  PARAMS.playbackrate = currPbr; // gui monitoring
+                }
+     */
+
+        if (fbdelayEnabled) {
+          // RIGHT HAND Y
+
+          if (handR.y >= 0 && handR.y <= 360) {
           
-          /*
-          if (handL.y >= 0 && handL.y <= 360) {
-            currPbr = p.map(handR.y, 0, 360, 0.05, 0.7);
+            fbNum = p.map(handR.y, 0, 360, 0, 0.9);
+          } else {
+            fbNum = 0.1;
           }
-          else {
-            currPbr = 0.05;
-          }
-
-          if(currPbr <= 0 ){
-            currPbr = 0.1;
-          }
-      */
-
-          gp.set({grainSize: gS, overlap: (gS/3)});
-
-
-
-
-
-
-          /*
-                  if (currPbr < 0.001) {
-                    // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
-                    gp.playbackRate = 0.001;
-                    //  PARAMS.playbackrate = 0.001; // für das gui monitoring
-                  } else {
-                    gp.playbackRate = currPbr;
-                    //  PARAMS.playbackrate = currPbr; // gui monitoring
-                  }
-       */
-
-          
+          const fb = fbNum.toFixed(1);
           // ranges of the defined feedbach delay nodes
           if (fb <= 0.8 && fb >= 0.1) {
             // if (fbdelayMap.has(float(del))) {
@@ -503,7 +526,7 @@ var c = function (p) {
             // get feedback delay node corresponding to delay time from the stored map
             let arr = fbdelayMap.get(p.float(fb));
 
-        
+            console.log("fb "+fb);
 
             //const ind = Math.floor(random(1, 4)) - 1;
             const ind = 0;
@@ -550,32 +573,66 @@ var c = function (p) {
             }
           } else { fbdelay = fbd27; }
 
+          melPl.connect(fbdelay).toDestination();
+          beglPl.connect(fbdelay).toDestination();
+        }
 
-          gp.connect(fbdelay).toDestination();
+          
 
-        //  let currDetune = p.map(handL.y, video.height, 0, 0.5, 0.1);
+          //  let currDetune = p.map(handL.y, video.height, 0, 0.5, 0.1);
           // const interval = currDetune / 1000;
           //intervaltofrequencyratio function from tone js
-         //  gp.playbackRate = Math.pow(2, (interval / 12));
+          //  gp.playbackRate = Math.pow(2, (interval / 12));
 
-      
+
 
 
 
           const gpVol = p.map(handL.y, 360, 0, 0.5, -20);
-         // gp.set({volume: gpVol});
+          // gp.set({volume: gpVol});
 
-          
 
-        /*  
-          console.log("hand L : "+handL.x + " " + handL.y +" pbr "+ gp.playbackRate +" vol "+ gpVol);
-          console.log("hand R : "+handR.x + " " + handR.y +" fb "+ fb +" gS "+ gp.grainSize);
-          */
+
+          /*  
+            console.log("hand L : "+handL.x + " " + handL.y +" pbr "+ gp.playbackRate +" vol "+ gpVol);
+            console.log("hand R : "+handR.x + " " + handR.y +" fb "+ fb +" gS "+ gp.grainSize);
+            */
         }
 
 
 
-
+        if(soundeffekteEnabled){
+          beglCH_SE.mute = false;
+          beglCH.mute = true;
+          if(handL.y > 0 && handL.y < 90){
+            melCH.mute = false;
+            channelSoundEffektM[0].mute = true;
+            channelSoundEffektM[1].mute = true;
+            channelSoundEffektM[2].mute = true;
+            console.log("melody");
+          }
+          else if(handL.y >= 90 && handL.y < 180){
+            melCH.mute = true;
+            channelSoundEffektM[0].mute = false;
+            channelSoundEffektM[1].mute = true;
+            channelSoundEffektM[2].mute = true;
+            console.log("sf 1");
+          }
+          else if(handL.y >= 180 && handL.y <= 270){
+            melCH.mute = true;
+            channelSoundEffektM[0].mute = true;
+            channelSoundEffektM[1].mute = false;
+            channelSoundEffektM[2].mute = true;
+            console.log("sf 2");
+          }
+          else if(handL.y >= 270 && handL.y < 360){
+            melCH.mute = true;
+            channelSoundEffektM[0].mute = true;
+            channelSoundEffektM[1].mute = true;
+            channelSoundEffektM[2].mute = false;
+            console.log("sf 3");
+          }
+        }
 
         // draw layers
         p.image(face_layer, 0, 0);

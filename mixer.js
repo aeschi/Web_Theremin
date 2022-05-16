@@ -16,6 +16,9 @@ let soundfiles = [
 ];
 */
 
+let filmmusik_melodie = "TRAUM_Melodie";
+let filmmusik_begleitung = "TRAUM_Begleitung";
+
 let soundfiles = [
   "TRAUM_T1_Melodie_w_oRev_trim",
   "TRAUM_T2_Melodie_w_oRev_trim",
@@ -32,8 +35,9 @@ let soundfiles_begleitung = [
   "TRAUM_T5_Begleitung_w_oRev_trim", 
 ];
 
-let starttimes = [0, 74, 142, 201.5, 245, 300]; // Startzeiten der einzelnen Video-Szenen/Motive in sec.
-
+let starttimes = [0, 74, 142.5, 201.5, 245, 300]; // Startzeiten der einzelnen Video-Szenen/Motive in sec.
+let starttimesSound = [0, 67, 125, 180, 218, 300];
+let starttimesFoley = [50];
 
 /*
 const melodyBuf1 = new Tone.ToneAudioBuffer("data/music/motive/"+soundfiles[0]+".wav", () => {
@@ -53,19 +57,42 @@ const melod5Buf = new Tone.ToneAudioBuffer("data/music/"+soundfiles[4]+".wav", (
   console.log('loaded');
 });
 
-
-
-
-let ch1 = new Tone.Channel(1).toDestination();
-ch1.mute = true;
-let pl1 = new Tone.Player();
-pl1.buffer = melodyBuf1;
-pl1.sync().start(0);
-
-pl1.loop = true;
-pl1.connect(ch1);
-
 */
+
+let audioFileMel = "data/music/motive/TRAUM_Melodie.ogg";
+let audioFileBegl = "data/music/motive/TRAUM_Begleitung.ogg";
+// tone audio buffer can be assigner to gp.buffer
+const sampleBufferMelody = new Tone.ToneAudioBuffer(audioFileMel, () => {
+  console.log('loaded');
+});
+const sampleBufferBegl = new Tone.ToneAudioBuffer(audioFileBegl, () => {
+  console.log('loaded');
+});
+
+let melCH = new Tone.Channel(1).toDestination();
+melCH.mute = true;
+let melPl = new Tone.GrainPlayer({
+  url: `data/music/motive/${filmmusik_melodie}.ogg`,
+  loop: true,
+  playbackRate: 1,
+  grainSize: 0.1
+}).sync()
+  .start(0);
+
+melPl.connect(melCH);
+
+let beglCH = new Tone.Channel(1).toDestination();
+beglCH.mute = true;
+let beglPl = new Tone.GrainPlayer({
+  url: `data/music/motive/${filmmusik_begleitung}.ogg`,
+  loop: true,
+  playbackRate: 1,
+  grainSize: 0.1
+}).sync()
+  .start(0);
+
+beglPl.connect(beglCH);
+
 
 soundfiles.map(function (url, i) {
   playerMeter[i] = new Tone.Meter();
@@ -104,21 +131,28 @@ soundfiles_begleitung.map(function (url, i) {
 let channelFoley = [];
 let playerFoley = [];
 
-let foleyfiles = ["rain", "water", "pigs", "steps"];
+//let foleyfiles = ["rain", "water", "pigs", "steps"];
+let foleyfiles = ["TRAUM_Noise_trim"];
 
 foleyfiles.map(function (url, i) {
   channelFoley[i] = new Tone.Channel(1).toDestination();
   channelFoley[i].mute = true;
 
   playerFoley[i] = new Tone.Player({
-    url: `data/music/${url}.wav`,
+    url: `data/music/motive/${url}.ogg`,
     loop: true,
   })
     .sync()
-    .start(0);
+    .start(starttimesFoley[i]);
   playerFoley[i].connect(channelFoley[i]);
 });
 
 
 
 
+/*
+Tone.Transport.scheduleRepeat(function(time){
+  playerMusic[0].start(time);
+  console.log("in repeat");
+},300,0);
+*/

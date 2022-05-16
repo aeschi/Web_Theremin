@@ -115,6 +115,7 @@
           <script src="grainPlayer.js"></script>
           <script src="grainDelay.js"></script>
           <script src="mixer.js"></script>
+          <script src="soundeffekte.js"></script>
           <script src="fbdelaymap.js"></script>
           <script src="clockedgrains.js"></script>
           <script src="canvas.js"></script>
@@ -163,10 +164,10 @@
     <div class="ui-bar">
       <div class="ui-interactive">
         <div class="ui-interactive-buttons">
-          <button class="btn classic">THEREMIN</button>
-          <button class="btn sampler">SAMPLER</button>
-          <button class="btn effect">SOUND EFFECTS</button>
-          <button class="btn granular">GRANULAR SYNTHESIS</button>
+          <button class="btn-classic">THEREMIN</button>
+          <button class="btn-sampler">SAMPLER</button>
+          <button class="btn-effect">SOUND EFFECTS</button>
+          <button class="btn-granular">GRANULAR SYNTHESIS</button>
         </div>
         <div class="ui-interactive-settings">
           <div class="slidecontainer slidergrainsize">
@@ -216,13 +217,13 @@
           </div>
 
           <h5>attach to hand</h5>
-          <div class="toggle" id="grainpbr">
+          <div class="toggle" id="grainsizeHand">
             <p><input type="checkbox" /> grain size</p>
           </div>
-          <div class="toggle" id="grainpbr">
+          <div class="toggle" id="grainpbrHand">
             <p><input type="checkbox" /> playback rate</p>
           </div>
-          <div class="toggle" id="grainpbr">
+          <div class="toggle" id="graindelayHand">
             <p><input type="checkbox" /> grain delay</p>
           </div>
         </div>
