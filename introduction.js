@@ -10,7 +10,7 @@ const tour = new Shepherd.Tour({
 tour.addStep({
   title: "Hi there!",
   text: `This is a virtual THEREMIN application.\
-  Let's have a look around. This application has several interactive sounds. The 'THEREMIN' sound, the more atmospheric 'GRANULAR THEREMIN' one and ... `,
+  Let's have a look around. This application has several interactive sounds. The 'THEREMIN' sound, a 'SAMPLER' Theremin sound, the more atmospheric 'GRANULAR SYNTHESIS' sound and a range of prerendered SOUND EFFECTS.`,
   buttons: [
     {
       action() {
@@ -32,7 +32,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
- button and active one of the interactive sounds (THEREMIN/GRANULAR THEREMIN/GRAIN DELAY). `,
+ button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS). To use the SOUND EFFECTS activate the button M and P on the right side, in the video timeline.`,
   attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
@@ -51,7 +51,7 @@ tour.addStep({
   ],
   id: "creating",
 });
-
+/*
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `Move your left hand up and down to change the volume. Move your right hand through space to change the pitch.`,
@@ -73,10 +73,10 @@ tour.addStep({
   ],
   id: "creating",
 });
-
+*/
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Move your left hand up and down to change the volume. Move your right hand through space to change the pitch. Also try playing around with the sliders to adjust the settings for the GRANULAR sounds.`,
+  text: `Move your left hand up and down to change the volume of THEREMIN and SAMPLER. Move your right hand through space to change the pitch. Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the sound synthesis is affected. `,
   attachTo: { element: ".ui-granular", on: "top" },
   buttons: [
     {
@@ -98,7 +98,7 @@ tour.addStep({
 
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Move your right hand across the canvas to play with the GRAIN DELAY. Activate the checkbox and move left hand up and down to control the sound playbackrate. You can also use the slider PLAYBACK RATE.`,
+  text: `To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE.`,
   attachTo: { element: ".ui-graindelay", on: "top" },
   buttons: [
     {
@@ -120,7 +120,7 @@ tour.addStep({
 
 tour.addStep({
   title: "FILM MUSIC",
-  text: `To better understand the value of film music, you can toggle on and of a precomposed piece of film music. You can active ALL sources at once or the MAIN and additional VOICES individually.`,
+  text: `To better understand the value of film music, you can toggle on and off a precomposed piece of film music for the film scene. To hear the individual SCENE compositions, click a scene button. To listen to the whole composition, click the M or P buttons. You can toggle M and P on and off to hear the difference between leading and accompanying melodies.`,
   attachTo: { element: ".ui-music", on: "top" },
   buttons: [
     {
@@ -142,7 +142,7 @@ tour.addStep({
 
 tour.addStep({
   title: "ATMOSPHERE FOLEY",
-  text: `Aside from film music, atmospheric sound, also called FOLEYS, help with brining a film scene to life. Click on the different sound sources to hear what a difference these sounds can make.`,
+  text: `Aside from film music, atmospheric sound, also called FOLEYS, help with bringing a film scene to life. Click on the different sound sources to hear what a difference these sounds can make.`,
   attachTo: { element: ".ui-foley", on: "top" },
   buttons: [
     {
