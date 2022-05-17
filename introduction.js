@@ -76,7 +76,7 @@ tour.addStep({
 */
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Move your left hand up and down to change the volume of THEREMIN and SAMPLER. Move your right hand through space to change the pitch. Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the sound synthesis is affected. `,
+  text: `Move your left hand up and down to change the volume of THEREMIN and SAMPLER. Move your right hand through space to change the pitch. Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the parameters affect the sound synthesis. `,
   attachTo: { element: ".ui-granular", on: "top" },
   buttons: [
     {
