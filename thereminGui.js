@@ -19,6 +19,10 @@ let toggleVideo = document.getElementById("play");
 
 let myVideo = document.getElementById("video1");
 
+/*
+Tone.Transport.loop = true;
+Tone.Transport.loopStart = 0;
+*/
 
 // ------------ SOUND TOGGLE ------------
 
@@ -484,10 +488,17 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
     clearInterval(timerID);
     console.log("in toggled "+i);
     //Tone.Transport.pause();
+    let transporttime = Tone.Transport.seconds;
+    Tone.Transport.set({loop:false})
+    
+    Tone.Transport.start(Tone.now(),transporttime);
+    /*
     melCH.volume.rampTo(-10, 0.1);
     beglCH.volume.rampTo(-10, 0.1);
+    
     melCH.mute = true;
     beglCH.mute = true;
+    */
     toggleBtnColorDeact(btnName);
     toggled[i] = false;
     lasttoggled = i;
@@ -502,6 +513,7 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
      playVideoScene(i);
       Tone.Transport.pause();
       //Tone.Transport.clear();
+      Tone.Transport.set({loop: true, loopStart:starttimes[i], loopEnd: starttimes[i+1]});
       Tone.Transport.start(Tone.now(), starttimes[i]);
       console.log("i " + i);
 
@@ -521,7 +533,9 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
     else {
       playVideoScene(i);
       Tone.Transport.pause();
-      Tone.Transport.start(Tone.now(), starttimes[i]);
+      Tone.Transport.set({loop: true, loopStart:starttimes[i], loopEnd: starttimes[i+1]});
+      Tone.Transport.start(Tone.now(),starttimes[i]);
+      //Tone.Transport.start(Tone.now(), starttimes[i]);
       console.log("i " + i);
 
       toggleBtnColorActive(btnName);
@@ -1034,6 +1048,44 @@ btnSideThree.addEventListener("click", () => {
 */
 // ------------ FOLEY ------------
 
+const btnFoleyRain = document.querySelector(".btn-foley-rain");
+const btnFoleyWater = document.querySelector(".btn-foley-water");
+const btnFoleyPigs = document.querySelector(".btn-foley-pigs");
+const btnFoleySteps = document.querySelector(".btn-foley-steps");
+
+const foleyButtons = [btnFoleyWater,btnFoleyRain,btnFoleyPigs,btnFoleySteps];
+
+toggleButton = (btnName, i) => {
+  Tone.Transport.start();
+  if (foleyChannels[i].mute) {
+    foleyChannels[i].mute = false;
+    toggleBtnColorActive(btnName);
+  } else {
+    foleyChannels[i].mute = true;
+    toggleBtnColorDeact(btnName);
+  }
+};
+
+btnFoleyWater.addEventListener("click", () => {
+  toggleButton(btnFoleyWater, 0);
+});
+
+btnFoleyRain.addEventListener("click", () => {
+  toggleButton(btnFoleyRain, 1);
+});
+
+btnFoleyPigs.addEventListener("click", () => {
+  toggleButton(btnFoleyPigs, 2);
+});
+
+btnFoleySteps.addEventListener("click", () => {
+  toggleButton(btnFoleySteps, 3);
+});
+
+
+
+
+/*
 const btnFoleyOne = document.querySelector(".btn-foley-rain");
 const btnFoleyTwo = document.querySelector(".btn-foley-water");
 const btnFoleyThree = document.querySelector(".btn-foley-pigs");
@@ -1050,8 +1102,8 @@ toggleButton = (btnName, i) => {
   }
 };
 
-btnFoleyOne.addEventListener("click", () => {
-  toggleButton(btnFoleyOne, 0);
+btnFoleyWater.addEventListener("click", () => {
+  toggleButton(btnFoleyWater, 0);
 });
 
 btnFoleyTwo.addEventListener("click", () => {
@@ -1066,6 +1118,7 @@ btnFoleyFour.addEventListener("click", () => {
   toggleButton(btnFoleyFour, 3);
 });
 
+*/
 // ------------ VIDEO ------------
 
 
