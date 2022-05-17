@@ -141,6 +141,29 @@ tour.addStep({
 });
 
 tour.addStep({
+  title: "INTERACTIVE SOUNDS",
+  text: `You can activate several interactive sounds at once and try out different hand movements.`,
+  attachTo: { element: ".ui-graindelay", on: "top" },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+  id: "creating",
+});
+
+
+tour.addStep({
   title: "FILM MUSIC",
   text: `To better understand the value of film music, you can toggle on and off a precomposed piece of film music for the film scene. To hear the individual SCENE compositions, click a scene button. To listen to the whole composition, click the M or P buttons. You can toggle M and P on and off to hear the difference between leading and accompanying melodies.`,
   attachTo: { element: ".ui-music", on: "top" },
