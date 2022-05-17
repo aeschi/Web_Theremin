@@ -43,7 +43,6 @@ const clock1 = new Tone.Clock(clockCallback, 1 / grainSize);
 
 
 
-
 function clockCallback(time) {
 //  console.log("time " + time);
   const ticks = clock1.getTicksAtTime(time);

@@ -10,7 +10,7 @@ const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
 const outgainGrainsynth = document.getElementById("grainSynthGain");
 const outgrainSynthgain = document.getElementById("outGrainsynthGain");
-const grainpbr = document.getElementById("grainpbrHand");
+//const grainpbr = document.getElementById("grainpbrHand");
 const feedbackdelay = document.getElementById("graindelayHand");
 const grainsizeHand = document.getElementById("grainsizeHand");
 //const foleygain = document.getElementById("outputfoleyGain");
@@ -127,18 +127,33 @@ btnGrainFBDelay.addEventListener("click", function () {
 });
 
 */
-
+/*
 grainpbr.addEventListener("click", function () {
+  melCH.mute = true;
+  beglCH.mute = true;
+ 
   if (myp5.pbrcontrol) {
     myp5.pbrcontrol = false;
   }
   else {
     if (myp5.grainfbdelay) {
-      myp5.pbrcontrol = true;
+      //myp5.pbrcontrol = true;
+      myp5.grainfbdelay = false;
+      myp5.grainPlaying = true;
+      melCH.mute = false;
+      beglCH.mute = false;
+      clock1.stop();
     }
-    else alert("Please activate GRAIN DELAY");
+    else {
+      audioBuffer.buffer = sampleBuffer;
+      myp5.grainfbdelay = true;
+      myp5.grainPlaying = false;
+      myp5.pbrcontrol = true;
+      clock1.start();
+    } //alert("Please activate GRAIN DELAY");
   }
 });
+*/
 
 /*
 btnGran.addEventListener("click", function () {

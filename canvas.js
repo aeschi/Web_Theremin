@@ -384,7 +384,7 @@ var c = function (p) {
 
               // get feedback delay node corresponding to delay time from the stored map
               let arr = fbdelayMap.get(p.float(del));
-              console.log(arr);
+              
               //const ind = Math.floor(random(1, 4)) - 1;
               const ind = 3;
               // console.log("del fb ind " + del + " " + fb);
