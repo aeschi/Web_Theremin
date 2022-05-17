@@ -32,7 +32,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
- button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS). To use the SOUND EFFECTS activate the button M and P on the right side, in the video timeline.`,
+ button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS). To use the SOUND EFFECTS activate the button M and P on the right side, in the video timeline, and move your left hand up and down.`,
   attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
