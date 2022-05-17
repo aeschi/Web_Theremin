@@ -336,7 +336,7 @@ var c = function (p) {
          }
          */
         // same as drawing
-        if (handR.confidence > 0.2) {
+       // if (handR.confidence > 0.2) {
 
           if (myp5.grainfbdelay) {
 
@@ -432,7 +432,7 @@ var c = function (p) {
 
           }
         }
-      }
+   //   }
 
       if (myp5.grainPlaying) {
         let gS;
@@ -584,15 +584,10 @@ var c = function (p) {
           //intervaltofrequencyratio function from tone js
           //  gp.playbackRate = Math.pow(2, (interval / 12));
 
-
-
-
-
           const gpVol = p.map(handL.y, 360, 0, 0.5, -20);
-          // gp.set({volume: gpVol});
-
-
-
+          melPl.set({volume: gpVol});
+          beglPl.set({volume: gpVol});
+      
           /*  
             console.log("hand L : "+handL.x + " " + handL.y +" pbr "+ gp.playbackRate +" vol "+ gpVol);
             console.log("hand R : "+handR.x + " " + handR.y +" fb "+ fb +" gS "+ gp.grainSize);

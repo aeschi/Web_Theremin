@@ -98,7 +98,7 @@ tour.addStep({
 
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE.`,
+  text: `To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE. Moving your left hand up and down changes the volume.`,
   attachTo: { element: ".ui-graindelay", on: "top" },
   buttons: [
     {

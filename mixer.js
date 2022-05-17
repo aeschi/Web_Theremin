@@ -146,6 +146,7 @@ wasserPL = new Tone.Player({
   .start(0);
 wasserPL.connect(wasserCH);
 
+
 rainCH = new Tone.Channel(1).toDestination();
 rainCH.mute = true;
 
@@ -158,6 +159,7 @@ rainPL = new Tone.Player({
   .sync()
   .start(0);
 rainPL.connect(rainCH);
+
 
 pigsCH = new Tone.Channel(1).toDestination();
 pigsCH.mute = true;
