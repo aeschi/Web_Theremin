@@ -154,7 +154,20 @@ grainpbr.addEventListener("click", function () {
   }
 });
 */
+/*
+let pbrateEnabled = false;
 
+grainpbr.addEventListener("click", function(){
+  if(pbrateEnabled){
+    pbrateEnabled = false;
+    melPl.set({playbackRate: 1.0});
+    beglPl.set({playbackRate: 1.0});
+  }
+  else {
+    pbrateEnabled = true;
+  }
+});
+*/
 /*
 btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH

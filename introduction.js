@@ -32,7 +32,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
- button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS).`,
+ button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS) or the film music (M and P).`,
   attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
@@ -120,7 +120,7 @@ tour.addStep({
 
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the parameters affect the sound synthesis. To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE. Moving your left hand up and down changes the volume.`,
+  text: `Activate the film music (M and P) on the left side, activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the parameters affect the sound. To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE. Moving your left hand up and down changes the volume.`,
   attachTo: { element: ".ui-graindelay", on: "top" },
   buttons: [
     {
