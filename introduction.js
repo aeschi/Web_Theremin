@@ -32,7 +32,7 @@ tour.addStep({
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
   text: `The THEREMIN responds to your hand movements, so make sure to allow access to your webcam. To be able to hear anything, you will have to turn on the sound with the speaker
- button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS). To use the SOUND EFFECTS activate the button M and P on the right side, in the video timeline, and move your left hand up and down.`,
+ button on the left and activate one of the interactive sounds (THEREMIN/SAMPLER/GRANULAR SYNTHESIS).`,
   attachTo: { element: ".ui-theremin", on: "top" },
   buttons: [
     {
@@ -76,7 +76,7 @@ tour.addStep({
 */
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `Move your left hand up and down to change the volume of THEREMIN and SAMPLER. Move your right hand through space to change the pitch. Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the parameters affect the sound synthesis. `,
+  text: `Move your left hand up and down to change the volume of THEREMIN and SAMPLER. Move your right hand through space to change the pitch.`,
   attachTo: { element: ".ui-granular", on: "top" },
   buttons: [
     {
@@ -98,7 +98,29 @@ tour.addStep({
 
 tour.addStep({
   title: "INTERACTIVE SOUNDS",
-  text: `To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE. Moving your left hand up and down changes the volume.`,
+  text: `To use the SOUND EFFECTS activate the button M and P on the right side, in the video timeline, and move your left hand up and down.`,
+  attachTo: { element: ".ui-granular", on: "top" },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+  id: "creating",
+});
+
+tour.addStep({
+  title: "INTERACTIVE SOUNDS",
+  text: `Activate GRANULAR SYNTHESIS and use the sliders GRAIN SIZE and PLAYBACK RATE to hear how the parameters affect the sound synthesis. To use GRANULAR SYNTHESIS interactively, activate the checkboxes GRAIN SIZE or GRAIN DELAY, or both. Moving your right hand up and down affects the GRAIN DELAY, moving the right hand left and right affects the GRAIN SIZE. Moving your left hand up and down changes the volume.`,
   attachTo: { element: ".ui-graindelay", on: "top" },
   buttons: [
     {
