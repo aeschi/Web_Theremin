@@ -162,7 +162,6 @@ tour.addStep({
   id: "creating",
 });
 
-
 tour.addStep({
   title: "FILM MUSIC",
   text: `To better understand the value of film music, you can toggle on and off a precomposed piece of film music for the film scene. To hear the individual SCENE compositions, click a scene button. To listen to the whole composition, click the M or P buttons. You can toggle M and P on and off to hear the difference between leading and accompanying melodies.`,
@@ -227,3 +226,5 @@ tour.addStep({
   ],
   id: "creating",
 });
+
+// tour.start();

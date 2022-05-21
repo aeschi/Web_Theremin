@@ -95,6 +95,7 @@ h5 {
 .imgContainer {
   /* background-color: #fde386; */
   width: 50%;
+  margin-right: 25%;
 }
 
 #canvas {
@@ -203,20 +204,26 @@ input#play:checked ~ .pause img {
   width: 50%;
   padding: 1rem;
   justify-content: space-between;
+
 }
 
 .ui-interactive-buttons {
   /* background-color: #df48c37c; */
   display: flex;
   flex-direction: column;
-  /* padding-right: 1rem; */
-  justify-content: space-around;
+  padding: 0.75rem;
+  justify-content: space-between;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2%;
 }
 
 .ui-interactive-settings{
   /* background-color: #71eaf37b; */
   display: flex;
   flex-direction: column;
+  padding: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2%;
 }
 
 .ui-filmsounds-label{
@@ -284,12 +291,22 @@ button:active {
   background-color: #20638d;
 }
 
-.btn{
+.btn-classic{
   background-color: #f16834;
   opacity: 0.7;
 }
 
-.btn:hover {
+.btn-classic:hover {
+  background-color: #f16834;
+  opacity: 0.92;
+}
+
+.btn-sampler{
+  background-color: #f16834;
+  opacity: 0.7;
+}
+
+.btn-classic:hover {
   background-color: #f16834;
   opacity: 0.92;
 }

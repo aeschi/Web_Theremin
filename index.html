@@ -3,9 +3,6 @@
   <head>
     <title>P5 Web Theremin</title>
 
-    <!-- < Tweakpane GUI -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/tweakpane@2.1.1/dist/tweakpane.min.js"></script> -->
-
     <!-- Embed pep.js for consistent cross-browser pointer events. -->
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
 
@@ -66,7 +63,7 @@
           src="./data/image/info_icon.svg"
           alt="info_icon.svg"
           title="Info"
-          width="40px"
+          width="45px"
         />
       </button>
     </div>
@@ -78,7 +75,7 @@
           src="./data/image/speaker.png"
           alt="Mute_Icon"
           title="Mute"
-          width="40px"
+          width="45px"
         />
       </label>
       <label for="un-mute" class="mute">
@@ -86,7 +83,7 @@
           src="./data/image/speaker_mute.png"
           alt="Speaker_Icon"
           title="Unmute"
-          width="40px"
+          width="45px"
         />
       </label>
     </div>
@@ -163,73 +160,26 @@
 
     <div class="ui-bar">
       <div class="ui-interactive">
-        <div class="ui-interactive-buttons">
+        <fieldset class="ui-interactive-buttons">
+          <legend>INTERACTIVE SOUNDS</legend>
           <button class="btn-classic">THEREMIN</button>
           <button class="btn-sampler">SAMPLER</button>
+        </fieldset>
+        <!-- alternative ways of text in border: -->
+        <!-- https://stackoverflow.com/questions/7731310/text-in-border-css-html -->
+        <fieldset class="ui-interactive-settings">
+          <legend>FILM MELODY EFFECTS</legend>
           <button class="btn-effect">SOUND EFFECTS</button>
           <button class="btn-granular">GRANULAR SYNTHESIS</button>
-        </div>
-        <div class="ui-interactive-settings">
-          <h5>manual use</h5>
-          <div class="slidecontainer slidergrainsize">
-            <p>
-              GRAIN SIZE
-              <input
-                type="range"
-                min="5"
-                max="100"
-                value="50"
-                step="1"
-                class="slider"
-                id="grainsize"
-              />
-              <span id="outputGrain"></span>
-            </p>
-          </div>
-          <div class="slidecontainer sliderpbrate">
-            <p>
-              PLAYBACK RATE
-              <input
-                type="range"
-                min="0.01"
-                max="2.0"
-                value="0.1"
-                step="0.01"
-                class="slider"
-                id="playbackrate"
-              />
-              <span id="outputPBR"></span>
-            </p>
-          </div>
-          <div class="slidecontainer slidergaingrainsynth">
-            <p>
-              GAIN
-              <input
-                type="range"
-                min="-20"
-                max="3"
-                value="-1"
-                step="1"
-                class="slider"
-                id="grainSynthGain"
-              />
-              <span id="outGrainsynthGain"></span>
-            </p>
-          </div>
+          <button class="btn-granular">PLACEHOLDER size/delay</button>
 
-          <h5>interactive use: attach to right hand</h5>
-          <div class="toggle" id="grainsizeHand">
-            <p><input type="checkbox" /> grain size</p>
+          <!-- <div class="toggle" id="grainsizeHand">
+            <p><input type="checkbox" checked /> grain size</p>
           </div>
-          <!--
-          <div class="toggle" id="grainpbrHand">
-            <p><input type="checkbox" /> playback rate</p>
-          </div>
-        -->
           <div class="toggle" id="graindelayHand">
-            <p><input type="checkbox" /> grain delay</p>
-          </div>
-        </div>
+            <p><input type="checkbox" checked /> grain delay</p>
+          </div> -->
+        </fieldset>
         <div class="ui-filmsounds-label">
           <h4>SCENE</h4>
           <h4>MELODY</h4>
