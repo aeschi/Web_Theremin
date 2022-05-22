@@ -211,19 +211,32 @@ input#play:checked ~ .pause img {
   /* background-color: #df48c37c; */
   display: flex;
   flex-direction: column;
-  padding: 0.75rem;
+  /* padding: 0.75rem; */
   justify-content: space-between;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 2%;
+  /* border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2%; */
 }
 
-.ui-interactive-settings{
+.ui-interactive-effects{
   /* background-color: #71eaf37b; */
   display: flex;
   flex-direction: column;
-  padding: 0.75rem;
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 2%;
+  /* padding: 0.75rem; */
+  /* border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 2%; */
+}
+
+.ui-interactive-effects-sett{
+  /* background-color: #f16834; */
+  display: flex;
+  /* justify-content: space-around; */
+  flex-direction: row;
+}
+
+
+.btn-gran-size .btn-gran-delay{
+  display: flex;
+  flex: 1;
 }
 
 .ui-filmsounds-label{
@@ -231,7 +244,9 @@ input#play:checked ~ .pause img {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  
 }
+
 
 
 /*  */

@@ -1,5 +1,4 @@
 var c = function (p) {
-
   let vidSize;
 
   let frequency;
@@ -9,8 +8,6 @@ var c = function (p) {
 
   // suspend sound on page upon loading page
   Tone.getContext().rawContext.suspend();
-
-
 
   Tone.Transport.bpm.value = 108;
   //Tone.Transport.loop = true;
@@ -57,7 +54,6 @@ var c = function (p) {
     // baseUrl: 'https://tonejs.github.io/audio/salamander/',
   }).toDestination();
 
-
   const samplerThereminAnalogFiltered = new Tone.Sampler({
     urls: {
       C0: "data/theremin/ThereminSamplesAnalog/C-f.wav",
@@ -74,21 +70,12 @@ var c = function (p) {
 
   //samplerThereminAnalogFiltered.connect(gainSampler).toDestination();
 
-
-
-
-
-
-
-
-
   // ### INTERACTIVE SOUND HANDLERS
 
   let playing = false;
   let therSampler = false;
   let grainPlaying = false;
   let grainfbdelay = false;
-
 
   // ### GLOBAL SOUND SETTINGS
 
@@ -129,7 +116,7 @@ var c = function (p) {
     brush_layer = p.createGraphics(canvas.width, canvas.height);
 
     poseNetSetup();
-  }
+  };
 
   p.draw = function () {
     //amp = new p5.Amplitude();
@@ -144,7 +131,6 @@ var c = function (p) {
       let d = 30;
 
       if (typeof handR.x !== "undefined") {
-
         brush_layer.clear();
         brush_layer.fill(183, 100);
         brush_layer.noStroke();
@@ -195,7 +181,6 @@ var c = function (p) {
           }
         }
 
-
         // play Theremin sound
         if (myp5.playing) {
           // trigger synth
@@ -217,11 +202,9 @@ var c = function (p) {
         // same as drawing
         if (handR.confidence > 0.2) {
           if (myp5.therSampler) {
-
             const vol = p.map(handL.y, 360, 0, 0.5, -40);
             //console.log(gpVol);
             // gp.volume.value = gpVol;
-
 
             frequency = p.map(handR.x, 0, 640, 880, 60);
 
@@ -235,7 +218,7 @@ var c = function (p) {
             const note = new Tone.Frequency(frequency).toNote();
 
             //toNote(frequency);
-            //  note = frequency; 
+            //  note = frequency;
             //  console.log("cur note " + note);
             /*
               if (lastNote != 0) {
@@ -336,38 +319,36 @@ var c = function (p) {
          }
          */
         // same as drawing
-       // if (handR.confidence > 0.2) {
+        // if (handR.confidence > 0.2) {
 
-          if (myp5.grainfbdelay) {
-
-
-            let audioLenInSec = audioBuffer.buffer.length / Tone.getContext().rawContext.sampleRate;
-            let handPercent = handR.y / (360 / 100) // percent hand height wrt video height
-            let audioPercent = (audioBuffer.buffer.length / 100);
-            let audioPercToHand = (audioPercent * handPercent) / Tone.getContext().rawContext.sampleRate;
-            if (audioPercToHand > audioLenInSec) {
-              //hand movement is outside the valid range
-              clock1.pause();
-              console.log("paused");
+        if (myp5.grainfbdelay) {
+          let audioLenInSec =
+            audioBuffer.buffer.length / Tone.getContext().rawContext.sampleRate;
+          let handPercent = handR.y / (360 / 100); // percent hand height wrt video height
+          let audioPercent = audioBuffer.buffer.length / 100;
+          let audioPercToHand =
+            (audioPercent * handPercent) /
+            Tone.getContext().rawContext.sampleRate;
+          if (audioPercToHand > audioLenInSec) {
+            //hand movement is outside the valid range
+            clock1.pause();
+            console.log("paused");
+          } else if (audioPercToHand < 0) {
+            clock1.pause();
+            console.log("paused");
+          } else if (audioPercToHand < audioLenInSec) {
+            if (clock1.state == "paused") {
+              console.log("start clock");
+              clock1.start(); // continues melody
+              // console.log("started");
             }
-            else if (audioPercToHand < 0) {
-              clock1.pause();
-              console.log("paused");
-            }
-            else if (audioPercToHand < audioLenInSec) {
-              if (clock1.state == "paused") {
-                console.log("start clock");
-                clock1.start(); // continues melody
-                // console.log("started");
-              }
 
-              if (handL.y >= 0 && handL.y <= 360) {
-                graindelay_pbrate = p.map(handL.y, 0, 360, 0.001, 2);
-              }
-              else {
-                graindelay_pbrate = 0.1;
-              }
-            
+            if (handL.y >= 0 && handL.y <= 360) {
+              graindelay_pbrate = p.map(handL.y, 0, 360, 0.001, 2);
+            } else {
+              graindelay_pbrate = 0.1;
+            }
+
             // feedback amount = where hand is vertically in relation to audio file length
             const fbNum = p.map(audioPercToHand, 0, audioLenInSec, 0, 1);
             const fb = fbNum.toFixed(2);
@@ -384,7 +365,7 @@ var c = function (p) {
 
               // get feedback delay node corresponding to delay time from the stored map
               let arr = fbdelayMap.get(p.float(del));
-              
+
               //const ind = Math.floor(random(1, 4)) - 1;
               const ind = 3;
               // console.log("del fb ind " + del + " " + fb);
@@ -428,41 +409,38 @@ var c = function (p) {
                 fbdelay = arr[7];
                 //fbdelay = arr[ind];
               }
-            } else { fbdelay = fbd27; }
-
+            } else {
+              fbdelay = fbd27;
+            }
           }
         }
-   //   }
+        //   }
 
-      if (myp5.grainPlaying) {
-        let gS;
-        let currPbr;
-        let fbNum;
+        if (myp5.grainPlaying) {
+          let gS;
+          let currPbr;
+          let fbNum;
 
-        console.log("in grain playng");
+          // console.log("in grain playng");
 
-        let xLenHand = 640 / 2;
-        // let yLenHand = 360/2; 
+          let xLenHand = 640 / 2;
+          // let yLenHand = 360/2;
 
-        
-        if(grainSizeEnabled){
-          console.log("grain size enabled");
-          if (handR.x >= xLenHand && handR.x <= 640) {
-            //gS = p.map(handR.y, 0, 360, 0.02, 1.5);
-            gS = ((p.map(handR.x, xLenHand, 640, 5, 100)) / 1000).toFixed(2);
-  
-            // gp.grainSize(gS.toFixed(2));
-  
-          } else {
-            gS = 0.1;
+          if (grainSizeEnabled) {
+            // console.log("grain size enabled");
+            if (handR.x >= xLenHand && handR.x <= 640) {
+              //gS = p.map(handR.y, 0, 360, 0.02, 1.5);
+              gS = (p.map(handR.x, xLenHand, 640, 5, 100) / 1000).toFixed(2);
+
+              // gp.grainSize(gS.toFixed(2));
+            } else {
+              gS = 0.1;
+            }
+            melPl.set({ grainSize: gS, overlap: gS / 3 });
+            beglPl.set({ grainSize: gS, overlap: gS / 3 });
           }
-          melPl.set({ grainSize: gS, overlap: (gS / 3) });
-          beglPl.set({ grainSize: gS, overlap: (gS / 3) });
-        }
 
-        
-        
-        /*
+          /*
           if (handR.x >= xLenHand && handR.x <= 640) {
 
             fbNum = p.map(
@@ -478,7 +456,7 @@ var c = function (p) {
 
           const fb = fbNum.toFixed(1);
          */
-        /*
+          /*
         if (handL.y >= 0 && handL.y <= 360) {
           currPbr = p.map(handR.y, 0, 360, 0.05, 0.7);
         }
@@ -491,14 +469,7 @@ var c = function (p) {
         }
     */
 
-       
-
-
-
-
-
-
-        /*
+          /*
                 if (currPbr < 0.001) {
                   // console.log('handL.y', handL.y, ' playback rate ', playbackrate, ' curr pbr ', currPbr);
                   gp.playbackRate = 0.001;
@@ -509,75 +480,74 @@ var c = function (p) {
                 }
      */
 
-        if (fbdelayEnabled) {
-          // RIGHT HAND Y
+          if (fbdelayEnabled) {
+            // RIGHT HAND Y
 
-          if (handR.y >= 0 && handR.y <= 360) {
-          
-            fbNum = p.map(handR.y, 0, 360, 0, 0.9);
-          } else {
-            fbNum = 0.1;
+            if (handR.y >= 0 && handR.y <= 360) {
+              fbNum = p.map(handR.y, 0, 360, 0, 0.9);
+            } else {
+              fbNum = 0.1;
+            }
+            const fb = fbNum.toFixed(1);
+            // ranges of the defined feedbach delay nodes
+            if (fb <= 0.8 && fb >= 0.1) {
+              // if (fbdelayMap.has(float(del))) {
+
+              // get feedback delay node corresponding to delay time from the stored map
+              let arr = fbdelayMap.get(p.float(fb));
+
+              console.log("fb " + fb);
+
+              //const ind = Math.floor(random(1, 4)) - 1;
+              const ind = 0;
+              // console.log("del fb ind " + del + " " + fb);
+              if (fb >= 0 && fb < 0.15) {
+                //console.log("next 1");
+                //fbdelay = arr[0];
+                fbdelay = arr[ind];
+              }
+              if (fb >= 0.15 && fb < 0.25) {
+                // console.log("next 2");
+                fbdelay = arr[1];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.25 && fb < 0.35) {
+                //console.log("next 3");
+                fbdelay = arr[2];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.35 && fb < 0.45) {
+                // console.log("next 4");
+                fbdelay = arr[3];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.45 && fb < 0.55) {
+                //console.log("next 5");
+                fbdelay = arr[4];
+                //fbdelay = arr[ind];
+              }
+              if (fb >= 0.55 && fb < 0.65) {
+                // console.log("next 6");
+                fbdelay = arr[5];
+                // fbdelay = arr[ind];
+              }
+              if (fb >= 0.65 && fb < 0.75) {
+                //console.log("next 7");
+                fbdelay = arr[6];
+                // fbdelay = arr[ind];
+              }
+              if (fb >= 0.75 && fb <= 0.85) {
+                //console.log("next 8");
+                fbdelay = arr[7];
+                //fbdelay = arr[ind];
+              }
+            } else {
+              fbdelay = fbd27;
+            }
+
+            melPl.connect(fbdelay).toDestination();
+            beglPl.connect(fbdelay).toDestination();
           }
-          const fb = fbNum.toFixed(1);
-          // ranges of the defined feedbach delay nodes
-          if (fb <= 0.8 && fb >= 0.1) {
-            // if (fbdelayMap.has(float(del))) {
-
-            // get feedback delay node corresponding to delay time from the stored map
-            let arr = fbdelayMap.get(p.float(fb));
-
-            console.log("fb "+fb);
-
-            //const ind = Math.floor(random(1, 4)) - 1;
-            const ind = 0;
-            // console.log("del fb ind " + del + " " + fb);
-            if (fb >= 0 && fb < 0.15) {
-              //console.log("next 1");
-              //fbdelay = arr[0];
-              fbdelay = arr[ind];
-            }
-            if (fb >= 0.15 && fb < 0.25) {
-              // console.log("next 2");
-              fbdelay = arr[1];
-              //fbdelay = arr[ind];
-            }
-            if (fb >= 0.25 && fb < 0.35) {
-              //console.log("next 3");
-              fbdelay = arr[2];
-              //fbdelay = arr[ind];
-            }
-            if (fb >= 0.35 && fb < 0.45) {
-              // console.log("next 4");
-              fbdelay = arr[3];
-              //fbdelay = arr[ind];
-            }
-            if (fb >= 0.45 && fb < 0.55) {
-              //console.log("next 5");
-              fbdelay = arr[4];
-              //fbdelay = arr[ind];
-            }
-            if (fb >= 0.55 && fb < 0.65) {
-              // console.log("next 6");
-              fbdelay = arr[5];
-              // fbdelay = arr[ind];
-            }
-            if (fb >= 0.65 && fb < 0.75) {
-              //console.log("next 7");
-              fbdelay = arr[6];
-              // fbdelay = arr[ind];
-            }
-            if (fb >= 0.75 && fb <= 0.85) {
-              //console.log("next 8");
-              fbdelay = arr[7];
-              //fbdelay = arr[ind];
-            }
-          } else { fbdelay = fbd27; }
-
-          melPl.connect(fbdelay).toDestination();
-          beglPl.connect(fbdelay).toDestination();
-        }
-
-          
 
           //  let currDetune = p.map(handL.y, video.height, 0, 0.5, 0.1);
           // const interval = currDetune / 1000;
@@ -585,42 +555,37 @@ var c = function (p) {
           //  gp.playbackRate = Math.pow(2, (interval / 12));
 
           const gpVol = p.map(handL.y, 360, 0, 0.5, -20);
-          melPl.set({volume: gpVol});
-          beglPl.set({volume: gpVol});
-      
+          melPl.set({ volume: gpVol });
+          beglPl.set({ volume: gpVol });
+
           /*  
             console.log("hand L : "+handL.x + " " + handL.y +" pbr "+ gp.playbackRate +" vol "+ gpVol);
             console.log("hand R : "+handR.x + " " + handR.y +" fb "+ fb +" gS "+ gp.grainSize);
             */
         }
 
-
-
-        if(soundeffekteEnabled){
+        if (soundeffekteEnabled) {
           beglCH_SE.mute = false;
           beglCH.mute = true;
-          if(handL.y > 0 && handL.y < 90){
+          if (handL.y > 0 && handL.y < 90) {
             melCH.mute = false;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = true;
             channelSoundEffektM[2].mute = true;
             console.log("melody");
-          }
-          else if(handL.y >= 90 && handL.y < 180){
+          } else if (handL.y >= 90 && handL.y < 180) {
             melCH.mute = true;
             channelSoundEffektM[0].mute = false;
             channelSoundEffektM[1].mute = true;
             channelSoundEffektM[2].mute = true;
             console.log("sf 1");
-          }
-          else if(handL.y >= 180 && handL.y <= 270){
+          } else if (handL.y >= 180 && handL.y <= 270) {
             melCH.mute = true;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = false;
             channelSoundEffektM[2].mute = true;
             console.log("sf 2");
-          }
-          else if(handL.y >= 270 && handL.y < 360){
+          } else if (handL.y >= 270 && handL.y < 360) {
             melCH.mute = true;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = true;
@@ -634,7 +599,7 @@ var c = function (p) {
         p.image(brush_layer, 0, 0);
       }
     }
-  }
+  };
 
   /*
   setInterval(function () {
@@ -710,7 +675,6 @@ var c = function (p) {
   
   */
 
-
     if (frequency > 494 && frequency < 523) {
       note = "B4";
     } else if (frequency > 466 && frequency < 494) {
@@ -766,7 +730,6 @@ var c = function (p) {
     farmerVid.size(vidSize);
   }
 
-
   let video;
   let poseNet;
   let poses = [];
@@ -795,10 +758,9 @@ var c = function (p) {
   function modelReady() {
     // console.log('poseNet model Loaded');
   }
+};
 
-}
-
-var myp5 = new p5(c, 'canvas');
+var myp5 = new p5(c, "canvas");
 
 /*
 function initAudio() {

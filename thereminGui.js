@@ -1,19 +1,18 @@
 const btnClassic = document.querySelector(".btn-classic");
 const btnSampler = document.querySelector(".btn-sampler");
 const btnGran = document.querySelector(".btn-granular");
-//const btnGrainFBDelay = document.querySelector(".btn-grain");
 const btnSoundEffect = document.querySelector(".btn-effect");
-const sliderGrainsize = document.getElementById("grainsize");
-const sliderPlaybackRate = document.getElementById("playbackrate");
-const sliderFoleyGain = document.getElementById("foleygain");
+// const sliderGrainsize = document.getElementById("grainsize");
+// const sliderPlaybackRate = document.getElementById("playbackrate");
+// const sliderFoleyGain = document.getElementById("foleygain");
 const output = document.getElementById("outputGrain");
 const pbr = document.getElementById("outputPBR");
 const outgainGrainsynth = document.getElementById("grainSynthGain");
 const outgrainSynthgain = document.getElementById("outGrainsynthGain");
-//const grainpbr = document.getElementById("grainpbrHand");
-const feedbackdelay = document.getElementById("graindelayHand");
-const grainsizeHand = document.getElementById("grainsizeHand");
-//const foleygain = document.getElementById("outputfoleyGain");
+
+const feedbackdelay = document.querySelector(".btn-gran-delay");
+const grainsizeHand = document.querySelector(".btn-gran-size");
+
 let un_mute = document.getElementById("un-mute");
 let toggleVideo = document.getElementById("play");
 
@@ -28,7 +27,6 @@ Tone.Transport.loopStart = 0;
 
 un_mute.onclick = () => {
   if (Tone.getContext().rawContext.state == "suspended") {
-
     Tone.start();
     Tone.Transport.start();
     console.log(Tone.Transport.state);
@@ -88,20 +86,19 @@ btnSampler.addEventListener("click", function () {
 
 soundeffekteEnabled = false;
 
-btnSoundEffect.addEventListener("click", function(){
+btnSoundEffect.addEventListener("click", function () {
   if (Tone.getContext().rawContext.state == "running") {
-    if(soundeffekteEnabled){
+    if (soundeffekteEnabled) {
       soundeffekteEnabled = false;
       toggleBtnColorDeact(btnSoundEffect);
       channelSoundEffektM[0].mute = true;
       channelSoundEffektM[1].mute = true;
       channelSoundEffektM[2].mute = true;
       beglCH_SE.mute = true;
-      
+
       beglCH.mute = false;
       melCH.mute = false;
-    }
-    else {
+    } else {
       soundeffekteEnabled = true;
       toggleBtnColorActive(btnSoundEffect);
     }
@@ -185,20 +182,11 @@ btnGran.addEventListener("click", function () {
   // FUNCTIOANLITY GRANULAR SYNTH
   if (Tone.getContext().rawContext.state == "running") {
     if (myp5.grainPlaying) {
-      //Tone.Transport.stop();
-
-//      gp.stop();
       toggleBtnColorDeact(btnGran);
       myp5.grainPlaying = false;
-//      gain.mute = true;
-    }
-    else {
-      //Tone.Transport.start();
-
-//      gp.start();
+    } else {
       toggleBtnColorActive(btnGran);
       myp5.grainPlaying = true;
-//      gain.mute = false;
     }
   }
 });
@@ -208,137 +196,102 @@ fbdelayEnabled = false;
 feedbackdelay.addEventListener("click", function () {
   if (fbdelayEnabled) {
     fbdelayEnabled = false;
+    toggleBtnColorDeact(feedbackdelay);
     Tone.Transport.pause();
     let transporttime = Tone.Transport.seconds;
-    console.log("transport time "+ transporttime);
+    console.log("transport time " + transporttime);
     melPl.stop();
     melPl.dispose();
-    melPl = new Tone.GrainPlayer(sampleBufferMelody, () => 
-    {console.log("loaded buffer");
-  }).sync().start(0);//toDestination();
-     // .start(0);
-    melPl.set({loop:true, playbackRate: 1, grainSize: 0.1});
+    melPl = new Tone.GrainPlayer(sampleBufferMelody, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0); //toDestination();
+    // .start(0);
+    melPl.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
     // gp.buffer = sampleBuffer;
     melPl.connect(melCH);
     //melPl.start();
-  
 
-   beglPl.stop();
-    beglPl.dispose();
-   beglPl = new Tone.GrainPlayer(sampleBufferBegl, () => 
-   {console.log("loaded buffer");
- }).sync().start(0);//toDestination();
-    // .start(0);
-   beglPl.set({loop:true, playbackRate: 1, grainSize: 0.1});
-   //beglPl.start();
-   // gp.buffer = sampleBuffer;
-   beglPl.connect(beglCH);
-  //beglPl.start();
-  
-  Tone.Transport.start(Tone.now(), transporttime);
-   
-/*
     beglPl.stop();
     beglPl.dispose();
-    beglPl = new Tone.GrainPlayer(sampleBufferBegl, () => 
-    {console.log("loaded buffer");
-  }).toDestination();
-     // .start(0);
-    beglPl.set({loop:true, playbackRate: 1, grainSize: 0.1});
+    beglPl = new Tone.GrainPlayer(sampleBufferBegl, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0); //toDestination();
+    // .start(0);
+    beglPl.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
+    //beglPl.start();
     // gp.buffer = sampleBuffer;
-    beglPl.start();
-    */
-  }
-  else {
+    beglPl.connect(beglCH);
+    //beglPl.start();
+
+    Tone.Transport.start(Tone.now(), transporttime);
+  } else {
     fbdelayEnabled = true;
+    toggleBtnColorActive(feedbackdelay);
   }
 });
-
-/*
-  if (playing) {
-    if (grainPlaying) {
-      grainPlaying = false;
-      gp.stop();
-    } else {
-      grainPlaying = true;
-      gp.start();
-    }
-*/
-
-/*
-} else {
-if (grainPlaying) {
-  grainPlaying = false;
-  gp.stop();
-} else {
-  Tone.start();
-  grainPlaying = true;
-  gp.start();
-}
-*/
-
-//}
-
 
 // GRAIN SIZE SLIDER
-output.innerHTML = sliderGrainsize.value;
-sliderGrainsize.oninput = function () {
-  output.innerHTML = this.value;
-  gS = (this.value / 1000).toFixed(2);
-  grainSize = gS;
-  melPl.set({grainSize: gS, overlap: (gS/3)});
-  beglPl.set({grainSize: gS, overlap: (gS/3)});
-  /*
-  playerMusic[0].grainSize = gS;
-  playerMusic[1].grainSize = gS;
-  */
-};
+// output.innerHTML = sliderGrainsize.value;
+// sliderGrainsize.oninput = function () {
+//   output.innerHTML = this.value;
+//   gS = (this.value / 1000).toFixed(2);
+//   grainSize = gS;
+//   melPl.set({ grainSize: gS, overlap: gS / 3 });
+//   beglPl.set({ grainSize: gS, overlap: gS / 3 });
+//   /*
+//   playerMusic[0].grainSize = gS;
+//   playerMusic[1].grainSize = gS;
+//   */
+// };
 
 // CHECKBOX GRAIN SIZE
-grainSizeEnabled = false;
+grainSizeEnabled = true;
 
 grainsizeHand.addEventListener("click", function () {
+  console.log("grain size");
   if (grainSizeEnabled) {
+    toggleBtnColorDeact(grainsizeHand);
     grainSizeEnabled = false;
     gS = 0.1;
-    melPl.set({grainSize: gS, overlap: (gS/3)});
-    beglPl.set({grainSize: gS, overlap: (gS/3)});
-    console.log("grian sitze enabled off");
-  }
-  else {
+    melPl.set({ grainSize: gS, overlap: gS / 3 });
+    beglPl.set({ grainSize: gS, overlap: gS / 3 });
+    // console.log("grian sitze enabled off");
+  } else {
     grainSizeEnabled = true;
+    toggleBtnColorActive(grainsizeHand);
   }
 });
 
-
-
 // PLAYBACK RATE SLIDER
-pbr.innerHTML = sliderPlaybackRate.value;
-sliderPlaybackRate.oninput = function () {
-  pbr.innerHTML = this.value;
+// pbr.innerHTML = sliderPlaybackRate.value;
+// sliderPlaybackRate.oninput = function () {
+//   pbr.innerHTML = this.value;
 
-  playbackrate = this.value;
-  //gp.playbackRate = playbackrate;
-  melPl.set({ playbackRate: playbackrate });
-  beglPl.set({ playbackRate: playbackrate });
-  /*
-   playerMusic[0].playbackRate = this.value;
-   playerMusic[1].playbackRate = this.value;
-   playerMusic[2].playbackRate = this.value;
-   playerMusic[3].playbackRate = this.value;
-   */
-  console.log(gp.playbackRate);
-};
+//   playbackrate = this.value;
+//   //gp.playbackRate = playbackrate;
+//   melPl.set({ playbackRate: playbackrate });
+//   beglPl.set({ playbackRate: playbackrate });
+//   /*
+//    playerMusic[0].playbackRate = this.value;
+//    playerMusic[1].playbackRate = this.value;
+//    playerMusic[2].playbackRate = this.value;
+//    playerMusic[3].playbackRate = this.value;
+//    */
+//   console.log(gp.playbackRate);
+// };
 
+// grainSynthGain.innerHTML = outgainGrainsynth.value;
+// outgainGrainsynth.oninput = function () {
+//   outgrainSynthgain.innerHTML = this.value;
+//   melPl.volume.value = this.value;
+//   beglPl.volume.value = this.value;
+// };
 
-grainSynthGain.innerHTML = outgainGrainsynth.value;
-outgainGrainsynth.oninput = function () {
-  outgrainSynthgain.innerHTML = this.value;
-  melPl.volume.value = this.value;
-  beglPl.volume.value = this.value;
-};
-
-// FOLEY GAIN SLIDER 
+// FOLEY GAIN SLIDER
 // PLAYBACK RATE SLIDER
 /*
 foleygain.innerHTML = sliderFoleyGain.value;
@@ -351,26 +304,6 @@ sliderFoleyGain.oninput = function () {
 };
 */
 
-
-/*
-btnSoundEffect.addEventListener("click", function () {
-  if (Tone.getContext().rawContext.state == "running") {
-    if (soundefftoggle) {
-      Tone.Transport.stop();
-      toggleBtnColorDeact(btnSoundEffect);
-      soundefftoggle = false;
-    }
-    else {
-      audioBuffer.buffer = playerMusic[0].buffer;
-      console.log("buffer "+playerMusic[0].buffer);
-      Tone.Transport.start();
-      toggleBtnColorActive(btnSoundEffect);
-      soundefftoggle = true;
-     // audioBuffer.buffer = playerMusic[0].buffer;
-    }
-  }
-});
-*/
 const motiv1 = document.getElementById("motiv1");
 const motiv2 = document.getElementById("motiv2");
 const motiv3 = document.getElementById("motiv3");
@@ -400,7 +333,6 @@ motiv5.addEventListener("click", () => {
   toggleButtonMusicMotiv2(motiv5, 4);
 });
 
-
 melody1.addEventListener("click", () => {
   toggleButtonMelody(melody1);
 });
@@ -425,7 +357,6 @@ const begl5 = document.getElementById("begl5");
 let toggled = [false, false, false, false, false];
 let lasttoggled = -1;
 let lasttoggledbuttons = [];
-
 
 let currentlyToggled = [];
 
@@ -460,29 +391,21 @@ toggleButtonMusic = (btnName, i) => {
   }
 };
 
-
-
-
 checkMarks = (start, end) => {
-  if ((myVideo.currentTime + 1) >= end) {
+  if (myVideo.currentTime + 1 >= end) {
     console.log("video reached mark out");
     myVideo.currentTime = start;
     myVideo.play();
     return;
-
-  };
+  }
 };
 
-
 playBetween = (a, b) => {
-
   if (myVideo.currentTime >= a && myVideo.currentTime <= b) {
     myVideo.play();
-  }
-  else {
+  } else {
     myVideo.currentTime = a;
   }
-
 };
 
 let timerID;
@@ -497,8 +420,6 @@ playVideoScene = (i) => {
   timerID = setInterval(() => checkMarks(start, end), 100);
 
   myVideo.play();
-
-
 };
 
 toggleButtonMusicMotiv2 = (btnName, i) => {
@@ -509,17 +430,16 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
     beglCH.volume.rampTo(0.05, 0.1);
     melCH.mute = false;
     beglCH.mute = false;
-
   }
 
   if (toggled[i]) {
     clearInterval(timerID);
-    console.log("in toggled "+i);
+    console.log("in toggled " + i);
     //Tone.Transport.pause();
     let transporttime = Tone.Transport.seconds;
-    Tone.Transport.set({loop:false})
-    
-    Tone.Transport.start(Tone.now(),transporttime);
+    Tone.Transport.set({ loop: false });
+
+    Tone.Transport.start(Tone.now(), transporttime);
     /*
     melCH.volume.rampTo(-10, 0.1);
     beglCH.volume.rampTo(-10, 0.1);
@@ -530,24 +450,27 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
     toggleBtnColorDeact(btnName);
     toggled[i] = false;
     lasttoggled = i;
-    console.log(i +" is now "+toggled[i]);
+    console.log(i + " is now " + toggled[i]);
     console.log(toggled);
     console.log("in toggled if");
-  }
-  else {
+  } else {
     console.log(lasttoggledbuttons);
-   if (lasttoggledbuttons.length > 0) {
-     clearInterval(timerID);
-     playVideoScene(i);
+    if (lasttoggledbuttons.length > 0) {
+      clearInterval(timerID);
+      playVideoScene(i);
       Tone.Transport.pause();
       //Tone.Transport.clear();
-      Tone.Transport.set({loop: true, loopStart:starttimes[i], loopEnd: starttimes[i+1]});
+      Tone.Transport.set({
+        loop: true,
+        loopStart: starttimes[i],
+        loopEnd: starttimes[i + 1],
+      });
       Tone.Transport.start(Tone.now(), starttimes[i]);
       console.log("i " + i);
 
       toggleBtnColorDeact(lasttoggledbuttons[0]);
       lasttoggledbuttons.pop();
-      console.log("lasttoggled is "+ lasttoggled )
+      console.log("lasttoggled is " + lasttoggled);
       toggled[lasttoggled] = false;
       toggleBtnColorActive(btnName);
       lasttoggledbuttons.push(btnName);
@@ -556,13 +479,15 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
       console.log(i + " " + toggled[i]);
       console.log(toggled);
       console.log("in last if");
-      
-    }
-    else {
+    } else {
       playVideoScene(i);
       Tone.Transport.pause();
-      Tone.Transport.set({loop: true, loopStart:starttimes[i], loopEnd: starttimes[i+1]});
-      Tone.Transport.start(Tone.now(),starttimes[i]);
+      Tone.Transport.set({
+        loop: true,
+        loopStart: starttimes[i],
+        loopEnd: starttimes[i + 1],
+      });
+      Tone.Transport.start(Tone.now(), starttimes[i]);
       //Tone.Transport.start(Tone.now(), starttimes[i]);
       console.log("i " + i);
 
@@ -574,16 +499,21 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
       console.log(toggled);
       console.log("In last else");
     }
-
   }
-
 };
 
 toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
-
   if (!myVideo.paused) {
-
-    console.log("i " + i + " toggled yes/no " + toggled[i] + " lasttoggled " + lasttoggled + " melCH.mute? " + melCH.mute);
+    console.log(
+      "i " +
+        i +
+        " toggled yes/no " +
+        toggled[i] +
+        " lasttoggled " +
+        lasttoggled +
+        " melCH.mute? " +
+        melCH.mute
+    );
     /*
     if (lasttoggled != i) {
       // start looping scene i 
@@ -606,9 +536,9 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       //if (channelMusic[i].mute && channelMusicBegleitung[i].mute) {
       // either non active or new button activated
       // deactivate last activated if its a different one
-      if (lasttoggled >= 0) { // maybe find another solution for this
+      if (lasttoggled >= 0) {
+        // maybe find another solution for this
         if (lasttoggled != i) {
-
           clearInterval(timerID);
 
           // clicked new motiv button
@@ -635,7 +565,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
           toggleBtnColorActive(btnName2);
           toggleBtnColorActive(btnName3);
 
-
           /*
           channelMusic[lasttoggled].volume.rampTo(-10, 0.5);
           channelMusicBegleitung[lasttoggled].volume.rampTo(-10, 0.5);
@@ -648,9 +577,7 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
           toggleBtnColorDeact(lasttoggledbuttons[2]);
           toggled[i] = true;
           toggled[lasttoggled] = false;
-        }
-
-        else if (lasttoggled == i) {
+        } else if (lasttoggled == i) {
           clearInterval(timerID);
           playVideoScene(i);
           Tone.Transport.pause();
@@ -661,7 +588,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
           beglCH.volume.rampTo(-10, 0.1);
           beglCH.mute = false;
 
-
           toggleBtnColorActive(btnName);
           toggleBtnColorActive(btnName2);
           toggleBtnColorActive(btnName3);
@@ -669,7 +595,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
           toggled[i] = true;
           lasttoggled = i;
         }
-
       }
 
       console.log("in both muted outside if");
@@ -679,7 +604,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
 
       Tone.Transport.pause();
       Tone.Transport.start(Tone.now(), starttimes[i]);
-
 
       melCH.volume.rampTo(0.05, 0.1);
       melCH.mute = false;
@@ -696,7 +620,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       channelMusicBegleitung[i].mute = false;
       */
 
-
       toggleBtnColorActive(btnName);
       toggleBtnColorActive(btnName2);
       toggleBtnColorActive(btnName3);
@@ -705,10 +628,7 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
       lasttoggledbuttons = [btnName, btnName2, btnName3];
       console.log("toggled " + i);
       console.log("lasttoggled " + i);
-    }
-
-
-    else {
+    } else {
       console.log("in else");
       if (lasttoggled == i) {
         console.log("in else last toggled = i");
@@ -724,8 +644,7 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
         toggleBtnColorDeact(btnName2);
         toggleBtnColorDeact(btnName3);
         toggled[i] = false;
-      }
-      else {
+      } else {
         console.log("in else last toggled new scene");
         // activate new scene , deactivate looping scene
 
@@ -774,7 +693,6 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
 
         lasttoggledbuttons = [btnName, btnName2, btnName3];
 
-
         /*
         channelMusic[i].volume.rampTo(-10, 0.5);
         channelMusicBegleitung[i].volume.rampTo(-10, 0.5);
@@ -788,20 +706,17 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
          toggleBtnColorDeact(btnName3);
          toggled[i] = false;
          */
-
       }
     }
-
   }
 };
-
 
 melodystarted = false;
 
 toggleButtonMelody = (btnName) => {
   // Tone.Transport.start();
 
-  if(Tone.Transport.state == "paused"){
+  if (Tone.Transport.state == "paused") {
     Tone.Transport.start();
   }
   /*
@@ -810,22 +725,18 @@ toggleButtonMelody = (btnName) => {
   }
 */
   if (melCH.mute) {
-
     console.log("melody mute state " + melCH.mute);
     melCH.volume.rampTo(0.05, 0.5);
     melCH.mute = false;
     console.log(Tone.Transport.state);
     toggleBtnColorActive(btnName);
     console.log(melCH.mute);
-
   } else {
     melCH.volume.rampTo(-10, 0.5);
     melCH.mute = true;
     toggleBtnColorDeact(btnName);
-
   }
 };
-
 
 toggleButtonBegleitung = (btnName) => {
   // Tone.Transport.start();
@@ -835,16 +746,12 @@ toggleButtonBegleitung = (btnName) => {
     beglCH.volume.rampTo(0.05, 0.5);
     beglCH.mute = false;
     toggleBtnColorActive(btnName);
-
   } else {
     beglCH.volume.rampTo(-10, 0.5);
     beglCH.mute = true;
     toggleBtnColorDeact(btnName);
-
   }
 };
-
-
 
 /*
 motiv1.addEventListener("click", () => {
@@ -868,9 +775,7 @@ motiv5.addEventListener("click", () => {
 });
  */
 
-
 toggleButtonPlayRangeMotiv = (btnName, btnName2, btnName3, i) => {
-
   // sound is muted and a scene is selected
   if (melCH.mute && beglCH.mute) {
     Tone.Transport.pause();
@@ -889,9 +794,7 @@ toggleButtonPlayRangeMotiv = (btnName, btnName2, btnName3, i) => {
     lasttoggled = i;
     lasttoggledbuttons = [btnName, btnName2, btnName3];
     currentlyToggled.push(i);
-  }
-
-  else {
+  } else {
     if (toggled[i]) {
       // deactivate scene
       melCH.volume.rampTo(-10, 0.1);
@@ -942,14 +845,7 @@ toggleButtonPlayRangeMotiv = (btnName, btnName2, btnName3, i) => {
       */
     }
   }
-
-
 };
-
-
-
-
-
 
 /*
 melody1.addEventListener("click", () => {
@@ -1081,7 +977,7 @@ const btnFoleyWater = document.querySelector(".btn-foley-water");
 const btnFoleyPigs = document.querySelector(".btn-foley-pigs");
 const btnFoleySteps = document.querySelector(".btn-foley-steps");
 
-const foleyButtons = [btnFoleyWater,btnFoleyRain,btnFoleyPigs,btnFoleySteps];
+const foleyButtons = [btnFoleyWater, btnFoleyRain, btnFoleyPigs, btnFoleySteps];
 
 toggleButton = (btnName, i) => {
   Tone.Transport.start();
@@ -1109,9 +1005,6 @@ btnFoleyPigs.addEventListener("click", () => {
 btnFoleySteps.addEventListener("click", () => {
   toggleButton(btnFoleySteps, 3);
 });
-
-
-
 
 /*
 const btnFoleyOne = document.querySelector(".btn-foley-rain");
@@ -1149,7 +1042,6 @@ btnFoleyFour.addEventListener("click", () => {
 */
 // ------------ VIDEO ------------
 
-
 let startTime = 0;
 let endTime = 10;
 
@@ -1158,19 +1050,15 @@ let mutedBegl = [];
 let mutedButtonsM = [];
 let mutedButtonsP = [];
 
-
 toggleVideo.onclick = () => {
   if (myVideo.paused) {
     myVideo.play();
 
     for (i = 0; i < mutedSound.length; i++) {
       mutedSound[i].mute = false;
-
-
     }
     for (i = 0; i < mutedBegl.length; i++) {
       mutedBegl[i].mute = false;
-
     }
     for (i = 0; i < mutedButtonsM.length; i++) {
       toggleBtnColorActive(mutedButtonsM[i]);
@@ -1182,8 +1070,7 @@ toggleVideo.onclick = () => {
     mutedBegl = [];
     mutedButtonsM = [];
     mutedButtonsP = [];
-  }
-  else {
+  } else {
     myVideo.pause();
     for (i = 0; i < channelMusic.length; i++) {
       if (channelMusic[i].mute == false) {
@@ -1191,8 +1078,6 @@ toggleVideo.onclick = () => {
         toggleBtnColorDeact(melodyButtons[i]);
         mutedButtonsM.push(melodyButtons[i]);
         mutedSound.push(channelMusic[i]);
-
-
       }
       if (channelMusicBegleitung[i].mute == false) {
         channelMusicBegleitung[i].mute = true;
@@ -1231,8 +1116,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-    " - " +
-    $("#slider-range").slider("values", 1) +
-    "sec"
+      " - " +
+      $("#slider-range").slider("values", 1) +
+      "sec"
   );
 });
