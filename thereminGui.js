@@ -20,10 +20,7 @@ let myVideo = document.getElementById("video1");
 
 tour.start()
 
-/*
-Tone.Transport.loop = true;
-Tone.Transport.loopStart = 0;
-*/
+let anyToggledCH = false;
 
 // ------------ SOUND TOGGLE ------------
 
@@ -202,6 +199,7 @@ feedbackdelay.addEventListener("click", function () {
     Tone.Transport.pause();
     let transporttime = Tone.Transport.seconds;
     console.log("transport time " + transporttime);
+    
     melPl.stop();
     melPl.dispose();
     melPl = new Tone.GrainPlayer(sampleBufferMelody, () => {
@@ -214,6 +212,8 @@ feedbackdelay.addEventListener("click", function () {
     // gp.buffer = sampleBuffer;
     melPl.connect(melCH);
     //melPl.start();
+
+
 
     beglPl.stop();
     beglPl.dispose();
@@ -229,12 +229,57 @@ feedbackdelay.addEventListener("click", function () {
     beglPl.connect(beglCH);
     //beglPl.start();
 
+    wasserPL.stop();
+    wasserPL.dispose();
+    wasserPL = new Tone.GrainPlayer(wsamplebuf, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0);
+    wasserPL.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
+    wasserPL.connect(wasserCH);
+
+    rainPL.stop();
+    rainPL.dispose();
+    rainPL = new Tone.GrainPlayer(rsamplebuf, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0);
+    rainPL.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
+    rainPL.connect(rainCH);
+
+    pigsPL.stop();
+    pigsPL.dispose();
+    pigsPL = new Tone.GrainPlayer(pigsamplebuf, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0);
+    pigsPL.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
+    pigsPL.connect(pigsCH);
+
+    stepsPL.stop();
+    stepsPL.dispose();
+    stepsPL = new Tone.GrainPlayer(stepssamplebuf, () => {
+      console.log("loaded buffer");
+    })
+      .sync()
+      .start(0);
+    stepsPL.set({ loop: true, playbackRate: 1, grainSize: 0.1 });
+    stepsPL.connect(stepsCH);
+
     Tone.Transport.start(Tone.now(), transporttime);
   } else {
     fbdelayEnabled = true;
     toggleBtnColorActive(feedbackdelay);
+
   }
+
+
 });
+
+
 
 // GRAIN SIZE SLIDER
 // output.innerHTML = sliderGrainsize.value;
@@ -251,7 +296,7 @@ feedbackdelay.addEventListener("click", function () {
 // };
 
 // CHECKBOX GRAIN SIZE
-grainSizeEnabled = true;
+grainSizeEnabled = false;
 
 grainsizeHand.addEventListener("click", function () {
   console.log("grain size");
@@ -261,6 +306,10 @@ grainsizeHand.addEventListener("click", function () {
     gS = 0.1;
     melPl.set({ grainSize: gS, overlap: gS / 3 });
     beglPl.set({ grainSize: gS, overlap: gS / 3 });
+    wasserPL.set({ grainSize: gS, overlap: gS / 3 });
+    rainPL.set({ grainSize: gS, overlap: gS / 3 });
+    pigsPL.set({ grainSize: gS, overlap: gS / 3 });
+    stepsPL.set({ grainSize: gS, overlap: gS / 3 });
     // console.log("grian sitze enabled off");
   } else {
     grainSizeEnabled = true;
@@ -416,7 +465,7 @@ playVideoScene = (i) => {
   let start = starttimes[i];
   let end = starttimes[i + 1] - 1;
 
-  console.log("start " + start + " end " + end);
+  //console.log("start " + start + " end " + end);
 
   playBetween(start, end);
   timerID = setInterval(() => checkMarks(start, end), 100);
@@ -426,17 +475,8 @@ playVideoScene = (i) => {
 
 toggleButtonMusicMotiv2 = (btnName, i) => {
   Tone.Transport.pause();
-  console.log(i + " is toggled " + toggled[i]);
-  if (melCH.mute && beglCH.mute) {
-    melCH.volume.rampTo(0.05, 0.1);
-    beglCH.volume.rampTo(0.05, 0.1);
-    melCH.mute = false;
-    beglCH.mute = false;
-  }
-
   if (toggled[i]) {
     clearInterval(timerID);
-    console.log("in toggled " + i);
     //Tone.Transport.pause();
     let transporttime = Tone.Transport.seconds;
     Tone.Transport.set({ loop: false });
@@ -452,11 +492,7 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
     toggleBtnColorDeact(btnName);
     toggled[i] = false;
     lasttoggled = i;
-    console.log(i + " is now " + toggled[i]);
-    console.log(toggled);
-    console.log("in toggled if");
   } else {
-    console.log(lasttoggledbuttons);
     if (lasttoggledbuttons.length > 0) {
       clearInterval(timerID);
       playVideoScene(i);
@@ -468,19 +504,13 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
         loopEnd: starttimes[i + 1],
       });
       Tone.Transport.start(Tone.now(), starttimes[i]);
-      console.log("i " + i);
-
       toggleBtnColorDeact(lasttoggledbuttons[0]);
       lasttoggledbuttons.pop();
-      console.log("lasttoggled is " + lasttoggled);
       toggled[lasttoggled] = false;
       toggleBtnColorActive(btnName);
       lasttoggledbuttons.push(btnName);
       toggled[i] = true;
       lasttoggled = i;
-      console.log(i + " " + toggled[i]);
-      console.log(toggled);
-      console.log("in last if");
     } else {
       playVideoScene(i);
       Tone.Transport.pause();
@@ -490,16 +520,10 @@ toggleButtonMusicMotiv2 = (btnName, i) => {
         loopEnd: starttimes[i + 1],
       });
       Tone.Transport.start(Tone.now(), starttimes[i]);
-      //Tone.Transport.start(Tone.now(), starttimes[i]);
-      console.log("i " + i);
-
       toggleBtnColorActive(btnName);
       lasttoggledbuttons.push(btnName);
       toggled[i] = true;
       lasttoggled = i;
-      console.log(i + " " + toggled[i]);
-      console.log(toggled);
-      console.log("In last else");
     }
   }
 };
@@ -508,13 +532,13 @@ toggleButtonMusicMotiv = (btnName, btnName2, btnName3, i) => {
   if (!myVideo.paused) {
     console.log(
       "i " +
-        i +
-        " toggled yes/no " +
-        toggled[i] +
-        " lasttoggled " +
-        lasttoggled +
-        " melCH.mute? " +
-        melCH.mute
+      i +
+      " toggled yes/no " +
+      toggled[i] +
+      " lasttoggled " +
+      lasttoggled +
+      " melCH.mute? " +
+      melCH.mute
     );
     /*
     if (lasttoggled != i) {
@@ -738,6 +762,7 @@ toggleButtonMelody = (btnName) => {
     melCH.mute = true;
     toggleBtnColorDeact(btnName);
   }
+  anyChannelToggled();
 };
 
 toggleButtonBegleitung = (btnName) => {
@@ -753,6 +778,7 @@ toggleButtonBegleitung = (btnName) => {
     beglCH.mute = true;
     toggleBtnColorDeact(btnName);
   }
+  anyChannelToggled();
 };
 
 /*
@@ -990,6 +1016,7 @@ toggleButton = (btnName, i) => {
     foleyChannels[i].mute = true;
     toggleBtnColorDeact(btnName);
   }
+  anyChannelToggled();
 };
 
 btnFoleyWater.addEventListener("click", () => {
@@ -1007,6 +1034,18 @@ btnFoleyPigs.addEventListener("click", () => {
 btnFoleySteps.addEventListener("click", () => {
   toggleButton(btnFoleySteps, 3);
 });
+
+
+
+
+anyChannelToggled = () => {
+  anyToggledCH = false;
+  for (i = 0; i < soundChannels; i++) {
+    if (soundChannels[i].mute) {
+      anyToggledCH = true;
+    }
+  }
+};
 
 /*
 const btnFoleyOne = document.querySelector(".btn-foley-rain");
@@ -1118,8 +1157,8 @@ $(function () {
   });
   $("#amount").val(
     $("#slider-range").slider("values", 0) +
-      " - " +
-      $("#slider-range").slider("values", 1) +
-      "sec"
+    " - " +
+    $("#slider-range").slider("values", 1) +
+    "sec"
   );
 });

@@ -33,7 +33,6 @@ var c = function (p) {
   }).toDestination();
 
   // ### TONE SAMPLER
-  const env = new Tone.AmplitudeEnvelope().toDestination();
 
   let lastNote = 0;
   let note = 0;
@@ -438,6 +437,10 @@ var c = function (p) {
             }
             melPl.set({ grainSize: gS, overlap: gS / 3 });
             beglPl.set({ grainSize: gS, overlap: gS / 3 });
+            wasserPL.set({ grainSize: gS, overlap: gS / 3 });
+            rainPL.set({ grainSize: gS, overlap: gS / 3 });
+            pigsPL.set({ grainSize: gS, overlap: gS / 3 });
+            stepsPL.set({ grainSize: gS, overlap: gS / 3 });
           }
 
           /*
@@ -545,8 +548,38 @@ var c = function (p) {
               fbdelay = fbd27;
             }
 
-            melPl.connect(fbdelay).toDestination();
-            beglPl.connect(fbdelay).toDestination();
+
+
+            if (!melCH.muted) {
+              melPl.connect(fbdelay).toDestination();
+            }
+            if (!beglCH.muted) {
+              beglPl.connect(fbdelay).toDestination();
+            }
+            if (!wasserCH.muted) {
+              wasserPL.connect(fbdelay).toDestination();
+            }
+            if (!rainCH.muted) {
+              rainPL.connect(fbdelay).toDestination();
+            }
+            if (!pigsCH.muted) {
+              pigsPL.connect(fbdelay).toDestination();
+            }
+            if (!stepsCH.muted) {
+              stepsPL.connect(fbdelay).toDestination();
+            }
+
+
+
+
+
+
+            /*
+                        wasserPL.connect(fbdelay).toDestination();
+                        rainPL.connect(fbdelay).toDestination();
+                        pigsPL.connect(fbdelay).toDestination();
+                        stepsPL.connect(fbdelay).toDestination();
+            */
           }
 
           //  let currDetune = p.map(handL.y, video.height, 0, 0.5, 0.1);
@@ -555,8 +588,18 @@ var c = function (p) {
           //  gp.playbackRate = Math.pow(2, (interval / 12));
 
           const gpVol = p.map(handL.y, 360, 0, 0.5, -20);
+
+
           melPl.set({ volume: gpVol });
           beglPl.set({ volume: gpVol });
+
+
+
+          wasserPL.set({ volume: gpVol });
+          rainPL.set({ volume: gpVol });
+          pigsPL.set({ volume: gpVol });
+          stepsPL.set({ volume: gpVol });
+
 
           /*  
             console.log("hand L : "+handL.x + " " + handL.y +" pbr "+ gp.playbackRate +" vol "+ gpVol);

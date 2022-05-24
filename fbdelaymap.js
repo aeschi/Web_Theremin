@@ -1,4 +1,3 @@
-// delay expressed in musical notation
 const fbd11 = new Tone.FeedbackDelay(0.1, 0.1).toDestination();
 const fbd12 = new Tone.FeedbackDelay(0.1, 0.2).toDestination();
 const fbd13 = new Tone.FeedbackDelay(0.1, 0.3).toDestination();

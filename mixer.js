@@ -7,6 +7,12 @@ let playerMusicBegleitung = [];
 let channelMusicBegleitung = [];
 let channelGainBegleitung = [];
 
+
+//let fbdelay;
+let fbdelay;
+let fbdelayCH = new Tone.Channel(1).toDestination();
+fbdelayCH.mute = true;
+
 /*
 let soundfiles = [
   "Theremin_Hauptstimme",
@@ -61,6 +67,7 @@ const melod5Buf = new Tone.ToneAudioBuffer("data/music/"+soundfiles[4]+".wav", (
 
 let audioFileMel = "data/music/motive/TRAUM_Melodie.ogg";
 let audioFileBegl = "data/music/motive/TRAUM_Begleitung.ogg";
+
 // tone audio buffer can be assigner to gp.buffer
 const sampleBufferMelody = new Tone.ToneAudioBuffer(audioFileMel, () => {
   console.log('loaded');
@@ -68,6 +75,7 @@ const sampleBufferMelody = new Tone.ToneAudioBuffer(audioFileMel, () => {
 const sampleBufferBegl = new Tone.ToneAudioBuffer(audioFileBegl, () => {
   console.log('loaded');
 });
+
 
 let melCH = new Tone.Channel(1).toDestination();
 melCH.mute = true;
@@ -134,13 +142,19 @@ let playerFoley = [];
 //let foleyfiles = ["rain", "water", "pigs", "steps"];
 let foleyfiles = ["TRAUM_Noise_trim", "rain", "pigs", "steps"];
 
+let wfile =`data/music/foleys/${foleyfiles[0]}.ogg`;
+let rfile =`data/music/foleys/${foleyfiles[1]}.ogg`
+let pfile = `data/music/foleys/${foleyfiles[2]}.ogg`
+let sfile =`data/music/foleys/${foleyfiles[3]}.ogg`
 
 wasserCH = new Tone.Channel(1).toDestination();
 wasserCH.mute = true;
 
-wasserPL = new Tone.Player({
+wasserPL = new Tone.GrainPlayer({
   url: `data/music/foleys/${foleyfiles[0]}.ogg`,
   loop: true,
+  playbackRate: 1,
+  grainSize: 0.1
 })
   .sync()
   .start(0);
@@ -150,9 +164,12 @@ wasserPL.connect(wasserCH);
 rainCH = new Tone.Channel(1).toDestination();
 rainCH.mute = true;
 
-rainPL = new Tone.Player({
+rainPL = new Tone.GrainPlayer({
   url: `data/music/foleys/${foleyfiles[1]}.ogg`,
   loop: true,
+  loop: true,
+  playbackRate: 1,
+  grainSize: 0.1,
   fadeIn: 1.0,
   fadeOut: 1.0
 })
@@ -164,9 +181,11 @@ rainPL.connect(rainCH);
 pigsCH = new Tone.Channel(1).toDestination();
 pigsCH.mute = true;
 
-pigsPL = new Tone.Player({
+pigsPL = new Tone.GrainPlayer({
   url: `data/music/foleys/${foleyfiles[2]}.ogg`,
   loop: true,
+  playbackRate: 1,
+  grainSize: 0.1,
   fadeIn: 1.0,
   fadeOut: 1.0
 })
@@ -178,9 +197,11 @@ pigsPL.connect(pigsCH);
 stepsCH = new Tone.Channel(1).toDestination();
 stepsCH.mute = true;
 
-stepsPL = new Tone.Player({
+stepsPL = new Tone.GrainPlayer({
   url: `data/music/foleys/${foleyfiles[3]}.ogg`,
   loop: true,
+  playbackRate: 1,
+  grainSize: 0.1,
   fadeIn: 1.0,
   fadeOut: 1.0
 })
@@ -189,7 +210,24 @@ stepsPL = new Tone.Player({
 stepsPL.connect(stepsCH);
 
 
+const wsamplebuf = new Tone.ToneAudioBuffer(wfile, () => {
+  console.log('loaded');
+});
+const rsamplebuf = new Tone.ToneAudioBuffer(rfile, () => {
+  console.log('loaded');
+});
+const pigsamplebuf = new Tone.ToneAudioBuffer(pfile, () => {
+  console.log('loaded');
+});
+const stepssamplebuf = new Tone.ToneAudioBuffer(sfile, () => {
+  console.log('loaded');
+});
+
+
 let foleyChannels = [wasserCH,rainCH,pigsCH,stepsCH];
+
+
+let soundChannels = [melCH,beglCH,foleyChannels];
 
 /*
 foleyfiles.map(function (url, i) {
