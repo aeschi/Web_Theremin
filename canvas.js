@@ -608,27 +608,44 @@ var c = function (p) {
         }
 
         if (soundeffekteEnabled) {
+          beglCH_SE.volume.rampTo(0.05, 0.5);
           beglCH_SE.mute = false;
           beglCH.mute = true;
-          if (handL.y > 0 && handL.y < 90) {
+          if (handL.y >= 0 && handL.y <= 180 && handL.x >=0 && handL.x <= 320) {
+            melCH.volume.rampTo(0.05, 0.5);
+            channelSoundEffektM[0].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[1].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[2].volume.rampTo(-10, 0.5);
             melCH.mute = false;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = true;
             channelSoundEffektM[2].mute = true;
             console.log("melody");
-          } else if (handL.y >= 90 && handL.y < 180) {
+          } else if (handR.y >= 0 && handR.y < 180 && handR.x >=0 && handR.x <= 320) {
+            melCH.volume.rampTo(-10, 0.5);
+            channelSoundEffektM[0].volume.rampTo(0.05, 0.5);
+            channelSoundEffektM[1].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[2].volume.rampTo(-10, 0.5);
             melCH.mute = true;
             channelSoundEffektM[0].mute = false;
             channelSoundEffektM[1].mute = true;
             channelSoundEffektM[2].mute = true;
             console.log("sf 1");
-          } else if (handL.y >= 180 && handL.y <= 270) {
+          } else if (handL.y >= 180 && handL.y <= 360 && handL.x >= 0 && handL.x <= 320 ) {
+            melCH.volume.rampTo(-10, 0.5);
+            channelSoundEffektM[0].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[1].volume.rampTo(0.05, 0.5);
+            channelSoundEffektM[2].volume.rampTo(-10, 0.5);
             melCH.mute = true;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = false;
             channelSoundEffektM[2].mute = true;
             console.log("sf 2");
-          } else if (handL.y >= 270 && handL.y < 360) {
+          } else if (handR.y >= 180 && handR.y <= 360 && handR.x >= 320 && handR.x <= 640) {
+            melCH.volume.rampTo(-10, 0.5);
+            channelSoundEffektM[0].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[1].volume.rampTo(-10, 0.5);
+            channelSoundEffektM[2].volume.rampTo(0.05, 0.5);
             melCH.mute = true;
             channelSoundEffektM[0].mute = true;
             channelSoundEffektM[1].mute = true;

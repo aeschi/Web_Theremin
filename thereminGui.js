@@ -94,9 +94,6 @@ btnSoundEffect.addEventListener("click", function () {
       channelSoundEffektM[1].mute = true;
       channelSoundEffektM[2].mute = true;
       beglCH_SE.mute = true;
-
-      beglCH.mute = false;
-      melCH.mute = false;
     } else {
       soundeffekteEnabled = true;
       toggleBtnColorActive(btnSoundEffect);
@@ -212,8 +209,6 @@ feedbackdelay.addEventListener("click", function () {
     // gp.buffer = sampleBuffer;
     melPl.connect(melCH);
     //melPl.start();
-
-
 
     beglPl.stop();
     beglPl.dispose();
