@@ -33,6 +33,27 @@ tour.addStep({
 
 tour.addStep({
   title: "WEB THEREMIN",
+  text: `To use the interactive functions of the WEB THEREMIN you need to allow your browser to use your webcam.`,
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+  id: "creating",
+});
+
+tour.addStep({
+  title: "WEB THEREMIN",
   text: `To start the web theremin activate the sound button in the upper left corner of the page.`,
   attachTo: { element: ".SpeakerContainer", on: "right" },
   buttons: [
