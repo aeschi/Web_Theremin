@@ -18,6 +18,8 @@ let toggleVideo = document.getElementById("play");
 
 let myVideo = document.getElementById("video1");
 
+tour.start()
+
 /*
 Tone.Transport.loop = true;
 Tone.Transport.loopStart = 0;
