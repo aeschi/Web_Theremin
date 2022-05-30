@@ -37,57 +37,35 @@ playbackRate = 0.1; // the grain is scheduled every x seconds
 overlap = 0.5; // wie verbunden die grains klingen
 detune = 100;
 
-
 const clock1 = new Tone.Clock(clockCallback, 1 / grainSize);
 //const clock2 = new Tone.Clock(clockCallback, 1 / (grainSize*0.5));
 
-
-
 function clockCallback(time) {
-//  console.log("time " + time);
+  //  console.log("time " + time);
   const ticks = clock1.getTicksAtTime(time);
-//  console.log("ticks " + ticks);
+  //  console.log("ticks " + ticks);
   const offset = ticks * grainSize;
-//  console.log("offset " + offset);
+  //  console.log("offset " + offset);
 
+  const grainBuf = new Tone.ToneBufferSource(audioBuffer.buffer, (onload) => {
+    // console.log("loaded audio buffer");
+  }).toDestination();
 
+  //grainBuf.connect(grainBufGain).toDestination();
 
-const grainBuf = new Tone.ToneBufferSource(audioBuffer.buffer, onload => {
-  console.log("loaded audio buffer");
-}).toDestination();
+  grainBuf.loop = true;
 
-//grainBuf.connect(grainBufGain).toDestination();
-
-grainBuf.loop = true;
- 
-
-
-  if(fbdelay != null){
-  //  console.log("apply fbdelay");
+  if (fbdelay != null) {
+    //  console.log("apply fbdelay");
     grainBuf.connect(fbdelay).toDestination();
   }
 
-  /* 
-  if (fbdelay == 2) {
-    grainBuf.connect(feedbackDelay11).connect(feedbackDelay6).connect(fbdel1).toDestination();
-  }
-  else if(fbdelay == 1){
-  //  grainBuf.connect(feedbackDelay9).connect(fbd2).connect(fbd3).toDestination();
-   grainBuf.connect(fbdC).connect(fbdB).connect(fbdA).toDestination();
-  }
-  else if (fbdelay != null) {
-    grainBuf.connect(fbdelay).toDestination();
-  }
- */
- 
-
-  if(myp5.pbrcontrol){
-  grainBuf.playbackRate.value = graindelay_pbrate;
-  }
-  else {
+  if (myp5.pbrcontrol) {
+    grainBuf.playbackRate.value = graindelay_pbrate;
+  } else {
     const interval = detune / 100;
     //intervaltofrequencyratio function from tone js
-    grainBuf.playbackRate.value = Math.pow(2, (interval / 12));
+    grainBuf.playbackRate.value = Math.pow(2, interval / 12);
   }
 
   /*
@@ -97,23 +75,20 @@ grainBuf.loop = true;
 */
   grainBuf.fadeIn = overlap; //0.5
   grainBuf.fadeOut = overlap; // 0.5
-//  console.log(" grain start at " + time + " from " + offset);
+  //  console.log(" grain start at " + time + " from " + offset);
   grainBuf.start(time, offset);
-//  console.log(" grain stop at " + time + " " + grainSize / playbackRate);
+  //  console.log(" grain stop at " + time + " " + grainSize / playbackRate);
   grainBuf.stop(time + grainSize / playbackRate);
   //grainBuf.stop(time + attack + decay +1 );
 
   grainBuf.onended = () => {
     grainBuf.disconnect();
     grainBuf.buffer.dispose();
-  }
-  
+  };
 }
-
 
 function rand(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
